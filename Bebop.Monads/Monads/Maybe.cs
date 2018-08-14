@@ -23,7 +23,8 @@ namespace Bebop.Monads
         {
             _VerifyTypeNotNull(type);
 
-            return (IMaybe) Activator.CreateInstance(typeof(Maybe<>).MakeGenericType(type));
+            return (IMaybe) Activator.CreateInstance(
+                typeof(Maybe<>).MakeGenericType(type));
         }
 
         /// <summary>
@@ -48,7 +49,10 @@ namespace Bebop.Monads
 
             return (IMaybe)Activator.CreateInstance(
                 typeof(Maybe<>).MakeGenericType(type),
-                new object[] { value });
+                BindingFlags.NonPublic | BindingFlags.Instance,
+                null,
+                new object[] { value },
+                null);
         }
 
         private static void _VerifyValueAssignable(Type type, object value)

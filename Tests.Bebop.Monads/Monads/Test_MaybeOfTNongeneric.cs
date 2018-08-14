@@ -80,24 +80,6 @@ namespace Bebop.Monads
             }
 
             [Test]
-            public void Equality_T()
-            {
-                var a = Maybe.From(typeof(int), 123);
-                var b = Maybe.From(typeof(string), "pretzels");
-                var c = Maybe.Nothing(typeof(int));
-                var d = Maybe.Nothing(typeof(string));
-
-                var e = 123;
-                var f = "pretzels";
-
-                // inequality
-                Assert.IsTrue(a.Equals(e));
-                Assert.IsTrue(b.Equals(f));
-                Assert.IsFalse(c.Equals(e));
-                Assert.IsFalse(d.Equals(f));
-            }
-
-            [Test]
             public void Equality_IMaybe()
             {
                 IMaybe a = Maybe.From(typeof(int),123);
@@ -163,40 +145,6 @@ namespace Bebop.Monads
                 // others
                 Assert.IsFalse(a.Equals(null));
                 Assert.IsFalse(a.Equals(new object()));
-            }
-
-            [Test]
-            public void Equality_Operators()
-            {
-                var a = Maybe.From(typeof(int),123);
-                var b = Maybe.From(typeof(int),123);
-                var c = Maybe.From(typeof(int),123);
-                var d = Maybe.From(typeof(int), 456);
-                var e = Maybe.Nothing(typeof(int));
-
-                // reflexive
-                Assert.IsTrue(a == a);
-                Assert.IsFalse(a != a);
-
-                // symmetric
-                Assert.IsTrue(a == b);
-                Assert.IsTrue(b == a);
-                Assert.IsFalse(a != b);
-                Assert.IsFalse(b != a);
-
-                // reflexive
-                Assert.IsTrue(a == b);
-                Assert.IsTrue(b == c);
-                Assert.IsTrue(a == c);
-                Assert.IsFalse(a != b);
-                Assert.IsFalse(b != c);
-                Assert.IsFalse(a != c);
-
-                // inequality
-                Assert.IsFalse(a == d);
-                Assert.IsFalse(a == e);
-                Assert.IsTrue(a != d);
-                Assert.IsTrue(a != e);
             }
         }
 

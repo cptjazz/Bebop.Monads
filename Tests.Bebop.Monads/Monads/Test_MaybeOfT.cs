@@ -113,25 +113,7 @@ namespace Bebop.Monads
                 Assert.IsFalse(a.Equals(null));
                 Assert.IsFalse(a.Equals(new object()));
             }
-
-            [Test]
-            public void Equality_T()
-            {
-                var a = Maybe.From(123);
-                var b = Maybe.From("pretzels");
-                var c = Maybe.Nothing<int>();
-                var d = Maybe.Nothing<string>();
-
-                var e = 123;
-                var f = "pretzels";
-
-                // inequality
-                Assert.IsTrue(a.Equals(e));
-                Assert.IsTrue(b.Equals(f));
-                Assert.IsFalse(c.Equals(e));
-                Assert.IsFalse(d.Equals(f));
-            }
-
+            
             [Test]
             public void Equality_IMaybeOfT()
             {

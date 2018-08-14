@@ -5,7 +5,7 @@ namespace Bebop.Monads
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public readonly struct Maybe<T>
-        : IEquatable<Maybe<T>>, IEquatable<T>, IMaybe<T>, IMaybe
+        : IEquatable<Maybe<T>>, IMaybe<T>, IMaybe
     {
         private readonly T _value;
         private readonly bool _hasValue;
@@ -29,19 +29,10 @@ namespace Bebop.Monads
 
             return !other._hasValue;
         }
-
-        public bool Equals(T other)
-        {
-            if (ReferenceEquals(other, null))
-                return false;
-
-            return _hasValue && _value.Equals(other);
-        }
-
+        
         public override bool Equals(object obj)
         {
-            return obj is Maybe<T> && Equals((Maybe<T>) obj)
-                   || obj is T && Equals((T) obj);
+            return obj is Maybe<T> && Equals((Maybe<T>) obj);
         }
 
         public override int GetHashCode()
