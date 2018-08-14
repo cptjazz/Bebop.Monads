@@ -57,7 +57,7 @@ Maybe<int> n = Maybe.Nothing<int>();
 
 The interface `IMaybe<T>` is covariant:
 
-```
+```C#
 private class A { }
 private class B : A { }
 
