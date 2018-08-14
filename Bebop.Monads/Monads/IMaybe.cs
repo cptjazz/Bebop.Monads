@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright 2018, Alexander Jesner
+// License: https://opensource.org/licenses/MIT
+
+using System;
 
 namespace Bebop.Monads
 {

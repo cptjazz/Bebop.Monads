@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright 2018, Alexander Jesner
+// License: https://opensource.org/licenses/MIT
+
+using System;
 using System.Diagnostics;
 
 namespace Bebop.Monads
@@ -56,6 +59,10 @@ namespace Bebop.Monads
 
         #region Bind
 
+        /// <summary>
+        /// Gets the internal value of this <see cref="IMaybe{T}"/>,
+        /// or the default value if this <see cref="IMaybe{T}"/> is empty.
+        /// </summary>
         public T GetValueOrDefault()
         {
             return _hasValue ? _value : default;
@@ -66,6 +73,12 @@ namespace Bebop.Monads
             return Map(binder);
         }
 
+        /// <summary>
+        /// Applies the given <paramref name="binder"/> to the internal value of this <see cref="Maybe{T}"/>,
+        /// or returns an empty <see cref="Maybe{U}"/> (of the target type) if this <see cref="Maybe{T}"/>
+        /// is empty.
+        /// </summary>
+        /// <param name="binder">A non-null binder.</param>
         public Maybe<U> Map<U>(in Func<T, Maybe<U>> binder)
         {
             if (binder is null)
@@ -93,7 +106,7 @@ namespace Bebop.Monads
 
         internal string DebuggerDisplay => _hasValue 
             ? _value.ToString() 
-            : "<Nothing>";
+            : $"Nothing<{typeof(T).Name}>";
 
         #endregion
     }

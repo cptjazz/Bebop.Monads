@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright 2018, Alexander Jesner
+// License: https://opensource.org/licenses/MIT
+
+using System;
 using System.Reflection;
 
 namespace Bebop.Monads
@@ -23,8 +26,7 @@ namespace Bebop.Monads
         {
             _VerifyTypeNotNull(type);
 
-            return (IMaybe) Activator.CreateInstance(
-                typeof(Maybe<>).MakeGenericType(type));
+            return new MaybeNongeneric(type);
         }
 
         /// <summary>
@@ -47,12 +49,7 @@ namespace Bebop.Monads
             _VerifyNotNull(value);
             _VerifyValueAssignable(type, value);
 
-            return (IMaybe)Activator.CreateInstance(
-                typeof(Maybe<>).MakeGenericType(type),
-                BindingFlags.NonPublic | BindingFlags.Instance,
-                null,
-                new object[] { value },
-                null);
+            return new MaybeNongeneric(type, value);
         }
 
         private static void _VerifyValueAssignable(Type type, object value)
