@@ -1,7 +1,12 @@
-﻿using System;
+﻿// Copyright 2018, Alexander Jesner
+// License: https://opensource.org/licenses/MIT
+
+using System;
+using System.Diagnostics;
 
 namespace Bebop.Monads
 {
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     internal sealed class MaybeNongeneric : IMaybe, IEquatable<IMaybe>
     {
         private readonly object _value;
@@ -69,5 +74,13 @@ namespace Bebop.Monads
         }
 
         #endregion
+
+        #region Debugger
+
+        internal string DebuggerDisplay => HasValue
+            ? _value.ToString()
+            : $"Nothing<{InternalType.Name}>";
+
+        #endregion
     }
-}
+    }

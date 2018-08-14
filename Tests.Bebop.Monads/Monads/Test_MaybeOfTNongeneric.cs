@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright 2018, Alexander Jesner
+// License: https://opensource.org/licenses/MIT
+
+using System;
 using NUnit.Framework;
 
 namespace Bebop.Monads
@@ -38,6 +41,18 @@ namespace Bebop.Monads
                 Assert.Throws<ArgumentNullException>(() => Maybe.From(null, 123));
                 Assert.Throws<ArgumentNullException>(() => Maybe.From(typeof(int), null));
                 Assert.Throws<ArgumentException>(() => Maybe.From(typeof(int), Guid.Empty));
+            }
+
+            private class A { }
+            private class B : A { }
+
+            [Test]
+            public void Covarinance()
+            {
+                IMaybe<A> o = Maybe.From(new B());
+                IMaybe<A> p = Maybe.Nothing<B>();
+
+                Assert.IsInstanceOf<B>(o.GetValueOrDefault());
             }
         }
 
@@ -194,6 +209,16 @@ namespace Bebop.Monads
                 
                 Assert.AreEqual(default(int), o.GetValueOrDefault());
                 Assert.AreEqual(default(string), p.GetValueOrDefault());
+            }
+
+            [Test]
+            public void ProvidesDebuggerDisplay()
+            {
+                var m = (MaybeNongeneric) Maybe.From(typeof(string), "yada yada yada");
+                var n = (MaybeNongeneric) Maybe.Nothing(typeof(int));
+
+                Assert.AreEqual("yada yada yada", m.DebuggerDisplay);
+                Assert.AreEqual("Nothing<Int32>", n.DebuggerDisplay);
             }
         }
     }

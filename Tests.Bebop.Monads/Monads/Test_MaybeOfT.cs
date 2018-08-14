@@ -1,6 +1,8 @@
-﻿using System;
+﻿// Copyright 2018, Alexander Jesner
+// License: https://opensource.org/licenses/MIT
+
+using System;
 using System.Globalization;
-using Bebop.Monads;
 using NUnit.Framework;
 
 namespace Bebop.Monads
@@ -226,8 +228,10 @@ namespace Bebop.Monads
                 var e = Maybe.Nothing<int>();
 
                 // reflexive
+#pragma warning disable CS1718 // Comparison made to same variable
                 Assert.IsTrue(a == a);
                 Assert.IsFalse(a != a);
+#pragma warning restore CS1718 // Comparison made to same variable
 
                 // symmetric
                 Assert.IsTrue(a == b);
@@ -313,6 +317,16 @@ namespace Bebop.Monads
                 
                 Assert.AreEqual(default(int), o.GetValueOrDefault());
                 Assert.AreEqual(default(string), p.GetValueOrDefault());
+            }
+
+            [Test]
+            public void ProvidesDebuggerDisplay()
+            {
+                var m = Maybe.From("yada yada yada");
+                var n = Maybe.Nothing<int>();
+
+                Assert.AreEqual("yada yada yada", m.DebuggerDisplay);
+                Assert.AreEqual("Nothing<Int32>", n.DebuggerDisplay);
             }
         }
     }
