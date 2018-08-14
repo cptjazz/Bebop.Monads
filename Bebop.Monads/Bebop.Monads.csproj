@@ -3,6 +3,14 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>Bebop</RootNamespace>
+    <PackageProjectUrl>https://github.com/cptjazz/Bebop.Monads</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/cptjazz/Bebop.Monads/blob/master/LICENSE</PackageLicenseUrl>
+    <Copyright>Alexander Jesner, 2018</Copyright>
+    <Company>—</Company>
+    <Authors>Alexander Jesner</Authors>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\Bebop.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -12,5 +20,9 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <LangVersion>7.2</LangVersion>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\Bebop.snk" Link="Bebop.snk" />
+  </ItemGroup>
 
 </Project>
