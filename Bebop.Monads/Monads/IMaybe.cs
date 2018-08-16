@@ -5,6 +5,11 @@ using System;
 
 namespace Bebop.Monads
 {
+    /// <summary>
+    /// Basic interface of the Maybe monad.
+    /// This interface is usefull when accessing Maybes in a
+    /// non-generic fashion, e. g. when processing lists of Maybes.
+    /// </summary>
     public interface IMaybe
     {
         /// <summary>

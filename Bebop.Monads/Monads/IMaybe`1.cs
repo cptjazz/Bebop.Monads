@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace Bebop.Monads
 {
+    /// <summary>
+    /// This interface provides covariance for <see cref="Maybe{T}"/>.
+    /// Note: since <see cref="Maybe{T}"/> is a value type, calling methods
+    /// via this interface introduces boxings!
+    /// </summary>
     public interface IMaybe<out T>
     {
         /// <summary>

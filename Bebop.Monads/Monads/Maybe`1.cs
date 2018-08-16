@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Bebop.Monads
 {
+    /// <summary>
+    /// Maybe monad of T.
+    /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public readonly partial struct Maybe<T>
         : IEquatable<Maybe<T>>, IMaybe<T>, IMaybe
@@ -27,6 +30,12 @@ namespace Bebop.Monads
 
         #region Equality
 
+        /// <summary>Indicates whether the current object is equal to another
+        /// object of the same type.</summary>
+        /// <param name="other">An object to compare with this object.</param>
+        /// <returns>true if the current object is equal to the
+        /// <paramref name="other">other</paramref> parameter;
+        /// otherwise, false.</returns>
         public bool Equals(Maybe<T> other)
         {
             if (_hasValue)
@@ -34,12 +43,22 @@ namespace Bebop.Monads
 
             return !other._hasValue;
         }
-        
+
+        /// <summary>Indicates whether this instance and a specified object
+        /// are equal.</summary>
+        /// <param name="obj">The object to compare with the current
+        /// instance.</param>
+        /// <returns>true if <paramref name="obj">obj</paramref> and this
+        /// instance are the same type and represent the same value;
+        /// otherwise, false.</returns>
         public override bool Equals(object obj)
         {
             return obj is Maybe<T> && Equals((Maybe<T>) obj);
         }
 
+        /// <summary>Returns the hash code for this instance.</summary>
+        /// <returns>A 32-bit signed integer that is the hash code for
+        /// this instance.</returns>
         public override int GetHashCode()
         {
             return _hasValue 
@@ -47,11 +66,15 @@ namespace Bebop.Monads
                 : typeof(T).GetHashCode();
         }
 
+        /// <summary>
+        /// </summary>
         public static bool operator ==(Maybe<T> left, Maybe<T> right)
         {
             return left.Equals(right);
         }
 
+        /// <summary>
+        /// </summary>
         public static bool operator !=(Maybe<T> left, Maybe<T> right)
         {
             return !left.Equals(right);
@@ -114,6 +137,10 @@ namespace Bebop.Monads
 
         #region OrElse
 
+        /// <summary>
+        /// Returns the internal value or <paramref name="alternative"/>
+        /// if this <see cref="Maybe{T}"/> is Nothing.
+        /// </summary>
         public T OrElse(
             T alternative)
         {
@@ -122,6 +149,11 @@ namespace Bebop.Monads
                 : alternative;
         }
 
+        /// <summary>
+        /// Returns the internal value or constructs an alternative
+        /// via the <paramref name="alternativeFactory"/> if this
+        /// <see cref="Maybe{T}"/> is Nothing.
+        /// </summary>
         public T OrElse(
             Func<T> alternativeFactory)
         {

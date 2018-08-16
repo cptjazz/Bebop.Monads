@@ -11,10 +11,14 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\Bebop.snk</AssemblyOriginatorKeyFile>
+    <PackageTags>maybe monad monads</PackageTags>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <LangVersion>7.2</LangVersion>
+    <DocumentationFile>C:\Users\alexa\Documents\Visual Studio 2017\Projects\Bebop.Monads\Bebop.Monads\Bebop.Monads.xml</DocumentationFile>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
