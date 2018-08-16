@@ -3,6 +3,11 @@
 This project provides the following monad implementations:
 * Maybe
 
+This library is:
+* netstandard2.0
+* strong-name signed
+* CLS compliant
+
 ## Maybe
 
 This represents the _Maybe_ (or Option) monad.
@@ -29,6 +34,26 @@ This example does not execute the _binder_ (the lambda) because the source Maybe
 ```C#
 Maybe<int> m = Maybe.Nothing<int>();
 Maybe<string> n = m.Map(x => Maybe.From("something completely different")); // n is Nothing
+```
+
+### Alternative Values
+The Maybe allows for 'materialising' to a value of type T by providing an alternative value that is chosen if the Maybe does not have an internal value:
+
+```C#
+Maybe<int> m = Maybe.From(123);
+int r = m.OrElse(456); // 123
+
+Maybe<int> n = Maybe.Nothing<int>();
+int s = n.OrElse(456); // 456
+```
+
+It is also possible to use lazy construction of the alternative value if creationg of this value is costly:
+```C#
+Maybe<int> m = Maybe.From(123);
+int r = m.OrElse(() => 456); // 123
+
+Maybe<int> n = Maybe.Nothing<int>();
+int s = n.OrElse(() => 456); // 456
 ```
 
 ### Infrastructure methods
