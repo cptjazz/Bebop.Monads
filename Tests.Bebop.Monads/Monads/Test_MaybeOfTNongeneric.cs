@@ -55,8 +55,7 @@ namespace Bebop.Monads
                 Assert.IsInstanceOf<B>(o.GetValueOrDefault());
             }
         }
-
-
+        
         [TestFixture]
         public class Equality
         {
@@ -207,8 +206,8 @@ namespace Bebop.Monads
                 Assert.AreEqual(123, m.GetValueOrDefault());
                 Assert.AreEqual("yada yada yada", n.GetValueOrDefault());
                 
-                Assert.AreEqual(default(int), o.GetValueOrDefault());
-                Assert.AreEqual(default(string), p.GetValueOrDefault());
+                Assert.AreEqual(default(int), ((IMaybe)o).GetValueOrDefault());
+                Assert.AreEqual(default(string), ((IMaybe)p).GetValueOrDefault());
             }
 
             [Test]

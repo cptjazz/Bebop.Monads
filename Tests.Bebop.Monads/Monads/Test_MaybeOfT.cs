@@ -3,6 +3,7 @@
 
 using System;
 using System.Globalization;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace Bebop.Monads
@@ -75,7 +76,85 @@ namespace Bebop.Monads
             {
                 var m = Maybe.From(123);
 
-                Assert.Throws<ArgumentNullException>(() => m.Map<string>(null));
+                Assert.Throws<ArgumentNullException>(() => m.Map<string>((Func<int, Maybe<string>>) null));
+            }
+        }
+
+        [TestFixture]
+        public class AsyncBinding
+        {
+            [Test]
+            public async Task CanMap()
+            {
+                var m = Maybe.From(123);
+                var n = await m.Map(async x => Maybe.From(x.ToString(CultureInfo.InvariantCulture)));
+
+                Assert.IsTrue(((IMaybe) n).HasValue);
+                Assert.AreEqual("123", ((IMaybe<string>) n).GetValueOrDefault());
+            }
+
+            [Test]
+            public async Task CanMapToNothing()
+            {
+                var m = Maybe.From(123);
+                var n = await m.Map(async x => Maybe.Nothing<string>());
+
+                Assert.IsFalse(((IMaybe) n).HasValue);
+                Assert.AreEqual(typeof(string), ((IMaybe) n).InternalType);
+            }
+
+            [Test]
+            public async Task CanMapNothing()
+            {
+                var m = Maybe.Nothing<int>();
+                var n = await m.Map(async x => Maybe.From(x.ToString(CultureInfo.InvariantCulture)));
+
+                Assert.IsFalse(((IMaybe) n).HasValue);
+                Assert.AreEqual(typeof(string), ((IMaybe) n).InternalType);
+            }
+
+            [Test]
+            public async Task RejectsNullBinder()
+            {
+                var m = Maybe.From(123);
+
+                Assert.ThrowsAsync<ArgumentNullException>(async () => await m.Map<string>((Func<int, Task<Maybe<string>>>) null));
+            }
+        }
+
+        [TestFixture]
+        public class OrElse
+        {
+            [Test]
+            public void CanGetValue()
+            {
+                var m = Maybe.From(123);
+                Assert.AreEqual(123, m.OrElse(456));
+            }
+
+            [Test]
+            public void CanGetAlternative()
+            {
+                var m = Maybe.Nothing<int>();
+                Assert.AreEqual(456, m.OrElse(456));
+            }
+
+            [Test]
+            public void CanGetValue_Factory()
+            {
+                var m = Maybe.From(123);
+                Assert.AreEqual(123, m.OrElse(() =>
+                {
+                    Assert.Fail("Should never be reached.");
+                    return 5;
+                }));
+            }
+
+            [Test]
+            public void CanGetAlternative_Factory()
+            {
+                var m = Maybe.Nothing<int>();
+                Assert.AreEqual(456, m.OrElse(() => 456));
             }
         }
 
@@ -296,8 +375,8 @@ namespace Bebop.Monads
                 Assert.AreEqual(123, m.GetValueOrDefault());
                 Assert.AreEqual("yada yada yada", n.GetValueOrDefault());
 
-                Assert.AreEqual(default(int), o.GetValueOrDefault());
-                Assert.AreEqual(default(string), p.GetValueOrDefault());
+                Assert.AreEqual(default(int), ((IMaybe<int>) o).GetValueOrDefault());
+                Assert.AreEqual(default(string), ((IMaybe<string>) p).GetValueOrDefault());
             }
 
             [Test]
@@ -315,8 +394,8 @@ namespace Bebop.Monads
                 Assert.AreEqual(123, m.GetValueOrDefault());
                 Assert.AreEqual("yada yada yada", n.GetValueOrDefault());
                 
-                Assert.AreEqual(default(int), o.GetValueOrDefault());
-                Assert.AreEqual(default(string), p.GetValueOrDefault());
+                Assert.AreEqual(default(int), ((IMaybe) o).GetValueOrDefault());
+                Assert.AreEqual(default(string), ((IMaybe) p).GetValueOrDefault());
             }
 
             [Test]

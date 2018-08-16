@@ -3,15 +3,17 @@
 
 using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace Bebop.Monads
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public readonly struct Maybe<T>
+    public readonly partial struct Maybe<T>
         : IEquatable<Maybe<T>>, IMaybe<T>, IMaybe
     {
-        private readonly T _value;
+        // internal for performance reasons
         private readonly bool _hasValue;
+        private readonly T _value;
 
         #region Construction
 
@@ -63,7 +65,7 @@ namespace Bebop.Monads
         /// Gets the internal value of this <see cref="IMaybe{T}"/>,
         /// or the default value if this <see cref="IMaybe{T}"/> is empty.
         /// </summary>
-        public T GetValueOrDefault()
+        T IMaybe<T>.GetValueOrDefault()
         {
             return _hasValue ? _value : default;
         }
@@ -71,6 +73,11 @@ namespace Bebop.Monads
         IMaybe<U> IMaybe<T>.Map<U>(Func<T, Maybe<U>> binder)
         {
             return Map(binder);
+        }
+
+        async Task<IMaybe<U>> IMaybe<T>.Map<U>(Func<T, Task<Maybe<U>>> binder)
+        {
+            return await Map(binder);
         }
 
         /// <summary>
@@ -87,6 +94,42 @@ namespace Bebop.Monads
             return _hasValue ? binder(_value) : default;
         }
 
+        /// <summary>
+        /// Applies the given async <paramref name="binder"/> to the internal value of this <see cref="Maybe{T}"/>,
+        /// or returns an empty <see cref="Maybe{U}"/> (of the target type) if this <see cref="Maybe{T}"/>
+        /// is empty.
+        /// </summary>
+        /// <param name="binder">A non-null binder.</param>
+        public Task<Maybe<U>> Map<U>(in Func<T, Task<Maybe<U>>> binder)
+        {
+            if (binder is null)
+                throw new ArgumentNullException(nameof(binder));
+
+            return _hasValue
+                ? binder(_value)
+                : Task.FromResult(default(Maybe<U>));
+        }
+
+        #endregion
+
+        #region OrElse
+
+        public T OrElse(
+            T alternative)
+        {
+            return _hasValue
+                ? _value
+                : alternative;
+        }
+
+        public T OrElse(
+            Func<T> alternativeFactory)
+        {
+            return _hasValue
+                ? _value
+                : alternativeFactory();
+        }
+
         #endregion
 
         #region IMaybe interface
@@ -97,7 +140,7 @@ namespace Bebop.Monads
 
         object IMaybe.GetValueOrDefault()
         {
-            return GetValueOrDefault();
+            return _hasValue ? _value : default;
         }
 
         #endregion
