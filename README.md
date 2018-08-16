@@ -8,6 +8,8 @@ This library is:
 * strong-name signed
 * CLS compliant
 
+A NuGet package is available on https://www.nuget.org/packages/Bebop.Monads/
+
 ## Maybe
 
 This represents the _Maybe_ (or Option) monad.
