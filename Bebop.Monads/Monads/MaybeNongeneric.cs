@@ -3,6 +3,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Reflection;
 
 namespace Bebop.Monads
 {
@@ -42,7 +43,7 @@ namespace Bebop.Monads
 
         private object _CreateDefault()
         {
-            if (InternalType.IsValueType)
+            if (InternalType.GetTypeInfo().IsValueType)
                 return Activator.CreateInstance(InternalType);
 
             return null;

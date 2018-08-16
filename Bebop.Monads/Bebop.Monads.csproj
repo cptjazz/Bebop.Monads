@@ -12,6 +12,9 @@
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\Bebop.snk</AssemblyOriginatorKeyFile>
     <PackageTags>maybe monad monads</PackageTags>
+    <Description>This project provides the following monad implementations:
+ * Maybe&lt;T&gt;
+</Description>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

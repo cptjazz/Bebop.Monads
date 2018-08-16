@@ -54,7 +54,7 @@ namespace Bebop.Monads
 
         private static void _VerifyValueAssignable(Type type, object value)
         {
-            if (!type.GetTypeInfo().IsAssignableFrom(value.GetType()))
+            if (!type.GetTypeInfo().IsAssignableFrom(value.GetType().GetTypeInfo()))
             {
                 throw new ArgumentException(
                    $"A Maybe of type '{type}' cannot be constructed with " +
