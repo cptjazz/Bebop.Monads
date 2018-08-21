@@ -26,6 +26,16 @@ namespace Bebop.Monads
             _hasValue = true;
         }
         
+        /// <summary>
+        /// </summary>
+        public static implicit operator Maybe<T>(T value)
+        {
+            if (ReferenceEquals(value, null))
+                return default;
+
+            return new Maybe<T>(value);
+        }
+
         #endregion
 
         #region Equality

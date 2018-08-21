@@ -36,6 +36,37 @@ namespace Bebop.Monads
             {
                 Assert.Throws<ArgumentNullException>(() => Maybe.From<string>(null));
             }
+
+            private Maybe<string> _ImplicitReceiverReferenceType(Maybe<string> m)
+            {
+                return m;
+            }
+
+            private Maybe<int> _ImplicitReceiverValueType(Maybe<int> m)
+            {
+                return m;
+            }
+
+            private Maybe<T> _ImplicitReceiverGeneric<T>(Maybe<T> m)
+            {
+                return m;
+            }
+
+            [Test]
+            public void CanImplicitlyConvert()
+            {
+                Assert.AreEqual(Maybe.From("yada"), _ImplicitReceiverReferenceType("yada"));
+                Assert.AreEqual(Maybe.From(182), _ImplicitReceiverValueType(182));
+                Assert.AreEqual(Maybe.From("yada"), _ImplicitReceiverGeneric<string>("yada"));
+                Assert.AreEqual(Maybe.From(182), _ImplicitReceiverGeneric<int>(182));
+            }
+
+            [Test]
+            public void CanImplicitlyConvert_Nothing()
+            {
+                Assert.AreEqual(Maybe.Nothing<string>(), _ImplicitReceiverReferenceType(null));
+                Assert.AreEqual(Maybe.Nothing<string>(), _ImplicitReceiverGeneric<string>(null));
+            }
         }
 
         [TestFixture]
