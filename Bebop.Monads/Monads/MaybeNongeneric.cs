@@ -51,7 +51,7 @@ namespace Bebop.Monads
 
         #endregion
 
-        #region Equaliy
+        #region Equality
 
         public override bool Equals(object obj)
         {

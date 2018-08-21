@@ -59,6 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Monads\Test_CrossEquality.cs" />
     <Compile Include="Monads\Test_MaybeOfTNongeneric.cs" />
     <Compile Include="Monads\Test_MaybeOfT.cs" />
     <Compile Include="Program.cs" />

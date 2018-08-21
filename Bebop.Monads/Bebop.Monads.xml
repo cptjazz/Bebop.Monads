@@ -89,7 +89,19 @@
             Maybe monad of T.
             </summary>
         </member>
+        <member name="M:Bebop.Monads.Maybe`1.op_Implicit(`0)~Bebop.Monads.Maybe{`0}">
+            <summary>
+            </summary>
+        </member>
         <member name="M:Bebop.Monads.Maybe`1.Equals(Bebop.Monads.Maybe{`0})">
+            <summary>Indicates whether the current object is equal to another
+            object of the same type.</summary>
+            <param name="other">An object to compare with this object.</param>
+            <returns>true if the current object is equal to the
+            <paramref name="other">other</paramref> parameter;
+            otherwise, false.</returns>
+        </member>
+        <member name="M:Bebop.Monads.Maybe`1.Equals(Bebop.Monads.IMaybe)">
             <summary>Indicates whether the current object is equal to another
             object of the same type.</summary>
             <param name="other">An object to compare with this object.</param>

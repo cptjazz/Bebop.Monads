@@ -11,8 +11,8 @@ namespace Bebop.Monads
     /// Maybe monad of T.
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public readonly partial struct Maybe<T>
-        : IEquatable<Maybe<T>>, IMaybe<T>, IMaybe
+    public readonly struct Maybe<T>
+        : IEquatable<Maybe<T>>, IEquatable<IMaybe>, IMaybe<T>, IMaybe
     {
         // internal for performance reasons
         private readonly bool _hasValue;
@@ -49,10 +49,28 @@ namespace Bebop.Monads
         public bool Equals(Maybe<T> other)
         {
             if (_hasValue)
-                return _value.Equals(other._value);
+                return other._hasValue && _value.Equals(other._value);
 
             return !other._hasValue;
         }
+
+        /// <summary>Indicates whether the current object is equal to another
+        /// object of the same type.</summary>
+        /// <param name="other">An object to compare with this object.</param>
+        /// <returns>true if the current object is equal to the
+        /// <paramref name="other">other</paramref> parameter;
+        /// otherwise, false.</returns>
+        public bool Equals(IMaybe other)
+        {
+            if (ReferenceEquals(other, null))
+                return false;
+
+            if (_hasValue)
+                return other.HasValue && _value.Equals(other.GetValueOrDefault());
+
+            return !other.HasValue;
+        }
+
 
         /// <summary>Indicates whether this instance and a specified object
         /// are equal.</summary>
@@ -63,7 +81,7 @@ namespace Bebop.Monads
         /// otherwise, false.</returns>
         public override bool Equals(object obj)
         {
-            return obj is Maybe<T> && Equals((Maybe<T>) obj);
+            return obj is IMaybe && Equals((IMaybe) obj);
         }
 
         /// <summary>Returns the hash code for this instance.</summary>
