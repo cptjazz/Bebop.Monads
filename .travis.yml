@@ -5,7 +5,7 @@ install:
   - nuget install NUnit.Runners -Version 3.8.0 -OutputDirectory testrunner
 script:
   - msbuild /p:Configuration=Release Bebop.Monads.sln
-  - mono ./testrunner/NUnit.ConsoleRunner.3.8.0/tools/nunit3-console.exe ./Tests.Bebop.Monads/bin/Release/Tests.Bebop.Monads.dll
+  - mono ./testrunner/NUnit.ConsoleRunner.3.8.0/tools/nunit3-console.exe ./Tests.Bebop.Monads/bin/Release/Tests.Bebop.Monads.exe
 matrix:
   include:
     - mono: latest
