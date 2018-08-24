@@ -3,9 +3,32 @@ solution: Bebop.Monads.sln
 install:
   - nuget restore Bebop.Monads.sln
   - nuget install NUnit.Runners -Version 3.8.0 -OutputDirectory testrunner
+  - nuget install Mono.Cecil -Version 0.10.0 -OutputDirectory cecil
+  - dotnet tool install --global coveralls.net --version 1.0.0 
+  - git clone --depth=50 git://github.com/csMACnz/monocov.git monocov
+  - cp cecil/Mono.Cecil.0.10.0/lib/net40/Mono.Cecil.dll .
+  - cd monocov
+  - ./configure
+  - make
+  - sudo make install
+  - cd ..
+
 script:
   - msbuild /p:Configuration=Release Bebop.Monads.sln
   - mono ./testrunner/NUnit.ConsoleRunner.3.8.0/tools/nunit3-console.exe ./Tests.Bebop.Monads/bin/Release/Tests.Bebop.Monads.exe
+  - mono --debug --profile=monocov:outfile=monocovCoverage.cov,+Bebop.Monads ./testrunner/NUnit.ConsoleRunner.3.8.0/tools/nunit3-console.exe --process=Single ./Tests.Bebop.Monads/bin/Release/Tests.Bebop.Monads.exe
+  - monocov --export-xml=monocovCoverage monocovCoverage.cov
+  - REPO_COMMIT_AUTHOR=$(git show -s --pretty=format:"%cn")
+  - REPO_COMMIT_AUTHOR_EMAIL=$(git show -s --pretty=format:"%ce")
+  - REPO_COMMIT_MESSAGE=$(git show -s --pretty=format:"%s")
+  - echo $TRAVIS_COMMIT
+  - echo $TRAVIS_BRANCH
+  - echo $REPO_COMMIT_AUTHOR
+  - echo $REPO_COMMIT_AUTHOR_EMAIL
+  - echo $REPO_COMMIT_MESSAGE
+  - echo $TRAVIS_JOB_ID
+  - mono coveralls.net --monocov -i ./monocovCoverage --repoToken $COVERALLS_REPO_TOKEN --commitId $TRAVIS_COMMIT --commitBranch $TRAVIS_BRANCH --commitAuthor "$REPO_COMMIT_AUTHOR" --commitEmail "$REPO_COMMIT_AUTHOR_EMAIL" --commitMessage "$REPO_COMMIT_MESSAGE" --jobId $TRAVIS_JOB_ID  --serviceName travis-ci  --useRelativePaths
+
 matrix:
   include:
     - mono: latest
