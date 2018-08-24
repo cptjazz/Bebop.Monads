@@ -1,0 +1,12 @@
+language: csharp
+solution: solution-name.sln
+install:
+  - nuget restore solution-name.sln
+  - nuget install NUnit.Runners -Version 3.8.0 -OutputDirectory testrunner
+script:
+  - xbuild /p:Configuration=Release solution-name.sln
+  - mono ./testrunner/NUnit.Console.3.8.0/tools/nunit-console.exe ./Tests.Bebop.Monads/bin/Release/Tests.*.dll
+matrix:
+  include:
+    - dotnet: latest
+    - mono: latest
