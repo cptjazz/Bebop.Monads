@@ -230,8 +230,8 @@ namespace Bebop.Monads
                 IMaybe m = Maybe.From(typeof(int), 123);
                 IMaybe n = Maybe.From(typeof(string), "yada yada yada");
 
-                var o = Maybe.Nothing<int>();
-                var p = Maybe.Nothing<string>();
+                var o = Maybe.Nothing(typeof(int));
+                var p = Maybe.Nothing(typeof(string));
 
                 Assert.IsInstanceOf<int>(m.GetValueOrDefault());
                 Assert.IsInstanceOf<string>(n.GetValueOrDefault());
