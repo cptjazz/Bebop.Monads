@@ -229,7 +229,7 @@ namespace Bebop.Monads
             }
 
             [Test]
-            public async Task RejectsNullBinder()
+            public void RejectsNullBinder()
             {
                 var m = Maybe.From(123);
 
@@ -276,6 +276,39 @@ namespace Bebop.Monads
         [TestFixture]
         public class Equality
         {
+            [Test]
+            public void ProvidesHashCode()
+            {
+                var a = Maybe.From(123);
+                Assert.AreEqual(123.GetHashCode(), a.GetHashCode());
+            }
+
+            private class Mutable
+            {
+                public int _hashCode = -999;
+
+                public override int GetHashCode() => _hashCode;
+            }
+
+            [Test]
+            public void ProvidesHashCode_Mutation()
+            {
+                var o = new Mutable();
+
+                var a = Maybe.From(o);
+                Assert.AreEqual(-999, a.GetHashCode());
+
+                o._hashCode = 777;
+                Assert.AreEqual(777, a.GetHashCode());
+            }
+
+            [Test]
+            public void ProvidesHashCode_Nothing()
+            {
+                var a = Maybe.Nothing<int>();
+                Assert.AreEqual(typeof(int).GetHashCode(), a.GetHashCode());
+            }
+
             [Test]
             public void Equality_MaybeOfT()
             {
