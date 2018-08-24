@@ -8,5 +8,6 @@ script:
   - mono ./testrunner/NUnit.Console.3.8.0/tools/nunit-console.exe ./Tests.Bebop.Monads/bin/Release/Tests.*.dll
 matrix:
   include:
-    - dotnet: latest
+    - dotnet: 1.1.5
+      mono: none
     - mono: latest
