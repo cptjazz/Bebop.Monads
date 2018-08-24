@@ -60,7 +60,7 @@ namespace Bebop.Monads
 
         public override int GetHashCode()
         {
-            return _value?.GetHashCode() ?? 0;
+            return _value?.GetHashCode() ?? InternalType.GetHashCode();
         }
 
         public bool Equals(IMaybe other)
