@@ -6,7 +6,7 @@ install:
   - nuget install Mono.Cecil -Version 0.10.0 -OutputDirectory cecil
   - dotnet tool install --global coveralls.net --version 1.0.0 
   - git clone --depth=50 git://github.com/csMACnz/monocov.git monocov
-  - cp cecil/Mono.Cecil.0.10.0/lib/net40/Mono.Cecil.dll .
+  - cp cecil/Mono.Cecil.0.10.0/lib/net40/Mono.Cecil.dll monocov
   - cd monocov
   - ./configure
   - make
