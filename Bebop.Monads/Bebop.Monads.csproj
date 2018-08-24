@@ -15,7 +15,7 @@
     <Description>This project provides the following monad implementations:
  * Maybe&lt;T&gt;
 </Description>
-    <Version>1.1.0</Version>
+    <Version>1.1.1</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
