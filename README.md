@@ -10,6 +10,8 @@ This library is:
 
 A NuGet package is available on https://www.nuget.org/packages/Bebop.Monads/
 
+[![Build status](https://ci.appveyor.com/api/projects/status/5ygm0nc2uggl5adq/branch/master?svg=true)](https://ci.appveyor.com/project/cptjazz/bebop-monads/branch/master)
+
 ## Maybe
 
 This represents the _Maybe_ (or Option) monad.
