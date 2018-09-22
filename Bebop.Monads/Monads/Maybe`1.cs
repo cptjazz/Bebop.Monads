@@ -14,7 +14,6 @@ namespace Bebop.Monads
     public readonly struct Maybe<T>
         : IEquatable<Maybe<T>>, IEquatable<IMaybe>, IMaybe<T>, IMaybe
     {
-        // internal for performance reasons
         private readonly bool _hasValue;
         private readonly T _value;
 
