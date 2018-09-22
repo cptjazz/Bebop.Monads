@@ -1,6 +1,6 @@
 # Bebop.Monads
 
-This project provides the following monad implementations:
+This project provides the following monads:
 * Maybe
 
 This library is:
@@ -8,9 +8,7 @@ This library is:
 * strong-name signed
 * CLS compliant
 
-A NuGet package is available on https://www.nuget.org/packages/Bebop.Monads/
-
-[![Build status](https://ci.appveyor.com/api/projects/status/5ygm0nc2uggl5adq/branch/master?svg=true)](https://ci.appveyor.com/project/cptjazz/bebop-monads/branch/master) [![Coverage Status](https://coveralls.io/repos/github/cptjazz/Bebop.Monads/badge.svg)](https://coveralls.io/github/cptjazz/Bebop.Monads)
+[![NuGet](https://img.shields.io/badge/nuget-Bebop.Monads-blue.svg)](https://www.nuget.org/packages/Bebop.Monads) [![Build status](https://ci.appveyor.com/api/projects/status/5ygm0nc2uggl5adq/branch/master?svg=true)](https://ci.appveyor.com/project/cptjazz/bebop-monads/branch/master) [![Coverage Status](https://coveralls.io/repos/github/cptjazz/Bebop.Monads/badge.svg?branch=master)](https://coveralls.io/github/cptjazz/Bebop.Monads?branch=master)
 
 ## Maybe
 
