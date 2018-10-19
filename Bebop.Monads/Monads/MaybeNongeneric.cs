@@ -83,5 +83,15 @@ namespace Bebop.Monads
             : $"Nothing<{InternalType.Name}>";
 
         #endregion
+
+        #region String representation
+
+        /// <summary>
+        /// </summary>
+        public override string ToString() => HasValue
+            ? _value.ToString()
+            : $"Nothing<{InternalType.Name}>";
+
+        #endregion
     }
 }

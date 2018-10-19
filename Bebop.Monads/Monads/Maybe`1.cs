@@ -211,5 +211,15 @@ namespace Bebop.Monads
             : $"Nothing<{typeof(T).Name}>";
 
         #endregion
+
+        #region String representation
+
+        /// <summary>
+        /// </summary>
+        public override string ToString() => _hasValue
+            ? _value.ToString()
+            : $"Nothing<{typeof(T).Name}>";
+
+        #endregion
     }
 }

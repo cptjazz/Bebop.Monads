@@ -555,6 +555,16 @@ namespace Bebop.Monads
                 Assert.AreEqual("yada yada yada", m.DebuggerDisplay);
                 Assert.AreEqual("Nothing<Int32>", n.DebuggerDisplay);
             }
+
+            [Test]
+            public void ProvidesStringRepresentation()
+            {
+                var m = Maybe.From("yada yada yada");
+                var n = Maybe.Nothing<int>();
+
+                Assert.AreEqual("yada yada yada", m.ToString());
+                Assert.AreEqual("Nothing<Int32>", n.ToString());
+            }
         }
     }
 }

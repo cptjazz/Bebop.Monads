@@ -73,7 +73,7 @@
             Creates an empty <see cref="T:Bebop.Monads.Maybe`1"/>.
             </summary>
         </member>
-        <member name="M:Bebop.Monads.Maybe.From``1(``0@)">
+        <member name="M:Bebop.Monads.Maybe.From``1(``0)">
             <summary>
             Creates a <see cref="T:Bebop.Monads.Maybe`1"/> instance that contains the given <paramref name="value"/>.
             </summary>
@@ -82,6 +82,10 @@
         <member name="M:Bebop.Monads.Maybe.From(System.Type,System.Object)">
             <summary>
             Creates an empty <see cref="T:Bebop.Monads.Maybe`1"/>.
+            </summary>
+        </member>
+        <member name="M:Bebop.Monads.MaybeNongeneric.ToString">
+            <summary>
             </summary>
         </member>
         <member name="T:Bebop.Monads.Maybe`1">
@@ -164,6 +168,10 @@
             Returns the internal value or constructs an alternative
             via the <paramref name="alternativeFactory"/> if this
             <see cref="T:Bebop.Monads.Maybe`1"/> is Nothing.
+            </summary>
+        </member>
+        <member name="M:Bebop.Monads.Maybe`1.ToString">
+            <summary>
             </summary>
         </member>
     </members>
