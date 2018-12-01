@@ -96,7 +96,21 @@ IMaybe<A> p = Maybe.Nothing<B>();
 When dealing with Maybes in scenarios where the types are not known at compile time we provide mechanisms to create 'non-generic' Maybes:
 
 ```C#
-IMaybe m = Maybe.From(typeof(int), "123");
+IMaybe m = Maybe.From(typeof(int), 123);
 IMaybe n = Maybe.Nothing(typeof(string));
 ```
 Those Maybes can only satisfy the basic `IMaybe` interface and thus do not offer the binding mechanism.
+
+#### Down-castable non-generic Maybes
+We can create instances of `IMaybe` during runtime, having only a `Type` and a value `object` in hand as described above. The returned instances satisfy exactly the `IMaybe` interface—nothing more. In fact, a different completely non-generic type is instantiated internally and returned by those methods. This is fast and satisfies exactly what the interface promises.
+
+In some situations however it is beneficial to non-generically create instances that are true `Maybe<T>` instances that can be downcast from `IMaybe` to `Maybe<T>` during runtime. This library provides mechanisms to create true `Maybe<T>` objects by using Reflection internally. However, those methods are significantly slower than their not down-castable counterparts.
+
+```C#
+IMaybe m = Maybe.From(typeof(int), 123);
+Maybe<int> n = (Maybe<int>) m; // fails!
+
+// Using the Reflection based mechanisms:
+IMaybe m = Maybe.Castable.From(typeof(int), 123);
+Maybe<int> n = (Maybe<int>) m; // works!
+```
