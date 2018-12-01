@@ -9,7 +9,7 @@ namespace Bebop.Monads
     /// <summary>
     /// A factory for creating 'Maybe' instances.
     /// </summary>
-    public static class Maybe
+    public static partial class Maybe
     {
         /// <summary>
         /// Creates an empty <see cref="Maybe{T}"/>.
@@ -20,7 +20,7 @@ namespace Bebop.Monads
         }
 
         /// <summary>
-        /// Creates an empty <see cref="Maybe{T}"/>.
+        /// Creates an empty <see cref="IMaybe"/>.
         /// </summary>
         public static IMaybe Nothing(Type type)
         {
@@ -32,7 +32,6 @@ namespace Bebop.Monads
         /// <summary>
         /// Creates a <see cref="Maybe{T}"/> instance that contains the given <paramref name="value"/>.
         /// </summary>
-        /// <param name="value">A non-null value.</param>
         public static Maybe<T> From<T>(in T value)
         {
             _VerifyNotNull(value);
@@ -41,7 +40,7 @@ namespace Bebop.Monads
         }
 
         /// <summary>
-        /// Creates an empty <see cref="Maybe{T}"/>.
+        /// Creates an <see cref="IMaybe"/> instance that contains the given <paramref name="value"/>.
         /// </summary>
         public static IMaybe From(Type type, object value)
         {

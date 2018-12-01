@@ -63,6 +63,37 @@
             A factory for creating 'Maybe' instances.
             </summary>
         </member>
+        <member name="T:Bebop.Monads.Maybe.Castable">
+            <summary>
+            Provides non-generic mechanisms to create instances of <see cref="T:Bebop.Monads.IMaybe"/> that are
+            down-castable to <see cref="T:Bebop.Monads.Maybe`1"/>. This is done by using Reflection. The methods are 
+            significantly slower than what is provided by <see cref="M:Bebop.Monads.Maybe.From(System.Type,System.Object)"/> and
+            <see cref="M:Bebop.Monads.Maybe.Nothing(System.Type)"/>.
+            Instances created with <see cref="M:Bebop.Monads.Maybe.From(System.Type,System.Object)"/> or <see cref="M:Bebop.Monads.Maybe.Nothing(System.Type)"/>
+            are not down-castable to <see cref="T:Bebop.Monads.Maybe`1"/> because they return a different implementation 
+            that only satisfies the <see cref="T:Bebop.Monads.IMaybe"/> interface.
+            </summary>
+        </member>
+        <member name="M:Bebop.Monads.Maybe.Castable.Nothing(System.Type)">
+            <summary>
+            Creates an empty <see cref="T:Bebop.Monads.Maybe`1"/>.
+            This instance is created via <see cref="M:System.Activator.CreateInstance(System.Type)"/>
+            and is directly castable to a <see cref="T:Bebop.Monads.Maybe`1"/>. This is in contrast to what
+            <see cref="M:Bebop.Monads.Maybe.Nothing(System.Type)"/> produces, which only satisfies the <see cref="T:Bebop.Monads.IMaybe"/>
+            interface but has different implementation.
+            This method is significantly slower than <see cref="M:Bebop.Monads.Maybe.Nothing(System.Type)"/>.
+            </summary>
+        </member>
+        <member name="M:Bebop.Monads.Maybe.Castable.From(System.Type,System.Object)">
+            <summary>
+            Creates an <see cref="T:Bebop.Monads.Maybe`1"/> instance that contains the given <paramref name="value"/>.
+            This instance is created via <see cref="M:System.Activator.CreateInstance(System.Type)"/>
+            and is directly castable to a <see cref="T:Bebop.Monads.Maybe`1"/>. This is in contrast to what
+            <see cref="M:Bebop.Monads.Maybe.From(System.Type,System.Object)"/> produces, which only satisfies the <see cref="T:Bebop.Monads.IMaybe"/>
+            interface but has different implementation.
+            This method is significantly slower than <see cref="M:Bebop.Monads.Maybe.From(System.Type,System.Object)"/>.
+            </summary>
+        </member>
         <member name="M:Bebop.Monads.Maybe.Nothing``1">
             <summary>
             Creates an empty <see cref="T:Bebop.Monads.Maybe`1"/>.
@@ -70,18 +101,17 @@
         </member>
         <member name="M:Bebop.Monads.Maybe.Nothing(System.Type)">
             <summary>
-            Creates an empty <see cref="T:Bebop.Monads.Maybe`1"/>.
+            Creates an empty <see cref="T:Bebop.Monads.IMaybe"/>.
             </summary>
         </member>
-        <member name="M:Bebop.Monads.Maybe.From``1(``0)">
+        <member name="M:Bebop.Monads.Maybe.From``1(``0@)">
             <summary>
             Creates a <see cref="T:Bebop.Monads.Maybe`1"/> instance that contains the given <paramref name="value"/>.
             </summary>
-            <param name="value">A non-null value.</param>
         </member>
         <member name="M:Bebop.Monads.Maybe.From(System.Type,System.Object)">
             <summary>
-            Creates an empty <see cref="T:Bebop.Monads.Maybe`1"/>.
+            Creates an <see cref="T:Bebop.Monads.IMaybe"/> instance that contains the given <paramref name="value"/>.
             </summary>
         </member>
         <member name="M:Bebop.Monads.MaybeNongeneric.ToString">

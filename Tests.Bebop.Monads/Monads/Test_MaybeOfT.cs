@@ -485,6 +485,34 @@ namespace Bebop.Monads
         [TestFixture]
         public class Infrastructure
         {
+            public class MockParent { }
+            
+            public class MockChild : MockParent { }
+
+            [Test]
+            public void InterfaceHierarchy()
+            {
+                var m1 = Maybe.From(123);
+                var m2 = Maybe.Nothing<int>();
+                var m3 = (IMaybe<int>) m1;
+                var m4 = (IMaybe<int>) m2;
+                var m5 = Maybe.From(new MockChild());
+                IMaybe<MockParent> m6 = m5;
+
+                Assert.IsInstanceOf<IMaybe>(m1);
+                Assert.IsInstanceOf<IMaybe>(m2);
+                Assert.IsInstanceOf<IMaybe>(m3);
+                Assert.IsInstanceOf<IMaybe>(m4);
+                Assert.IsInstanceOf<IMaybe>(m5);
+                Assert.IsInstanceOf<IMaybe>(m6);
+
+                Assert.IsInstanceOf<IMaybe<int>>(m1);
+                Assert.IsInstanceOf<IMaybe<int>>(m2);
+                
+                Assert.IsInstanceOf<IMaybe<object>>(m5);
+                Assert.IsInstanceOf<IMaybe<object>>(m6);
+            }
+
             [Test]
             public void ProvidesTypeInformation()
             {

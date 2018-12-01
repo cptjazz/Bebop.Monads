@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Monads\Test_CrossEquality.cs" />
+    <Compile Include="Monads\Test_MaybeOfTNongenericCastable.cs" />
     <Compile Include="Monads\Test_MaybeOfTNongeneric.cs" />
     <Compile Include="Monads\Test_MaybeOfT.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -64,7 +65,9 @@
     <None Include="..\Bebop.snk">
       <Link>Bebop.snk</Link>
     </None>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Bebop.Monads\Bebop.Monads.csproj">
