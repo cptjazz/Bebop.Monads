@@ -11,13 +11,13 @@ namespace Bebop.Monads
     /// Note: since <see cref="Maybe{T}"/> is a value type, calling methods
     /// via this interface introduces boxings!
     /// </summary>
-    public interface IMaybe<out T>
+    public interface IMaybe<out T> : IMaybe
     {
         /// <summary>
         /// Gets the internal value of this <see cref="IMaybe{T}"/>,
         /// or the default value if this <see cref="IMaybe{T}"/> is empty.
         /// </summary>
-        T GetValueOrDefault();
+        new T GetValueOrDefault();
 
         /// <summary>
         /// Applies the given <paramref name="binder"/> to the internal value of this <see cref="IMaybe{T}"/>,
