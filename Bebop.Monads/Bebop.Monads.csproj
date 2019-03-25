@@ -37,4 +37,8 @@
     <None Include="..\Bebop.snk" Link="Bebop.snk" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.0.0" />
+  </ItemGroup>
+
 </Project>

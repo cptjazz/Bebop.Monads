@@ -127,7 +127,22 @@ namespace Bebop.Monads
 
         async Task<IMaybe<U>> IMaybe<T>.Map<U>(Func<T, Task<Maybe<U>>> binder)
         {
-            return await Map(binder);
+            return await MapAsync(binder).ConfigureAwait(false);
+        }
+
+        ValueTask<IMaybe<U>> IMaybe<T>.MapAsync<U>(Func<T, ValueTask<Maybe<U>>> binder)
+        {
+            return new ValueTask<IMaybe<U>>(_MapAsyncInternal(binder));
+        }
+
+        private async Task<IMaybe<U>> _MapAsyncInternal<U>(Func<T, ValueTask<Maybe<U>>> binder)
+        {
+            return await MapAsync(binder).ConfigureAwait(false);
+        }
+
+        async Task<IMaybe<U>> IMaybe<T>.MapAsync<U>(Func<T, Task<Maybe<U>>> binder)
+        {
+            return await MapAsync(binder).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -150,6 +165,7 @@ namespace Bebop.Monads
         /// is empty.
         /// </summary>
         /// <param name="binder">A non-null binder.</param>
+        [Obsolete("Use IMaybe`1.MapAsync(..) instead.")]
         public Task<Maybe<U>> Map<U>(in Func<T, Task<Maybe<U>>> binder)
         {
             if (binder is null)
@@ -160,6 +176,38 @@ namespace Bebop.Monads
                 : Task.FromResult(default(Maybe<U>));
         }
 
+        /// <summary>
+        /// Applies the given async <paramref name="binder"/> to the internal value of this <see cref="Maybe{T}"/>,
+        /// or returns an empty <see cref="Maybe{U}"/> (of the target type) if this <see cref="Maybe{T}"/>
+        /// is empty.
+        /// </summary>
+        /// <param name="binder">A non-null binder.</param>
+        public ValueTask<Maybe<U>> MapAsync<U>(in Func<T, ValueTask<Maybe<U>>> binder)
+        {
+            if (binder is null)
+                throw new ArgumentNullException(nameof(binder));
+
+            return _hasValue
+                ? binder(_value)
+                : new ValueTask<Maybe<U>>(default(Maybe<U>));
+        }
+
+        /// <summary>
+        /// Applies the given async <paramref name="binder"/> to the internal value of this <see cref="Maybe{T}"/>,
+        /// or returns an empty <see cref="Maybe{U}"/> (of the target type) if this <see cref="Maybe{T}"/>
+        /// is empty.
+        /// </summary>
+        /// <param name="binder">A non-null binder.</param>
+        public Task<Maybe<U>> MapAsync<U>(in Func<T, Task<Maybe<U>>> binder)
+        {
+            if (binder is null)
+                throw new ArgumentNullException(nameof(binder));
+
+            return _hasValue
+                ? binder(_value)
+                : Task.FromResult(default(Maybe<U>));
+        }
+        
         #endregion
 
         #region OrElse
@@ -186,6 +234,32 @@ namespace Bebop.Monads
         {
             return _hasValue
                 ? _value
+                : alternativeFactory();
+        }
+
+        /// <summary>
+        /// Returns the internal value or constructs an alternative
+        /// via the <paramref name="alternativeFactory"/> if this
+        /// <see cref="Maybe{T}"/> is Nothing.
+        /// </summary>
+        public Task<T> OrElseAsync(
+            Func<Task<T>> alternativeFactory)
+        {
+            return _hasValue
+                ? Task.FromResult(_value)
+                : alternativeFactory();
+        }
+
+        /// <summary>
+        /// Returns the internal value or constructs an alternative
+        /// via the <paramref name="alternativeFactory"/> if this
+        /// <see cref="Maybe{T}"/> is Nothing.
+        /// </summary>
+        public ValueTask<T> OrElseAsync(
+            Func<ValueTask<T>> alternativeFactory)
+        {
+            return _hasValue
+                ? new ValueTask<T>(_value)
                 : alternativeFactory();
         }
 

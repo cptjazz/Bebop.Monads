@@ -43,6 +43,23 @@ namespace Bebop.Monads
         /// is empty.
         /// </summary>
         /// <param name="binder">A non-null binder.</param>
+        [Obsolete("Use IMaybe`1.MapAsync(..) instead.")]
         Task<IMaybe<U>> Map<U>(Func<T, Task<Maybe<U>>> binder);
+
+        /// <summary>
+        /// Applies the given async <paramref name="binder"/> to the internal value of this <see cref="IMaybe{T}"/>,
+        /// or returns an empty <see cref="IMaybe{U}"/> (of the target type) if this <see cref="IMaybe{T}"/>
+        /// is empty.
+        /// </summary>
+        /// <param name="binder">A non-null binder.</param>
+        ValueTask<IMaybe<U>> MapAsync<U>(Func<T, ValueTask<Maybe<U>>> binder);
+
+        /// <summary>
+        /// Applies the given async <paramref name="binder"/> to the internal value of this <see cref="IMaybe{T}"/>,
+        /// or returns an empty <see cref="IMaybe{U}"/> (of the target type) if this <see cref="IMaybe{T}"/>
+        /// is empty.
+        /// </summary>
+        /// <param name="binder">A non-null binder.</param>
+        Task<IMaybe<U>> MapAsync<U>(Func<T, Task<Maybe<U>>> binder);
     }
 }

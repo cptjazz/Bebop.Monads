@@ -29,6 +29,15 @@
             or the default value if this <see cref="T:Bebop.Monads.IMaybe"/> is empty.
             </summary>
         </member>
+        <member name="P:Bebop.Monads.IMaybe.Value">
+            <summary>
+            Gets the internal value of this <see cref="T:Bebop.Monads.IMaybe"/>. 
+            This property should only be queried after making sure that this
+            <see cref="T:Bebop.Monads.IMaybe"/> has a value by checking the <see cref="P:Bebop.Monads.IMaybe.HasValue"/> 
+            property! The exact return value for an empty <see cref="T:Bebop.Monads.IMaybe"/> 
+            depends on the internal implementation and remains hereby unspecified.
+            </summary>
+        </member>
         <member name="T:Bebop.Monads.IMaybe`1">
             <summary>
             This interface provides covariance for <see cref="T:Bebop.Monads.Maybe`1"/>.
@@ -40,6 +49,15 @@
             <summary>
             Gets the internal value of this <see cref="T:Bebop.Monads.IMaybe`1"/>,
             or the default value if this <see cref="T:Bebop.Monads.IMaybe`1"/> is empty.
+            </summary>
+        </member>
+        <member name="P:Bebop.Monads.IMaybe`1.Value">
+            <summary>
+            Gets the internal value of this <see cref="T:Bebop.Monads.IMaybe`1"/>. 
+            This property should only be queried after making sure that this
+            <see cref="T:Bebop.Monads.IMaybe`1"/> has a value by checking the <see cref="P:Bebop.Monads.IMaybe.HasValue"/> 
+            property! The exact return value for an empty <see cref="T:Bebop.Monads.IMaybe`1"/> 
+            depends on the internal implementation and remains hereby unspecified.
             </summary>
         </member>
         <member name="M:Bebop.Monads.IMaybe`1.Map``1(System.Func{`0,Bebop.Monads.Maybe{``0}})">
