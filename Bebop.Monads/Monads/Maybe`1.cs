@@ -65,7 +65,7 @@ namespace Bebop.Monads
                 return false;
 
             if (_hasValue)
-                return other.HasValue && _value.Equals(other.GetValueOrDefault());
+                return other.HasValue && _value.Equals(other.Value);
 
             return !other.HasValue;
         }
@@ -201,6 +201,10 @@ namespace Bebop.Monads
         {
             return _hasValue ? _value : default;
         }
+
+        object IMaybe.Value => _value;
+
+        T IMaybe<T>.Value => _value;
 
         #endregion
 

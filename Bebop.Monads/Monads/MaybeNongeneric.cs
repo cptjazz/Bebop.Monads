@@ -49,6 +49,8 @@ namespace Bebop.Monads
             return null;
         }
 
+        public object Value => _value;
+
         #endregion
 
         #region Equality
@@ -69,7 +71,7 @@ namespace Bebop.Monads
                 return false;
 
             if (HasValue)
-                return other.HasValue && _value.Equals(other.GetValueOrDefault());
+                return other.HasValue && _value.Equals(other.Value);
 
             return !other.HasValue;
         }

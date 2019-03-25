@@ -242,6 +242,25 @@ namespace Bebop.Monads
             }
 
             [Test]
+            public void CanGetValue_Object_ViaProperty()
+            {
+                IMaybe m = Maybe.From(typeof(int), 123);
+                IMaybe n = Maybe.From(typeof(string), "yada yada yada");
+
+                var o = Maybe.Nothing(typeof(int));
+                var p = Maybe.Nothing(typeof(string));
+
+                Assert.IsInstanceOf<int>(m.Value);
+                Assert.IsInstanceOf<string>(n.Value);
+
+                Assert.AreEqual(123, m.Value);
+                Assert.AreEqual("yada yada yada", n.Value);
+
+                Assert.AreEqual(null, ((IMaybe)o).Value);
+                Assert.AreEqual(default(string), ((IMaybe)p).Value);
+            }
+
+            [Test]
             public void ProvidesDebuggerDisplay()
             {
                 var m = (MaybeNongeneric) Maybe.From(typeof(string), "yada yada yada");
