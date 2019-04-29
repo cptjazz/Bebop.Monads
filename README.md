@@ -72,11 +72,11 @@ Maybe<int> n = Maybe.Nothing<int>();
 ((IMaybe) m).InternalType; // String
 ((IMaybe) n).InternalType; // Int32
 
-((IMaybe) m).GetValueOrDefault(); // returns "these pretzels ..." -- return type is Object
-((IMaybe) n).GetValueOrDefault(); // returns default(int) -- return type is Object
+((IMaybe) m).Value; // returns "these pretzels ..." -- return type is Object
+((IMaybe) n).Value; // throws an InvalidOperationException -- cannot get the value of a Nothing
 
-((IMaybe<string>) m).GetValueOrDefault(); // returns "these pretzels ..." -- return type is T
-((IMaybe<int>) n).GetValueOrDefault(); // returns default(int) -- return type is T
+((IMaybe<string>) m).Value; // returns "these pretzels ..." -- return type is T
+((IMaybe<int>) n).Value; // throws an InvalidOperationException -- cannot get the value of a Nothing
 
 ((IMaybe<string>) m).Map(x => ...)
 ((IMaybe<int>) n).Map(x => ...)
