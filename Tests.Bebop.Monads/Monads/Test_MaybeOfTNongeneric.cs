@@ -256,8 +256,8 @@ namespace Bebop.Monads
                 Assert.AreEqual(123, m.Value);
                 Assert.AreEqual("yada yada yada", n.Value);
 
-                Assert.AreEqual(null, ((IMaybe)o).Value);
-                Assert.AreEqual(default(string), ((IMaybe)p).Value);
+                Assert.Throws<InvalidOperationException>(() => { var x = ((IMaybe)o).Value; });
+                Assert.Throws<InvalidOperationException>(() => { var x = ((IMaybe)p).Value; });
             }
 
             [Test]

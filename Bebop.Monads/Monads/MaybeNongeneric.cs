@@ -11,6 +11,7 @@ namespace Bebop.Monads
     internal sealed class MaybeNongeneric : IMaybe, IEquatable<IMaybe>
     {
         private readonly object _value;
+        private readonly bool _hasValue;
 
         #region Construction
 
@@ -23,6 +24,7 @@ namespace Bebop.Monads
         {
             InternalType = internalType;
             _value = value;
+            _hasValue = true;
         }
 
         #endregion
@@ -49,7 +51,9 @@ namespace Bebop.Monads
             return null;
         }
 
-        public object Value => _value;
+        public object Value => _hasValue
+            ? _value
+            : throw new InvalidOperationException("Cannot get Value of a 'Nothing'.");
 
         #endregion
 

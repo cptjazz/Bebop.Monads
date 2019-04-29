@@ -3,6 +3,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace Bebop.Monads
@@ -11,6 +12,7 @@ namespace Bebop.Monads
     /// Maybe monad of T.
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
+    [StructLayout(LayoutKind.Auto)]
     public readonly struct Maybe<T>
         : IEquatable<Maybe<T>>, IEquatable<IMaybe>, IMaybe<T>, IMaybe
     {
@@ -276,9 +278,11 @@ namespace Bebop.Monads
             return _hasValue ? _value : default;
         }
 
-        object IMaybe.Value => _value;
+        object IMaybe.Value => ((IMaybe<T>) this).Value;
 
-        T IMaybe<T>.Value => _value;
+        T IMaybe<T>.Value => _hasValue 
+            ? _value 
+            : throw new InvalidOperationException("Cannot get Value of a 'Nothing'.");
 
         #endregion
 
