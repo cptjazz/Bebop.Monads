@@ -76,6 +76,22 @@
             </summary>
             <param name="binder">A non-null binder.</param>
         </member>
+        <member name="M:Bebop.Monads.IMaybe`1.MapAsync``1(System.Func{`0,System.Threading.Tasks.ValueTask{Bebop.Monads.Maybe{``0}}})">
+            <summary>
+            Applies the given async <paramref name="binder"/> to the internal value of this <see cref="T:Bebop.Monads.IMaybe`1"/>,
+            or returns an empty <see cref="T:Bebop.Monads.IMaybe`1"/> (of the target type) if this <see cref="T:Bebop.Monads.IMaybe`1"/>
+            is empty.
+            </summary>
+            <param name="binder">A non-null binder.</param>
+        </member>
+        <member name="M:Bebop.Monads.IMaybe`1.MapAsync``1(System.Func{`0,System.Threading.Tasks.Task{Bebop.Monads.Maybe{``0}}})">
+            <summary>
+            Applies the given async <paramref name="binder"/> to the internal value of this <see cref="T:Bebop.Monads.IMaybe`1"/>,
+            or returns an empty <see cref="T:Bebop.Monads.IMaybe`1"/> (of the target type) if this <see cref="T:Bebop.Monads.IMaybe`1"/>
+            is empty.
+            </summary>
+            <param name="binder">A non-null binder.</param>
+        </member>
         <member name="T:Bebop.Monads.Maybe">
             <summary>
             A factory for creating 'Maybe' instances.
@@ -205,6 +221,22 @@
             </summary>
             <param name="binder">A non-null binder.</param>
         </member>
+        <member name="M:Bebop.Monads.Maybe`1.MapAsync``1(System.Func{`0,System.Threading.Tasks.ValueTask{Bebop.Monads.Maybe{``0}}}@)">
+            <summary>
+            Applies the given async <paramref name="binder"/> to the internal value of this <see cref="T:Bebop.Monads.Maybe`1"/>,
+            or returns an empty <see cref="T:Bebop.Monads.Maybe`1"/> (of the target type) if this <see cref="T:Bebop.Monads.Maybe`1"/>
+            is empty.
+            </summary>
+            <param name="binder">A non-null binder.</param>
+        </member>
+        <member name="M:Bebop.Monads.Maybe`1.MapAsync``1(System.Func{`0,System.Threading.Tasks.Task{Bebop.Monads.Maybe{``0}}}@)">
+            <summary>
+            Applies the given async <paramref name="binder"/> to the internal value of this <see cref="T:Bebop.Monads.Maybe`1"/>,
+            or returns an empty <see cref="T:Bebop.Monads.Maybe`1"/> (of the target type) if this <see cref="T:Bebop.Monads.Maybe`1"/>
+            is empty.
+            </summary>
+            <param name="binder">A non-null binder.</param>
+        </member>
         <member name="M:Bebop.Monads.Maybe`1.OrElse(`0)">
             <summary>
             Returns the internal value or <paramref name="alternative"/>
@@ -212,6 +244,20 @@
             </summary>
         </member>
         <member name="M:Bebop.Monads.Maybe`1.OrElse(System.Func{`0})">
+            <summary>
+            Returns the internal value or constructs an alternative
+            via the <paramref name="alternativeFactory"/> if this
+            <see cref="T:Bebop.Monads.Maybe`1"/> is Nothing.
+            </summary>
+        </member>
+        <member name="M:Bebop.Monads.Maybe`1.OrElseAsync(System.Func{System.Threading.Tasks.Task{`0}})">
+            <summary>
+            Returns the internal value or constructs an alternative
+            via the <paramref name="alternativeFactory"/> if this
+            <see cref="T:Bebop.Monads.Maybe`1"/> is Nothing.
+            </summary>
+        </member>
+        <member name="M:Bebop.Monads.Maybe`1.OrElseAsync(System.Func{System.Threading.Tasks.ValueTask{`0}})">
             <summary>
             Returns the internal value or constructs an alternative
             via the <paramref name="alternativeFactory"/> if this
