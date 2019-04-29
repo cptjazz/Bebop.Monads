@@ -24,9 +24,12 @@ namespace Bebop.Monads
         /// Gets the internal value of this <see cref="IMaybe{T}"/>. 
         /// This property should only be queried after making sure that this
         /// <see cref="IMaybe{T}"/> has a value by checking the <see cref="IMaybe.HasValue"/> 
-        /// property! The exact return value for an empty <see cref="IMaybe{T}"/> 
-        /// depends on the internal implementation and remains hereby unspecified.
+        /// property!
         /// </summary>
+        /// <exception cref="InvalidOperationException">
+        /// Throws an <see cref="InvalidOperationException"/> if this property is 
+        /// called on a Nothing.
+        /// </exception>
         new T Value { get; }
 
         /// <summary>
