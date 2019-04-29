@@ -58,6 +58,28 @@ Maybe<int> n = Maybe.Nothing<int>();
 int s = n.OrElse(() => 456); // 456
 ```
 
+### Async/Await Support
+
+The binding (`Map(..)`) and alternative (`OrElse(..)`) methods are also available in async variants:
+
+```C#
+Maybe<int> m = Maybe.From(123);
+Maybe<string> r1 = await m.MapAsync(async () => Maybe.From("A"));
+Maybe<string> r2 = await m.MapAsync(() => new ValueTask<string>(Maybe.From("A")));
+```
+
+And 
+
+```C#
+Maybe<int> m = Maybe.From(123);
+int r1 = await m.OrElseAsync(async () => 456); // 123
+int r2 = await m.OrElseAsync(() => new ValueTask<int>(456)); // 123
+
+Maybe<int> n = Maybe.Nothing<int>();
+int s1 = await n.OrElseAsync(async () => 456); // 456
+int s2 = await n.OrElseAsync(() => new ValueTask<int>(456)); // 456
+```
+
 ### Infrastructure methods
 To fit into the C#/.NET ecosystem we provide the following methods that go beyond pure monadic implementations. 
 The methods are part of the interface `IMaybe<T>` and `IMaybe` and are implemented _explicitly_ i. e. you must cast to the interface to invoke the methods.
