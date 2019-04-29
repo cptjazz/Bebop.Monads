@@ -31,7 +31,7 @@ Maybe<int> m = Maybe.From(123);
 Maybe<string> n = m.Map(x => Maybe.From("something completely different")); // n represents the string
 ```
 
-This example does not execute the _binder_ (the lambda) because the source Maybe is empty. An empty target Maybe is created instead:
+The next example does not execute the _binder_ (the lambda) because the source Maybe is empty. An empty target Maybe is created instead:
 
 ```C#
 Maybe<int> m = Maybe.Nothing<int>();
@@ -49,7 +49,7 @@ Maybe<int> n = Maybe.Nothing<int>();
 int s = n.OrElse(456); // 456
 ```
 
-It is also possible to use lazy construction of the alternative value if creationg of this value is costly:
+It is also possible to use lazy construction of the alternative value if creation of that value is costly:
 ```C#
 Maybe<int> m = Maybe.From(123);
 int r = m.OrElse(() => 456); // 123
