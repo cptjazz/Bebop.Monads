@@ -439,6 +439,34 @@ namespace Bebop.Monads
                 var m = Maybe.Nothing<int>();
                 Assert.AreEqual(456, m.OrElse(() => 456));
             }
+
+            [Test]
+            public async Task CanGetValue_Task()
+            {
+                var m = Maybe.From(123);
+                Assert.AreEqual(123, await m.OrElseAsync(async () => 456));
+            }
+
+            [Test]
+            public async Task CanGetAlternative_Task()
+            {
+                var m = Maybe.Nothing<int>();
+                Assert.AreEqual(456, await m.OrElseAsync(async () => 456));
+            }
+
+            [Test]
+            public async Task CanGetValue_ValueTask()
+            {
+                var m = Maybe.From(123);
+                Assert.AreEqual(123, await m.OrElseAsync(() => new ValueTask<int>(456)));
+            }
+
+            [Test]
+            public async Task CanGetAlternative_ValueTask()
+            {
+                var m = Maybe.Nothing<int>();
+                Assert.AreEqual(456, await m.OrElseAsync(() => new ValueTask<int>(456)));
+            }
         }
 
         [TestFixture]
