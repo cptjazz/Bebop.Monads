@@ -3,7 +3,6 @@
 
 using System;
 using System.Diagnostics;
-using System.Reflection;
 
 namespace Bebop.Monads
 {
@@ -34,23 +33,7 @@ namespace Bebop.Monads
         public bool HasValue => !ReferenceEquals(_value, null);
 
         public Type InternalType { get; }
-
-        public object GetValueOrDefault()
-        {
-            if (!ReferenceEquals(_value, null))
-                return _value;
-
-            return _CreateDefault();
-        }
-
-        private object _CreateDefault()
-        {
-            if (InternalType.GetTypeInfo().IsValueType)
-                return Activator.CreateInstance(InternalType);
-
-            return null;
-        }
-
+        
         public object Value => _hasValue
             ? _value
             : throw new InvalidOperationException("Cannot get Value of a 'Nothing'.");
