@@ -28,15 +28,6 @@ namespace Bebop.Monads
         }
 
         [Test]
-        public async Task SupportsImplicitCast()
-        {
-            Task<Maybe<int>> _MockProducer() => Task.FromResult(Maybe.From(55));
-            AsyncMaybe<int> m = _MockProducer();
-
-            Assert.AreEqual(Maybe.From(55), await m);
-        }
-
-        [Test]
         public void ProvidesTypeInformation()
         {
             var m = new AsyncMaybe<int>();
@@ -52,7 +43,7 @@ namespace Bebop.Monads
                 var result = await Maybe
                     .From(55)
                     .MapAsync(async x => Maybe.From(66))
-                    .MapAsync(async x => Maybe.From(77))
+                    .MapAsync(x => Maybe.From(77))
                     .AsTask();
 
                 Assert.AreEqual(Maybe.From(77), result);
@@ -68,7 +59,7 @@ namespace Bebop.Monads
                         Assert.Fail("should not be called");
                         return Maybe.From(66);
                     })
-                    .MapAsync(async x =>
+                    .MapAsync(x =>
                     {
                         Assert.Fail("should not be called");
                         return Maybe.From(77);
@@ -116,7 +107,7 @@ namespace Bebop.Monads
                 var result = await Maybe
                     .From(55)
                     .MapAsync(async x => Maybe.From(66))
-                    .MapAsync(async x => Maybe.From(77))
+                    .MapAsync(x => Maybe.From(77))
                     .OrElse(99);
 
                 Assert.AreEqual(77, result);
@@ -132,7 +123,7 @@ namespace Bebop.Monads
                         Assert.Fail("should not be called");
                         return Maybe.From(66);
                     })
-                    .MapAsync(async x =>
+                    .MapAsync(x =>
                     {
                         Assert.Fail("should not be called");
                         return Maybe.From(77);
@@ -148,7 +139,7 @@ namespace Bebop.Monads
                 var result = await Maybe
                     .From(55)
                     .MapAsync(async x => Maybe.Nothing<int>())
-                    .MapAsync(async x =>
+                    .MapAsync(x =>
                     {
                         Assert.Fail("should not be called");
                         return Maybe.From(77);
@@ -164,7 +155,7 @@ namespace Bebop.Monads
                 var result = await Maybe
                     .From(55)
                     .MapAsync(async x => Maybe.From(66))
-                    .MapAsync(async x => Maybe.Nothing<int>())
+                    .MapAsync(x => Maybe.Nothing<int>())
                     .OrElse(99);
 
                 Assert.AreEqual(99, result);

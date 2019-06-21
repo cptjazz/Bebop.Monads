@@ -23,17 +23,7 @@ namespace Bebop.Monads
         {
             _task = task;
         }
-        
-        /// <summary>
-        /// </summary>
-        public static implicit operator AsyncMaybe<T>(in Task<Maybe<T>> value)
-        {
-            if (value is null)
-                return default;
-
-            return new AsyncMaybe<T>(value);
-        }
-        
+                
         #endregion
 
         #region IAsyncMaybe interface

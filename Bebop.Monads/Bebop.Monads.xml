@@ -9,10 +9,6 @@
             Asynchronous Maybe monad of T.
             </summary>
         </member>
-        <member name="M:Bebop.Monads.AsyncMaybe`1.op_Implicit(System.Threading.Tasks.Task{Bebop.Monads.Maybe{`0}}@)~Bebop.Monads.AsyncMaybe{`0}">
-            <summary>
-            </summary>
-        </member>
         <member name="M:Bebop.Monads.AsyncMaybe`1.MapAsync``1(System.Func{`0,System.Threading.Tasks.Task{Bebop.Monads.Maybe{``0}}}@)">
             <summary>
             Applies the given <paramref name="binder"/> to the internal value of this <see cref="T:Bebop.Monads.AsyncMaybe`1"/>,
