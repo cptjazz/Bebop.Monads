@@ -42,6 +42,8 @@ namespace Bebop.Monads
 
             Assert.Throws<ArgumentNullException>(() => m.MapAsync<string>(null));
             Assert.Throws<ArgumentNullException>(() => m.Map<string>(null));
+            Assert.Throws<ArgumentNullException>(() => m.OrElse(null));
+            Assert.Throws<ArgumentNullException>(() => m.OrElseAsync(null));
         }
 
         [TestFixture]
@@ -194,6 +196,30 @@ namespace Bebop.Monads
                         .MapAsync(async x => Maybe.From(66))
                         .Map(x => Maybe.From(77))
                         .OrElse(99);
+
+                    Assert.AreEqual(77, result);
+                }
+
+                [Test]
+                public async Task FromMapFromMapFrom_Factory()
+                {
+                    var result = await Maybe
+                        .From(55)
+                        .MapAsync(async x => Maybe.From(66))
+                        .Map(x => Maybe.From(77))
+                        .OrElse(() => 99);
+
+                    Assert.AreEqual(77, result);
+                }
+
+                [Test]
+                public async Task FromMapFromMapFrom_AsyncFactory()
+                {
+                    var result = await Maybe
+                        .From(55)
+                        .MapAsync(async x => Maybe.From(66))
+                        .Map(x => Maybe.From(77))
+                        .OrElseAsync(async () => 99);
 
                     Assert.AreEqual(77, result);
                 }
