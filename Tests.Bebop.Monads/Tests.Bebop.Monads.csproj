@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Monads\Test_AsyncMaybeOfT.cs" />
     <Compile Include="Monads\Test_CrossEquality.cs" />
     <Compile Include="Monads\Test_MaybeOfTNongenericCastable.cs" />
     <Compile Include="Monads\Test_MaybeOfTNongeneric.cs" />

@@ -26,7 +26,7 @@ namespace Bebop.Monads
                 var m = Maybe.From(typeof(int), 123);
 
                 Assert.IsTrue(((IMaybe) m).HasValue);
-                Assert.AreEqual(123, ((IMaybe) m).GetValueOrDefault());
+                Assert.AreEqual(123, ((IMaybe) m).Value);
             }
 
             [Test]
@@ -221,26 +221,7 @@ namespace Bebop.Monads
                 Assert.IsTrue(((IMaybe) m).HasValue);
                 Assert.IsFalse(((IMaybe) n).HasValue);
             }
-
-            [Test]
-            public void CanGetValue_Object()
-            {
-                IMaybe m = Maybe.From(typeof(int), 123);
-                IMaybe n = Maybe.From(typeof(string), "yada yada yada");
-
-                var o = Maybe.Nothing(typeof(int));
-                var p = Maybe.Nothing(typeof(string));
-
-                Assert.IsInstanceOf<int>(m.GetValueOrDefault());
-                Assert.IsInstanceOf<string>(n.GetValueOrDefault());
-
-                Assert.AreEqual(123, m.GetValueOrDefault());
-                Assert.AreEqual("yada yada yada", n.GetValueOrDefault());
-                
-                Assert.AreEqual(default(int), ((IMaybe)o).GetValueOrDefault());
-                Assert.AreEqual(default(string), ((IMaybe)p).GetValueOrDefault());
-            }
-
+            
             [Test]
             public void CanGetValue_Object_ViaProperty()
             {

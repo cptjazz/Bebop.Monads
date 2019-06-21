@@ -28,7 +28,7 @@ namespace Bebop.Monads
                 Maybe<int> m = Maybe.From(123);
 
                 Assert.IsTrue(((IMaybe) m).HasValue);
-                Assert.AreEqual(123, ((IMaybe<int>) m).GetValueOrDefault());
+                Assert.AreEqual(123, ((IMaybe<int>) m).Value);
             }
 
             [Test]
@@ -79,7 +79,7 @@ namespace Bebop.Monads
                 var n = m.Map(x => Maybe.From(x.ToString(CultureInfo.InvariantCulture)));
 
                 Assert.IsTrue(((IMaybe) n).HasValue);
-                Assert.AreEqual("123", ((IMaybe<string>) n).GetValueOrDefault());
+                Assert.AreEqual("123", ((IMaybe<string>) n).Value);
             }
 
             [Test]
@@ -110,49 +110,7 @@ namespace Bebop.Monads
                 Assert.Throws<ArgumentNullException>(() => m.Map<string>((Func<int, Maybe<string>>) null));
             }
         }
-
-        [TestFixture]
-        public class AsyncBinding_Obsolete
-        {
-            [Test]
-            public async Task CanMap()
-            {
-                var m = Maybe.From(123);
-                var n = await m.Map(async x => Maybe.From(x.ToString(CultureInfo.InvariantCulture)));
-
-                Assert.IsTrue(((IMaybe) n).HasValue);
-                Assert.AreEqual("123", ((IMaybe<string>) n).GetValueOrDefault());
-            }
-
-            [Test]
-            public async Task CanMapToNothing()
-            {
-                var m = Maybe.From(123);
-                var n = await m.Map(async x => Maybe.Nothing<string>());
-
-                Assert.IsFalse(((IMaybe) n).HasValue);
-                Assert.AreEqual(typeof(string), ((IMaybe) n).InternalType);
-            }
-
-            [Test]
-            public async Task CanMapNothing()
-            {
-                var m = Maybe.Nothing<int>();
-                var n = await m.Map(async x => Maybe.From(x.ToString(CultureInfo.InvariantCulture)));
-
-                Assert.IsFalse(((IMaybe) n).HasValue);
-                Assert.AreEqual(typeof(string), ((IMaybe) n).InternalType);
-            }
-
-            [Test]
-            public async Task RejectsNullBinder()
-            {
-                var m = Maybe.From(123);
-
-                Assert.ThrowsAsync<ArgumentNullException>(async () => await m.Map<string>((Func<int, Task<Maybe<string>>>) null));
-            }
-        }
-
+        
         [TestFixture]
         public class AsyncBinding
         {
@@ -196,48 +154,6 @@ namespace Bebop.Monads
         }
 
         [TestFixture]
-        public class AsyncBinding_ValueTask
-        {
-            [Test]
-            public async Task CanMap()
-            {
-                var m = Maybe.From(123);
-                var n = await m.MapAsync(x => new ValueTask<Maybe<string>>(Maybe.From(x.ToString(CultureInfo.InvariantCulture))));
-
-                Assert.IsTrue(((IMaybe)n).HasValue);
-                Assert.AreEqual("123", ((IMaybe<string>)n).Value);
-            }
-
-            [Test]
-            public async Task CanMapToNothing()
-            {
-                var m = Maybe.From(123);
-                var n = await m.MapAsync(x => new ValueTask<Maybe<string>>(Maybe.Nothing<string>()));
-
-                Assert.IsFalse(((IMaybe)n).HasValue);
-                Assert.AreEqual(typeof(string), ((IMaybe)n).InternalType);
-            }
-
-            [Test]
-            public async Task CanMapNothing()
-            {
-                var m = Maybe.Nothing<int>();
-                var n = await m.MapAsync(x => new ValueTask<Maybe<string>>(Maybe.From(x.ToString(CultureInfo.InvariantCulture))));
-
-                Assert.IsFalse(((IMaybe)n).HasValue);
-                Assert.AreEqual(typeof(string), ((IMaybe)n).InternalType);
-            }
-
-            [Test]
-            public async Task RejectsNullBinder()
-            {
-                var m = Maybe.From(123);
-
-                Assert.ThrowsAsync<ArgumentNullException>(async () => await m.MapAsync<string>((Func<int, ValueTask<Maybe<string>>>)null));
-            }
-        }
-
-        [TestFixture]
         public class BindingViaInterface
         {
             [Test]
@@ -247,7 +163,7 @@ namespace Bebop.Monads
                 var n = ((IMaybe<int>) m).Map(x => Maybe.From(x.ToString(CultureInfo.InvariantCulture)));
 
                 Assert.IsTrue(((IMaybe) n).HasValue);
-                Assert.AreEqual("123", ((IMaybe<string>) n).GetValueOrDefault());
+                Assert.AreEqual("123", ((IMaybe<string>) n).Value);
             }
 
             [Test]
@@ -276,48 +192,6 @@ namespace Bebop.Monads
                 var m = Maybe.From(123);
 
                 Assert.Throws<ArgumentNullException>(() => ((IMaybe<int>)m).Map<string>((Func<int, Maybe<string>>) null));
-            }
-        }
-
-        [TestFixture]
-        public class AsyncBindingViaInterface_Obsolete
-        {
-            [Test]
-            public async Task CanMap()
-            {
-                var m = Maybe.From(123);
-                var n = await ((IMaybe<int>)m).Map(async x => Maybe.From(x.ToString(CultureInfo.InvariantCulture)));
-
-                Assert.IsTrue(((IMaybe) n).HasValue);
-                Assert.AreEqual("123", ((IMaybe<string>) n).GetValueOrDefault());
-            }
-
-            [Test]
-            public async Task CanMapToNothing()
-            {
-                var m = Maybe.From(123);
-                var n = await ((IMaybe<int>)m).Map(async x => Maybe.Nothing<string>());
-
-                Assert.IsFalse(((IMaybe) n).HasValue);
-                Assert.AreEqual(typeof(string), ((IMaybe) n).InternalType);
-            }
-
-            [Test]
-            public async Task CanMapNothing()
-            {
-                var m = Maybe.Nothing<int>();
-                var n = await ((IMaybe<int>)m).Map(async x => Maybe.From(x.ToString(CultureInfo.InvariantCulture)));
-
-                Assert.IsFalse(((IMaybe) n).HasValue);
-                Assert.AreEqual(typeof(string), ((IMaybe) n).InternalType);
-            }
-
-            [Test]
-            public void RejectsNullBinder()
-            {
-                var m = Maybe.From(123);
-
-                Assert.ThrowsAsync<ArgumentNullException>(async () => await ((IMaybe<int>)m).Map<string>((Func<int, Task<Maybe<string>>>) null));
             }
         }
         
@@ -362,49 +236,7 @@ namespace Bebop.Monads
                 Assert.ThrowsAsync<ArgumentNullException>(async () => await ((IMaybe<int>)m).MapAsync<string>((Func<int, Task<Maybe<string>>>)null));
             }
         }
-
-        [TestFixture]
-        public class AsyncBindingViaInterface_ValueTask
-        {
-            [Test]
-            public async Task CanMap()
-            {
-                var m = Maybe.From(123);
-                var n = await ((IMaybe<int>)m).MapAsync(x => new ValueTask<Maybe<string>>(Maybe.From(x.ToString(CultureInfo.InvariantCulture))));
-
-                Assert.IsTrue(((IMaybe)n).HasValue);
-                Assert.AreEqual("123", ((IMaybe<string>)n).Value);
-            }
-
-            [Test]
-            public async Task CanMapToNothing()
-            {
-                var m = Maybe.From(123);
-                var n = await ((IMaybe<int>)m).MapAsync(x => new ValueTask<Maybe<string>>(Maybe.Nothing<string>()));
-
-                Assert.IsFalse(((IMaybe)n).HasValue);
-                Assert.AreEqual(typeof(string), ((IMaybe)n).InternalType);
-            }
-
-            [Test]
-            public async Task CanMapNothing()
-            {
-                var m = Maybe.Nothing<int>();
-                var n = await ((IMaybe<int>)m).MapAsync(x => new ValueTask<Maybe<string>>(Maybe.From(x.ToString(CultureInfo.InvariantCulture))));
-
-                Assert.IsFalse(((IMaybe)n).HasValue);
-                Assert.AreEqual(typeof(string), ((IMaybe)n).InternalType);
-            }
-
-            [Test]
-            public void RejectsNullBinder()
-            {
-                var m = Maybe.From(123);
-
-                Assert.ThrowsAsync<ArgumentNullException>(async () => await ((IMaybe<int>)m).MapAsync<string>((Func<int, ValueTask<Maybe<string>>>)null));
-            }
-        }
-
+        
         [TestFixture]
         public class OrElse
         {
@@ -452,20 +284,6 @@ namespace Bebop.Monads
             {
                 var m = Maybe.Nothing<int>();
                 Assert.AreEqual(456, await m.OrElseAsync(async () => 456));
-            }
-
-            [Test]
-            public async Task CanGetValue_ValueTask()
-            {
-                var m = Maybe.From(123);
-                Assert.AreEqual(123, await m.OrElseAsync(() => new ValueTask<int>(456)));
-            }
-
-            [Test]
-            public async Task CanGetAlternative_ValueTask()
-            {
-                var m = Maybe.Nothing<int>();
-                Assert.AreEqual(456, await m.OrElseAsync(() => new ValueTask<int>(456)));
             }
         }
 
@@ -734,23 +552,7 @@ namespace Bebop.Monads
                 Assert.IsTrue(((IMaybe) m).HasValue);
                 Assert.IsFalse(((IMaybe) n).HasValue);
             }
-
-            [Test]
-            public void CanGetValue_OfT()
-            {
-                IMaybe<int> m = Maybe.From(123);
-                IMaybe<string> n = Maybe.From("yada yada yada");
-
-                var o = Maybe.Nothing<int>();
-                var p = Maybe.Nothing<string>();
-
-                Assert.AreEqual(123, m.GetValueOrDefault());
-                Assert.AreEqual("yada yada yada", n.GetValueOrDefault());
-
-                Assert.AreEqual(default(int), ((IMaybe<int>) o).GetValueOrDefault());
-                Assert.AreEqual(default(string), ((IMaybe<string>) p).GetValueOrDefault());
-            }
-
+            
             [Test]
             public void CanGetValue_OfT_ViaProperty()
             {
@@ -765,25 +567,6 @@ namespace Bebop.Monads
 
                 Assert.Throws<InvalidOperationException>(() => { var x = ((IMaybe<int>)o).Value; });
                 Assert.Throws<InvalidOperationException>(() => { var x = ((IMaybe<string>)p).Value; });
-            }
-
-            [Test]
-            public void CanGetValue_Object()
-            {
-                IMaybe m = Maybe.From(123);
-                IMaybe n = Maybe.From("yada yada yada");
-
-                var o = Maybe.Nothing<int>();
-                var p = Maybe.Nothing<string>();
-
-                Assert.IsInstanceOf<int>(m.GetValueOrDefault());
-                Assert.IsInstanceOf<string>(n.GetValueOrDefault());
-
-                Assert.AreEqual(123, m.GetValueOrDefault());
-                Assert.AreEqual("yada yada yada", n.GetValueOrDefault());
-
-                Assert.AreEqual(default(int), ((IMaybe)o).GetValueOrDefault());
-                Assert.AreEqual(default(string), ((IMaybe)p).GetValueOrDefault());
             }
 
             [Test]

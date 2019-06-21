@@ -25,13 +25,6 @@ namespace Bebop.Monads
         Type InternalType { get; }
      
         /// <summary>
-        /// Gets the internal value of this <see cref="IMaybe"/>,
-        /// or the default value if this <see cref="IMaybe"/> is empty.
-        /// </summary>
-        [Obsolete("Use IMaybe.Value in combination with IMaybe.HasValue instead.")]
-        object GetValueOrDefault();
-
-        /// <summary>
         /// Gets the internal value of this <see cref="IMaybe"/>. 
         /// This property should only be queried after making sure that this
         /// <see cref="IMaybe"/> has a value by checking the <see cref="HasValue"/> 

@@ -29,7 +29,7 @@ namespace Bebop.Monads
         
         /// <summary>
         /// </summary>
-        public static implicit operator Maybe<T>(T value)
+        public static implicit operator Maybe<T>(in T value)
         {
             if (ReferenceEquals(value, null))
                 return default;
@@ -112,47 +112,28 @@ namespace Bebop.Monads
         #endregion
 
         #region Bind
-
-        /// <summary>
-        /// Gets the internal value of this <see cref="IMaybe{T}"/>,
-        /// or the default value if this <see cref="IMaybe{T}"/> is empty.
-        /// </summary>
-        T IMaybe<T>.GetValueOrDefault()
-        {
-            return _hasValue ? _value : default;
-        }
-
+        
         IMaybe<U> IMaybe<T>.Map<U>(Func<T, Maybe<U>> binder)
         {
             return Map(binder);
         }
-
-        async Task<IMaybe<U>> IMaybe<T>.Map<U>(Func<T, Task<Maybe<U>>> binder)
+        
+        IAsyncMaybe<U> IMaybe<T>.MapAsync<U>(Func<T, Task<Maybe<U>>> binder)
         {
-            return await MapAsync(binder).ConfigureAwait(false);
-        }
+            if (binder is null)
+                throw new ArgumentNullException(nameof(binder));
 
-        ValueTask<IMaybe<U>> IMaybe<T>.MapAsync<U>(Func<T, ValueTask<Maybe<U>>> binder)
-        {
-            return new ValueTask<IMaybe<U>>(_MapAsyncInternal(binder));
-        }
+            if (!_hasValue)
+                return default(AsyncMaybe<U>);
 
-        private async Task<IMaybe<U>> _MapAsyncInternal<U>(Func<T, ValueTask<Maybe<U>>> binder)
-        {
-            return await MapAsync(binder).ConfigureAwait(false);
+            return new AsyncMaybe<U>(binder(_value));
         }
-
-        async Task<IMaybe<U>> IMaybe<T>.MapAsync<U>(Func<T, Task<Maybe<U>>> binder)
-        {
-            return await MapAsync(binder).ConfigureAwait(false);
-        }
-
+        
         /// <summary>
         /// Applies the given <paramref name="binder"/> to the internal value of this <see cref="Maybe{T}"/>,
         /// or returns an empty <see cref="Maybe{U}"/> (of the target type) if this <see cref="Maybe{T}"/>
         /// is empty.
         /// </summary>
-        /// <param name="binder">A non-null binder.</param>
         public Maybe<U> Map<U>(in Func<T, Maybe<U>> binder)
         {
             if (binder is null)
@@ -163,51 +144,19 @@ namespace Bebop.Monads
 
         /// <summary>
         /// Applies the given async <paramref name="binder"/> to the internal value of this <see cref="Maybe{T}"/>,
+        /// and wraps the result in an <see cref="IAsyncMaybe{U}"/> that can be awaited, 
         /// or returns an empty <see cref="Maybe{U}"/> (of the target type) if this <see cref="Maybe{T}"/>
         /// is empty.
         /// </summary>
-        /// <param name="binder">A non-null binder.</param>
-        [Obsolete("Use IMaybe`1.MapAsync(..) instead.")]
-        public Task<Maybe<U>> Map<U>(in Func<T, Task<Maybe<U>>> binder)
+        public AsyncMaybe<U> MapAsync<U>(in Func<T, Task<Maybe<U>>> binder)
         {
             if (binder is null)
                 throw new ArgumentNullException(nameof(binder));
 
-            return _hasValue
-                ? binder(_value)
-                : Task.FromResult(default(Maybe<U>));
-        }
+            if (!_hasValue)
+                return default;
 
-        /// <summary>
-        /// Applies the given async <paramref name="binder"/> to the internal value of this <see cref="Maybe{T}"/>,
-        /// or returns an empty <see cref="Maybe{U}"/> (of the target type) if this <see cref="Maybe{T}"/>
-        /// is empty.
-        /// </summary>
-        /// <param name="binder">A non-null binder.</param>
-        public ValueTask<Maybe<U>> MapAsync<U>(in Func<T, ValueTask<Maybe<U>>> binder)
-        {
-            if (binder is null)
-                throw new ArgumentNullException(nameof(binder));
-
-            return _hasValue
-                ? binder(_value)
-                : new ValueTask<Maybe<U>>(default(Maybe<U>));
-        }
-
-        /// <summary>
-        /// Applies the given async <paramref name="binder"/> to the internal value of this <see cref="Maybe{T}"/>,
-        /// or returns an empty <see cref="Maybe{U}"/> (of the target type) if this <see cref="Maybe{T}"/>
-        /// is empty.
-        /// </summary>
-        /// <param name="binder">A non-null binder.</param>
-        public Task<Maybe<U>> MapAsync<U>(in Func<T, Task<Maybe<U>>> binder)
-        {
-            if (binder is null)
-                throw new ArgumentNullException(nameof(binder));
-
-            return _hasValue
-                ? binder(_value)
-                : Task.FromResult(default(Maybe<U>));
+            return new AsyncMaybe<U>(binder(_value));
         }
         
         #endregion
@@ -219,7 +168,7 @@ namespace Bebop.Monads
         /// if this <see cref="Maybe{T}"/> is Nothing.
         /// </summary>
         public T OrElse(
-            T alternative)
+            in T alternative)
         {
             return _hasValue
                 ? _value
@@ -232,8 +181,11 @@ namespace Bebop.Monads
         /// <see cref="Maybe{T}"/> is Nothing.
         /// </summary>
         public T OrElse(
-            Func<T> alternativeFactory)
+            in Func<T> alternativeFactory)
         {
+            if (alternativeFactory is null)
+                throw new ArgumentNullException(nameof(alternativeFactory));
+
             return _hasValue
                 ? _value
                 : alternativeFactory();
@@ -244,27 +196,17 @@ namespace Bebop.Monads
         /// via the <paramref name="alternativeFactory"/> if this
         /// <see cref="Maybe{T}"/> is Nothing.
         /// </summary>
-        public Task<T> OrElseAsync(
-            Func<Task<T>> alternativeFactory)
-        {
-            return _hasValue
-                ? Task.FromResult(_value)
-                : alternativeFactory();
-        }
-
-        /// <summary>
-        /// Returns the internal value or constructs an alternative
-        /// via the <paramref name="alternativeFactory"/> if this
-        /// <see cref="Maybe{T}"/> is Nothing.
-        /// </summary>
         public ValueTask<T> OrElseAsync(
-            Func<ValueTask<T>> alternativeFactory)
+            in Func<Task<T>> alternativeFactory)
         {
+            if (alternativeFactory is null)
+                throw new ArgumentNullException(nameof(alternativeFactory));
+
             return _hasValue
                 ? new ValueTask<T>(_value)
-                : alternativeFactory();
+                : new ValueTask<T>(alternativeFactory());
         }
-
+        
         #endregion
 
         #region IMaybe interface
@@ -272,12 +214,7 @@ namespace Bebop.Monads
         bool IMaybe.HasValue => _hasValue;
 
         Type IMaybe.InternalType => typeof(T);
-
-        object IMaybe.GetValueOrDefault()
-        {
-            return _hasValue ? _value : default;
-        }
-
+        
         object IMaybe.Value => ((IMaybe<T>) this).Value;
 
         T IMaybe<T>.Value => _hasValue 
