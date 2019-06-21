@@ -1,4 +1,4 @@
-﻿// Copyright 2018, Alexander Jesner
+﻿// Copyright 2019, Alexander Jesner
 // License: https://opensource.org/licenses/MIT
 
 using NUnit.Framework;
@@ -48,7 +48,7 @@ namespace Bebop.Monads
         public class OnAsyncMaybe
         {
             [TestFixture]
-            public class AsTask
+            public class AsValueTask
             {
                 [Test]
                 public async Task FromMapFromMapFrom()
@@ -60,6 +60,19 @@ namespace Bebop.Monads
                         .AsValueTask();
 
                     Assert.AreEqual(Maybe.From(77), result);
+                }
+
+                [Test]
+                public async Task FromMapFromMapFromMapFrom()
+                {
+                    var result = await Maybe
+                        .From(55)
+                        .MapAsync(async x => Maybe.From(66))
+                        .MapAsync(async x => Maybe.From(77))
+                        .Map(x => Maybe.From(88))
+                        .AsValueTask();
+
+                    Assert.AreEqual(Maybe.From(88), result);
                 }
 
                 [Test]
@@ -83,6 +96,31 @@ namespace Bebop.Monads
                 }
 
                 [Test]
+                public async Task NothingMapFromMapFromMapFrom()
+                {
+                    var result = await Maybe
+                        .Nothing<int>()
+                        .MapAsync(async x =>
+                        {
+                            Assert.Fail("should not be called");
+                            return Maybe.From(66);
+                        })
+                        .MapAsync(async x =>
+                        {
+                            Assert.Fail("should not be called");
+                            return Maybe.From(77);
+                        })
+                        .Map(x =>
+                        {
+                            Assert.Fail("should not be called");
+                            return Maybe.From(88);
+                        })
+                        .AsValueTask();
+
+                    Assert.AreEqual(Maybe.Nothing<int>(), result);
+                }
+
+                [Test]
                 public async Task FromMapNothingMapFrom()
                 {
                     var result = await Maybe
@@ -92,6 +130,40 @@ namespace Bebop.Monads
                         {
                             Assert.Fail("should not be called");
                             return Maybe.From(77);
+                        })
+                        .AsValueTask();
+
+                    Assert.AreEqual(Maybe.Nothing<int>(), result);
+                }
+
+                [Test]
+                public async Task FromMapNothingMapFromMapFrom()
+                {
+                    var result = await Maybe
+                        .From(55)
+                        .MapAsync(async x => Maybe.Nothing<int>())
+                        .MapAsync(async x => Maybe.From(77))
+                        .Map(x =>
+                        {
+                            Assert.Fail("should not be called");
+                            return Maybe.From(88);
+                        })
+                        .AsValueTask();
+
+                    Assert.AreEqual(Maybe.Nothing<int>(), result);
+                }
+
+                [Test]
+                public async Task FromMapFromMapNothingMapFrom()
+                {
+                    var result = await Maybe
+                        .From(55)
+                        .MapAsync(async x => Maybe.From(66))
+                        .MapAsync(async x => Maybe.Nothing<int>())
+                        .Map(x =>
+                        {
+                            Assert.Fail("should not be called");
+                            return Maybe.From(88);
                         })
                         .AsValueTask();
 
@@ -114,6 +186,7 @@ namespace Bebop.Monads
             [TestFixture]
             public class OrElse
             {
+
                 [Test]
                 public async Task FromMapFromMapFrom()
                 {
@@ -124,6 +197,19 @@ namespace Bebop.Monads
                         .OrElse(99);
 
                     Assert.AreEqual(77, result);
+                }
+
+                [Test]
+                public async Task FromMapFromMapFromMapFrom()
+                {
+                    var result = await Maybe
+                        .From(55)
+                        .MapAsync(async x => Maybe.From(66))
+                        .MapAsync(async x => Maybe.From(77))
+                        .Map(x => Maybe.From(88))
+                        .OrElse(99);
+
+                    Assert.AreEqual(88, result);
                 }
 
                 [Test]
@@ -147,6 +233,31 @@ namespace Bebop.Monads
                 }
 
                 [Test]
+                public async Task NothingMapFromMapFromMapFrom()
+                {
+                    var result = await Maybe
+                        .Nothing<int>()
+                        .MapAsync(async x =>
+                        {
+                            Assert.Fail("should not be called");
+                            return Maybe.From(66);
+                        })
+                        .MapAsync(async x =>
+                        {
+                            Assert.Fail("should not be called");
+                            return Maybe.From(77);
+                        })
+                        .Map(x =>
+                        {
+                            Assert.Fail("should not be called");
+                            return Maybe.From(88);
+                        })
+                        .OrElse(99);
+
+                    Assert.AreEqual(99, result);
+                }
+
+                [Test]
                 public async Task FromMapNothingMapFrom()
                 {
                     var result = await Maybe
@@ -156,6 +267,40 @@ namespace Bebop.Monads
                         {
                             Assert.Fail("should not be called");
                             return Maybe.From(77);
+                        })
+                        .OrElse(99);
+
+                    Assert.AreEqual(99, result);
+                }
+
+                [Test]
+                public async Task FromMapNothingMapFromMapFrom()
+                {
+                    var result = await Maybe
+                        .From(55)
+                        .MapAsync(async x => Maybe.Nothing<int>())
+                        .MapAsync(async x => Maybe.From(77))
+                        .Map(x =>
+                        {
+                            Assert.Fail("should not be called");
+                            return Maybe.From(88);
+                        })
+                        .OrElse(99);
+
+                    Assert.AreEqual(99, result);
+                }
+
+                [Test]
+                public async Task FromMapFromMapNothingMapFrom()
+                {
+                    var result = await Maybe
+                        .From(55)
+                        .MapAsync(async x => Maybe.From(66))
+                        .MapAsync(async x => Maybe.Nothing<int>())
+                        .Map(x =>
+                        {
+                            Assert.Fail("should not be called");
+                            return Maybe.From(88);
                         })
                         .OrElse(99);
 

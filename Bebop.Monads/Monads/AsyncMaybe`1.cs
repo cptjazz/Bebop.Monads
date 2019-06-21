@@ -1,4 +1,4 @@
-﻿// Copyright 2018, Alexander Jesner
+﻿// Copyright 2019, Alexander Jesner
 // License: https://opensource.org/licenses/MIT
 
 using System;
