@@ -107,7 +107,7 @@ namespace Bebop.Monads
             {
                 var m = Maybe.From(123);
 
-                Assert.Throws<ArgumentNullException>(() => m.Map<string>((Func<int, Maybe<string>>) null));
+                Assert.Throws<ArgumentNullException>(() => m.Map<string>(null));
             }
         }
         
@@ -149,7 +149,7 @@ namespace Bebop.Monads
             {
                 var m = Maybe.From(123);
 
-                Assert.ThrowsAsync<ArgumentNullException>(async () => await m.MapAsync<string>((Func<int, Task<Maybe<string>>>)null));
+                Assert.ThrowsAsync<ArgumentNullException>(async () => await m.MapAsync<string>(null));
             }
         }
 
@@ -245,6 +245,15 @@ namespace Bebop.Monads
             {
                 var m = Maybe.From(123);
                 Assert.AreEqual(123, m.OrElse(456));
+            }
+
+            [Test]
+            public void RejectsInvalidArguments()
+            {
+                var m = Maybe.From(123);
+
+                Assert.Throws<ArgumentNullException>(() => m.OrElse(null));
+                Assert.ThrowsAsync<ArgumentNullException>(async () => await m.OrElseAsync(null));
             }
 
             [Test]
