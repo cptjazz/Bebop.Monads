@@ -156,7 +156,7 @@ namespace Bebop.Monads
 
         /// <summary>
         /// Returns the internal value or constructs an alternative
-        /// via the <paramref name="alternativeFactory"/> if this
+        /// via the <paramref name="alternative"/> if this
         /// <see cref="AsyncMaybe{T}"/> is Nothing.
         /// </summary>
         public ValueTask<T> OrElse(in T alternative)

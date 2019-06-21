@@ -4,6 +4,109 @@
         <name>Bebop.Monads</name>
     </assembly>
     <members>
+        <member name="T:Bebop.Monads.AsyncMaybe`1">
+            <summary>
+            Asynchronous Maybe monad of T.
+            </summary>
+        </member>
+        <member name="M:Bebop.Monads.AsyncMaybe`1.op_Implicit(System.Threading.Tasks.Task{Bebop.Monads.Maybe{`0}}@)~Bebop.Monads.AsyncMaybe{`0}">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Bebop.Monads.AsyncMaybe`1.MapAsync``1(System.Func{`0,System.Threading.Tasks.Task{Bebop.Monads.Maybe{``0}}}@)">
+            <summary>
+            Applies the given <paramref name="binder"/> to the internal value of this <see cref="T:Bebop.Monads.AsyncMaybe`1"/>,
+            and wraps the result in an <see cref="T:Bebop.Monads.IAsyncMaybe`1"/> that can be awaited, 
+            or returns an empty <see cref="T:Bebop.Monads.AsyncMaybe`1"/> (of the target type) if this <see cref="T:Bebop.Monads.AsyncMaybe`1"/>
+            is empty.
+            </summary>
+        </member>
+        <member name="M:Bebop.Monads.AsyncMaybe`1.MapAsync``1(System.Func{`0,Bebop.Monads.Maybe{``0}}@)">
+            <summary>
+            Applies the given async <paramref name="binder"/> to the internal value of this <see cref="T:Bebop.Monads.AsyncMaybe`1"/>,
+            and wraps the result in an <see cref="T:Bebop.Monads.IAsyncMaybe`1"/> that can be awaited, 
+            or returns an empty <see cref="T:Bebop.Monads.AsyncMaybe`1"/> (of the target type) if this <see cref="T:Bebop.Monads.AsyncMaybe`1"/>
+            is empty.
+            </summary>
+        </member>
+        <member name="M:Bebop.Monads.AsyncMaybe`1.AsTask">
+            <summary>
+            Provides a <see cref="T:System.Threading.Tasks.ValueTask`1"/> that represents the result of
+            this <see cref="T:Bebop.Monads.AsyncMaybe`1"/>.
+            </summary>
+        </member>
+        <member name="M:Bebop.Monads.AsyncMaybe`1.GetAwaiter">
+            <summary>
+            async/await infrastructure.
+            Do not use directly.
+            </summary>
+        </member>
+        <member name="M:Bebop.Monads.AsyncMaybe`1.Bebop#Monads#IAsyncMaybe{T}#GetAwaiter">
+            <summary>
+            async/await infrastructure.
+            Do not use directly.
+            </summary>
+        </member>
+        <member name="M:Bebop.Monads.AsyncMaybe`1.OrElse(`0@)">
+            <summary>
+            Returns the internal value or constructs an alternative
+            via the <paramref name="alternative"/> if this
+            <see cref="T:Bebop.Monads.AsyncMaybe`1"/> is Nothing.
+            </summary>
+        </member>
+        <member name="M:Bebop.Monads.AsyncMaybe`1.OrElse(System.Func{`0}@)">
+            <summary>
+            Returns the internal value or constructs an alternative
+            via the <paramref name="alternativeFactory"/> if this
+            <see cref="T:Bebop.Monads.AsyncMaybe`1"/> is Nothing.
+            </summary>
+        </member>
+        <member name="M:Bebop.Monads.AsyncMaybe`1.OrElseAsync(System.Func{System.Threading.Tasks.Task{`0}}@)">
+            <summary>
+            Returns the internal value or constructs an alternative
+            via the <paramref name="alternativeFactory"/> if this
+            <see cref="T:Bebop.Monads.AsyncMaybe`1"/> is Nothing.
+            </summary>
+        </member>
+        <member name="T:Bebop.Monads.IAsyncMaybe">
+            <summary>
+            Basic interface of the AsyncMaybe monad.
+            This interface is usefull when accessing AsyncMaybes in a
+            non-generic fashion.
+            </summary>
+        </member>
+        <member name="P:Bebop.Monads.IAsyncMaybe.InternalType">
+            <summary>
+            Gets the <see cref="T:System.Type"/> argument the underlying <see cref="T:Bebop.Monads.AsyncMaybe`1"/> 
+            was created with.
+            </summary>
+        </member>
+        <member name="T:Bebop.Monads.IAsyncMaybe`1">
+            <summary>
+            This interface provides covariance for <see cref="T:Bebop.Monads.AsyncMaybe`1"/>.
+            Note: since <see cref="T:Bebop.Monads.AsyncMaybe`1"/> is a value type, calling methods
+            via this interface introduces boxings!
+            </summary>
+        </member>
+        <member name="M:Bebop.Monads.IAsyncMaybe`1.MapAsync``1(System.Func{`0,System.Threading.Tasks.Task{Bebop.Monads.Maybe{``0}}})">
+            <summary>
+            Applies the given async <paramref name="binder"/> to the internal value of this <see cref="T:Bebop.Monads.IAsyncMaybe`1"/>,
+            or returns an empty <see cref="T:Bebop.Monads.IAsyncMaybe`1"/> (of the target type) if this <see cref="T:Bebop.Monads.IAsyncMaybe`1"/>
+            is empty.
+            </summary>
+        </member>
+        <member name="M:Bebop.Monads.IAsyncMaybe`1.AsTask">
+            <summary>
+            Provides a <see cref="T:System.Threading.Tasks.ValueTask`1"/> that represents the result of
+            this <see cref="T:Bebop.Monads.AsyncMaybe`1"/>.
+            </summary>
+        </member>
+        <member name="M:Bebop.Monads.IAsyncMaybe`1.GetAwaiter">
+            <summary>
+            async/await infrastructure.
+            Do not use directly.
+            </summary>
+        </member>
         <member name="T:Bebop.Monads.IMaybe">
             <summary>
             Basic interface of the Maybe monad.
@@ -21,12 +124,6 @@
             <summary>
             Gets the <see cref="T:System.Type"/> argument the underlying <see cref="T:Bebop.Monads.Maybe`1"/> 
             was created with.
-            </summary>
-        </member>
-        <member name="M:Bebop.Monads.IMaybe.GetValueOrDefault">
-            <summary>
-            Gets the internal value of this <see cref="T:Bebop.Monads.IMaybe"/>,
-            or the default value if this <see cref="T:Bebop.Monads.IMaybe"/> is empty.
             </summary>
         </member>
         <member name="P:Bebop.Monads.IMaybe.Value">
@@ -48,12 +145,6 @@
             via this interface introduces boxings!
             </summary>
         </member>
-        <member name="M:Bebop.Monads.IMaybe`1.GetValueOrDefault">
-            <summary>
-            Gets the internal value of this <see cref="T:Bebop.Monads.IMaybe`1"/>,
-            or the default value if this <see cref="T:Bebop.Monads.IMaybe`1"/> is empty.
-            </summary>
-        </member>
         <member name="P:Bebop.Monads.IMaybe`1.Value">
             <summary>
             Gets the internal value of this <see cref="T:Bebop.Monads.IMaybe`1"/>. 
@@ -72,31 +163,14 @@
             or returns an empty <see cref="T:Bebop.Monads.IMaybe`1"/> (of the target type) if this <see cref="T:Bebop.Monads.IMaybe`1"/>
             is empty.
             </summary>
-            <param name="binder">A non-null binder.</param>
-        </member>
-        <member name="M:Bebop.Monads.IMaybe`1.Map``1(System.Func{`0,System.Threading.Tasks.Task{Bebop.Monads.Maybe{``0}}})">
-            <summary>
-            Applies the given async <paramref name="binder"/> to the internal value of this <see cref="T:Bebop.Monads.IMaybe`1"/>,
-            or returns an empty <see cref="T:Bebop.Monads.IMaybe`1"/> (of the target type) if this <see cref="T:Bebop.Monads.IMaybe`1"/>
-            is empty.
-            </summary>
-            <param name="binder">A non-null binder.</param>
-        </member>
-        <member name="M:Bebop.Monads.IMaybe`1.MapAsync``1(System.Func{`0,System.Threading.Tasks.ValueTask{Bebop.Monads.Maybe{``0}}})">
-            <summary>
-            Applies the given async <paramref name="binder"/> to the internal value of this <see cref="T:Bebop.Monads.IMaybe`1"/>,
-            or returns an empty <see cref="T:Bebop.Monads.IMaybe`1"/> (of the target type) if this <see cref="T:Bebop.Monads.IMaybe`1"/>
-            is empty.
-            </summary>
-            <param name="binder">A non-null binder.</param>
         </member>
         <member name="M:Bebop.Monads.IMaybe`1.MapAsync``1(System.Func{`0,System.Threading.Tasks.Task{Bebop.Monads.Maybe{``0}}})">
             <summary>
-            Applies the given async <paramref name="binder"/> to the internal value of this <see cref="T:Bebop.Monads.IMaybe`1"/>,
-            or returns an empty <see cref="T:Bebop.Monads.IMaybe`1"/> (of the target type) if this <see cref="T:Bebop.Monads.IMaybe`1"/>
+            Applies the given async <paramref name="binder"/> to the internal value of this <see cref="T:Bebop.Monads.IMaybe`1"/>
+            and wraps the result in an <see cref="T:Bebop.Monads.IAsyncMaybe`1"/> that can be awaited, 
+            or returns an empty <see cref="T:Bebop.Monads.IAsyncMaybe`1"/> (of the target type) if this <see cref="T:Bebop.Monads.IMaybe`1"/>
             is empty.
             </summary>
-            <param name="binder">A non-null binder.</param>
         </member>
         <member name="T:Bebop.Monads.Maybe">
             <summary>
@@ -163,7 +237,7 @@
             Maybe monad of T.
             </summary>
         </member>
-        <member name="M:Bebop.Monads.Maybe`1.op_Implicit(`0)~Bebop.Monads.Maybe{`0}">
+        <member name="M:Bebop.Monads.Maybe`1.op_Implicit(`0@)~Bebop.Monads.Maybe{`0}">
             <summary>
             </summary>
         </member>
@@ -205,65 +279,35 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Bebop.Monads.Maybe`1.Bebop#Monads#IMaybe{T}#GetValueOrDefault">
-            <summary>
-            Gets the internal value of this <see cref="T:Bebop.Monads.IMaybe`1"/>,
-            or the default value if this <see cref="T:Bebop.Monads.IMaybe`1"/> is empty.
-            </summary>
-        </member>
         <member name="M:Bebop.Monads.Maybe`1.Map``1(System.Func{`0,Bebop.Monads.Maybe{``0}}@)">
             <summary>
             Applies the given <paramref name="binder"/> to the internal value of this <see cref="T:Bebop.Monads.Maybe`1"/>,
             or returns an empty <see cref="T:Bebop.Monads.Maybe`1"/> (of the target type) if this <see cref="T:Bebop.Monads.Maybe`1"/>
             is empty.
             </summary>
-            <param name="binder">A non-null binder.</param>
-        </member>
-        <member name="M:Bebop.Monads.Maybe`1.Map``1(System.Func{`0,System.Threading.Tasks.Task{Bebop.Monads.Maybe{``0}}}@)">
-            <summary>
-            Applies the given async <paramref name="binder"/> to the internal value of this <see cref="T:Bebop.Monads.Maybe`1"/>,
-            or returns an empty <see cref="T:Bebop.Monads.Maybe`1"/> (of the target type) if this <see cref="T:Bebop.Monads.Maybe`1"/>
-            is empty.
-            </summary>
-            <param name="binder">A non-null binder.</param>
-        </member>
-        <member name="M:Bebop.Monads.Maybe`1.MapAsync``1(System.Func{`0,System.Threading.Tasks.ValueTask{Bebop.Monads.Maybe{``0}}}@)">
-            <summary>
-            Applies the given async <paramref name="binder"/> to the internal value of this <see cref="T:Bebop.Monads.Maybe`1"/>,
-            or returns an empty <see cref="T:Bebop.Monads.Maybe`1"/> (of the target type) if this <see cref="T:Bebop.Monads.Maybe`1"/>
-            is empty.
-            </summary>
-            <param name="binder">A non-null binder.</param>
         </member>
         <member name="M:Bebop.Monads.Maybe`1.MapAsync``1(System.Func{`0,System.Threading.Tasks.Task{Bebop.Monads.Maybe{``0}}}@)">
             <summary>
             Applies the given async <paramref name="binder"/> to the internal value of this <see cref="T:Bebop.Monads.Maybe`1"/>,
+            and wraps the result in an <see cref="T:Bebop.Monads.IAsyncMaybe`1"/> that can be awaited, 
             or returns an empty <see cref="T:Bebop.Monads.Maybe`1"/> (of the target type) if this <see cref="T:Bebop.Monads.Maybe`1"/>
             is empty.
             </summary>
-            <param name="binder">A non-null binder.</param>
         </member>
-        <member name="M:Bebop.Monads.Maybe`1.OrElse(`0)">
+        <member name="M:Bebop.Monads.Maybe`1.OrElse(`0@)">
             <summary>
             Returns the internal value or <paramref name="alternative"/>
             if this <see cref="T:Bebop.Monads.Maybe`1"/> is Nothing.
             </summary>
         </member>
-        <member name="M:Bebop.Monads.Maybe`1.OrElse(System.Func{`0})">
+        <member name="M:Bebop.Monads.Maybe`1.OrElse(System.Func{`0}@)">
             <summary>
             Returns the internal value or constructs an alternative
             via the <paramref name="alternativeFactory"/> if this
             <see cref="T:Bebop.Monads.Maybe`1"/> is Nothing.
             </summary>
         </member>
-        <member name="M:Bebop.Monads.Maybe`1.OrElseAsync(System.Func{System.Threading.Tasks.Task{`0}})">
-            <summary>
-            Returns the internal value or constructs an alternative
-            via the <paramref name="alternativeFactory"/> if this
-            <see cref="T:Bebop.Monads.Maybe`1"/> is Nothing.
-            </summary>
-        </member>
-        <member name="M:Bebop.Monads.Maybe`1.OrElseAsync(System.Func{System.Threading.Tasks.ValueTask{`0}})">
+        <member name="M:Bebop.Monads.Maybe`1.OrElseAsync(System.Func{System.Threading.Tasks.Task{`0}}@)">
             <summary>
             Returns the internal value or constructs an alternative
             via the <paramref name="alternativeFactory"/> if this
