@@ -33,7 +33,12 @@ namespace Bebop.Monads
         #endregion
 
         #region IAsyncMaybe`1 interface
-        
+
+        IAsyncMaybe<U> IAsyncMaybe<T>.Map<U>(Func<T, Maybe<U>> binder)
+        {
+            return Map(binder);
+        }
+
         IAsyncMaybe<U> IAsyncMaybe<T>.MapAsync<U>(Func<T, Task<Maybe<U>>> binder)
         {
             return MapAsync(binder);
@@ -66,7 +71,7 @@ namespace Bebop.Monads
         /// or returns an empty <see cref="AsyncMaybe{U}"/> (of the target type) if this <see cref="AsyncMaybe{T}"/>
         /// is empty.
         /// </summary>
-        public AsyncMaybe<U> MapAsync<U>(in Func<T, Maybe<U>> binder)
+        public AsyncMaybe<U> Map<U>(in Func<T, Maybe<U>> binder)
         {
             if (binder is null)
                 throw new ArgumentNullException(nameof(binder));
@@ -84,7 +89,7 @@ namespace Bebop.Monads
             var value = await _task.ConfigureAwait(false);
             return await value
                 .MapAsync(binder)
-                .AsTask()
+                .AsValueTask()
                 .ConfigureAwait(false);
         }
 
@@ -112,7 +117,7 @@ namespace Bebop.Monads
         /// Provides a <see cref="ValueTask{T}"/> that represents the result of
         /// this <see cref="AsyncMaybe{T}"/>.
         /// </summary>
-        public ValueTask<Maybe<T>> AsTask()
+        public ValueTask<Maybe<T>> AsValueTask()
         {
             if (_task is null)
                 return new ValueTask<Maybe<T>>(Maybe.Nothing<T>());
@@ -127,7 +132,7 @@ namespace Bebop.Monads
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         public ValueTaskAwaiter<Maybe<T>> GetAwaiter()
         {
-            return AsTask().GetAwaiter();
+            return AsValueTask().GetAwaiter();
         }
 
         /// <summary>

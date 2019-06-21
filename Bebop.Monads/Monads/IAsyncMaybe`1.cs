@@ -23,6 +23,13 @@ namespace Bebop.Monads
         IAsyncMaybe<U> MapAsync<U>(Func<T, Task<Maybe<U>>> binder);
 
         /// <summary>
+        /// Applies the given <paramref name="binder"/> to the internal value of this <see cref="IAsyncMaybe{T}"/>,
+        /// or returns an empty <see cref="IAsyncMaybe{U}"/> (of the target type) if this <see cref="IAsyncMaybe{T}"/>
+        /// is empty.
+        /// </summary>
+        IAsyncMaybe<U> Map<U>(Func<T, Maybe<U>> binder);
+
+        /// <summary>
         /// Provides a <see cref="ValueTask{T}"/> that represents the result of
         /// this <see cref="AsyncMaybe{T}"/>.
         /// </summary>
