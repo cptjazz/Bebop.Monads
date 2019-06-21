@@ -5,7 +5,7 @@
     <RootNamespace>Bebop</RootNamespace>
     <PackageProjectUrl>https://github.com/cptjazz/Bebop.Monads</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/cptjazz/Bebop.Monads/blob/master/LICENSE</PackageLicenseUrl>
-    <Copyright>Alexander Jesner, 2018</Copyright>
+    <Copyright>Alexander Jesner, 2019</Copyright>
     <Company>—</Company>
     <Authors>Alexander Jesner</Authors>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -15,8 +15,8 @@
     <Description>This project provides the following monad implementations:
  * Maybe&lt;T&gt;
 </Description>
-    <Version>1.4.0</Version>
-    <AssemblyVersion>1.4.0.0</AssemblyVersion>
+    <Version>2.0.0</Version>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
