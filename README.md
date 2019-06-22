@@ -60,12 +60,23 @@ int s = n.OrElse(() => 456); // 456
 
 ### Async/Await Support
 
+:information_source: The async/await support has been greatly revised in the 2.x series. The basic usage pattern stays the same, except:
+* `Map(..)`, `MapAsync(..)`, `OrElse(..)`, and `OrElseAsync(..)` are now stackable. Previously many intermediate `await`s had to be used and the code looked rather cluttered,
+* `ValueTask` is used as a return value where appropriate,
+* `ValueTask` overloads for `MapAsync(..)` have been removed in favour of the more general `Task`-based variant.
+
+
 The binding (`Map(..)`) and alternative (`OrElse(..)`) methods are also available in async variants:
 
 ```C#
 Maybe<int> m = Maybe.From(123);
 Maybe<string> r1 = await m.MapAsync(async () => Maybe.From("A"));
-Maybe<string> r2 = await m.MapAsync(() => new ValueTask<string>(Maybe.From("A")));
+
+var r2 = await Maybe
+    .From(55)
+    .MapAsync(async x => Maybe.From(66))
+    .MapAsync(async x => Maybe.From(77))
+    .Map(x => Maybe.From(88));
 ```
 
 And 
@@ -73,11 +84,16 @@ And
 ```C#
 Maybe<int> m = Maybe.From(123);
 int r1 = await m.OrElseAsync(async () => 456); // 123
-int r2 = await m.OrElseAsync(() => new ValueTask<int>(456)); // 123
 
 Maybe<int> n = Maybe.Nothing<int>();
 int s1 = await n.OrElseAsync(async () => 456); // 456
-int s2 = await n.OrElseAsync(() => new ValueTask<int>(456)); // 456
+
+var r2 = await Maybe
+    .From(55)
+    .MapAsync(async x => Maybe.From(66))
+    .MapAsync(async x => Maybe.From(77))
+    .Map(x => Maybe.From(88))
+    .OrElse(99);
 ```
 
 ### Infrastructure methods
