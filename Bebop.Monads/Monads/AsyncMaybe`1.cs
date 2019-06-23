@@ -19,7 +19,7 @@ namespace Bebop.Monads
 
         #region Construction
 
-        internal AsyncMaybe(in Task<Maybe<T>> task)
+        internal AsyncMaybe(Task<Maybe<T>> task)
         {
             _task = task;
         }
@@ -54,7 +54,7 @@ namespace Bebop.Monads
         /// or returns an empty <see cref="AsyncMaybe{U}"/> (of the target type) if this <see cref="AsyncMaybe{T}"/>
         /// is empty.
         /// </summary>
-        public AsyncMaybe<U> MapAsync<U>(in Func<T, Task<Maybe<U>>> binder)
+        public AsyncMaybe<U> MapAsync<U>(Func<T, Task<Maybe<U>>> binder)
         {
             if (binder is null)
                 throw new ArgumentNullException(nameof(binder));
@@ -71,7 +71,7 @@ namespace Bebop.Monads
         /// or returns an empty <see cref="AsyncMaybe{U}"/> (of the target type) if this <see cref="AsyncMaybe{T}"/>
         /// is empty.
         /// </summary>
-        public AsyncMaybe<U> Map<U>(in Func<T, Maybe<U>> binder)
+        public AsyncMaybe<U> Map<U>(Func<T, Maybe<U>> binder)
         {
             if (binder is null)
                 throw new ArgumentNullException(nameof(binder));
@@ -154,7 +154,7 @@ namespace Bebop.Monads
         /// via the <paramref name="alternative"/> if this
         /// <see cref="AsyncMaybe{T}"/> is Nothing.
         /// </summary>
-        public ValueTask<T> OrElse(in T alternative)
+        public ValueTask<T> OrElse(T alternative)
         {
             if (_task is null)
                 return new ValueTask<T>(alternative);
@@ -168,7 +168,7 @@ namespace Bebop.Monads
         /// <see cref="AsyncMaybe{T}"/> is Nothing.
         /// </summary>
         public ValueTask<T> OrElse(
-            in Func<T> alternativeFactory)
+            Func<T> alternativeFactory)
         {
             if (alternativeFactory is null)
                 throw new ArgumentNullException(nameof(alternativeFactory));
@@ -185,7 +185,7 @@ namespace Bebop.Monads
         /// <see cref="AsyncMaybe{T}"/> is Nothing.
         /// </summary>
         public ValueTask<T> OrElseAsync(
-            in Func<Task<T>> alternativeFactory)
+            Func<Task<T>> alternativeFactory)
         {
             if (alternativeFactory is null)
                 throw new ArgumentNullException(nameof(alternativeFactory));

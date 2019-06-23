@@ -32,7 +32,7 @@ namespace Bebop.Monads
         /// <summary>
         /// Creates a <see cref="Maybe{T}"/> instance that contains the given <paramref name="value"/>.
         /// </summary>
-        public static Maybe<T> From<T>(in T value)
+        public static Maybe<T> From<T>(T value)
         {
             _VerifyNotNull(value);
 
@@ -61,7 +61,7 @@ namespace Bebop.Monads
             }
         }
 
-        private static void _VerifyNotNull<T>(in T value)
+        private static void _VerifyNotNull<T>(T value)
         {
             if (ReferenceEquals(value, null))
             {
@@ -71,7 +71,7 @@ namespace Bebop.Monads
             }
         }
 
-        private static void _VerifyTypeNotNull(in Type type)
+        private static void _VerifyTypeNotNull(Type type)
         {
             if (ReferenceEquals(type, null))
             {

@@ -21,7 +21,7 @@ namespace Bebop.Monads
 
         #region Construction
 
-        internal Maybe(in T value)
+        internal Maybe(T value)
         {
             _value = value;
             _hasValue = true;
@@ -29,7 +29,7 @@ namespace Bebop.Monads
         
         /// <summary>
         /// </summary>
-        public static implicit operator Maybe<T>(in T value)
+        public static implicit operator Maybe<T>(T value)
         {
             if (ReferenceEquals(value, null))
                 return default;
@@ -134,7 +134,7 @@ namespace Bebop.Monads
         /// or returns an empty <see cref="Maybe{U}"/> (of the target type) if this <see cref="Maybe{T}"/>
         /// is empty.
         /// </summary>
-        public Maybe<U> Map<U>(in Func<T, Maybe<U>> binder)
+        public Maybe<U> Map<U>(Func<T, Maybe<U>> binder)
         {
             if (binder is null)
                 throw new ArgumentNullException(nameof(binder));
@@ -148,7 +148,7 @@ namespace Bebop.Monads
         /// or returns an empty <see cref="Maybe{U}"/> (of the target type) if this <see cref="Maybe{T}"/>
         /// is empty.
         /// </summary>
-        public AsyncMaybe<U> MapAsync<U>(in Func<T, Task<Maybe<U>>> binder)
+        public AsyncMaybe<U> MapAsync<U>(Func<T, Task<Maybe<U>>> binder)
         {
             if (binder is null)
                 throw new ArgumentNullException(nameof(binder));
@@ -181,7 +181,7 @@ namespace Bebop.Monads
         /// <see cref="Maybe{T}"/> is Nothing.
         /// </summary>
         public T OrElse(
-            in Func<T> alternativeFactory)
+            Func<T> alternativeFactory)
         {
             if (alternativeFactory is null)
                 throw new ArgumentNullException(nameof(alternativeFactory));
@@ -197,7 +197,7 @@ namespace Bebop.Monads
         /// <see cref="Maybe{T}"/> is Nothing.
         /// </summary>
         public ValueTask<T> OrElseAsync(
-            in Func<Task<T>> alternativeFactory)
+            Func<Task<T>> alternativeFactory)
         {
             if (alternativeFactory is null)
                 throw new ArgumentNullException(nameof(alternativeFactory));
