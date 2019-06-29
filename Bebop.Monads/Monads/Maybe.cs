@@ -3,6 +3,7 @@
 
 using System;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace Bebop.Monads
 {
@@ -53,13 +54,14 @@ namespace Bebop.Monads
 
         private static void _VerifyValueAssignable(Type type, object value)
         {
-            var valueType = value.GetType();
-            if (!type.IsAssignableFrom(valueType.GetTypeInfo()))
-                _ThrowNotAssignable(type, valueType);
+            if (!type.IsAssignableFrom(value.GetType()))
+                _ThrowNotAssignable(type, value);
         }
 
-        private static void _ThrowNotAssignable(Type maybeType, Type valueType)
+        private static void _ThrowNotAssignable(Type maybeType, object value)
         {
+            var valueType = value.GetType();
+
             throw new ArgumentException(
                 $"A Maybe of type '{maybeType}' cannot be constructed with " +
                 $"a value of type '{valueType}'.");
