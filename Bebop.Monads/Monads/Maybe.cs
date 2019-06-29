@@ -53,32 +53,42 @@ namespace Bebop.Monads
 
         private static void _VerifyValueAssignable(Type type, object value)
         {
-            if (!type.GetTypeInfo().IsAssignableFrom(value.GetType().GetTypeInfo()))
-            {
-                throw new ArgumentException(
-                   $"A Maybe of type '{type}' cannot be constructed with " +
-                   $"a value of type '{value.GetType()}'.");
-            }
+            var valueType = value.GetType();
+            if (!type.IsAssignableFrom(valueType.GetTypeInfo()))
+                _ThrowNotAssignable(type, valueType);
+        }
+
+        private static void _ThrowNotAssignable(Type maybeType, Type valueType)
+        {
+            throw new ArgumentException(
+                $"A Maybe of type '{maybeType}' cannot be constructed with " +
+                $"a value of type '{valueType}'.");
         }
 
         private static void _VerifyNotNull<T>(T value)
         {
             if (ReferenceEquals(value, null))
-            {
-                throw new ArgumentNullException(
-                    nameof(value),
-                    "Cannot construct a 'Maybe' from a 'null' value.");
-            }
+                _ThrowValueNull(nameof(value));
+        }
+
+        private static void _ThrowValueNull(string parameterName)
+        {
+            throw new ArgumentNullException(
+                parameterName,
+                "Cannot construct a 'Maybe' from a 'null' value.");
         }
 
         private static void _VerifyTypeNotNull(Type type)
         {
             if (ReferenceEquals(type, null))
-            {
-                throw new ArgumentNullException(
-                    nameof(type),
-                    "Type must not be null.");
-            }
+                _ThrowTypeNull(nameof(type));
+        }
+
+        private static void _ThrowTypeNull(string parameterName)
+        {
+            throw new ArgumentNullException(
+                parameterName,
+                "Type must not be null.");
         }
     }
 }
