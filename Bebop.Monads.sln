@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2047
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29009.5
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bebop.Monads", "Bebop.Monads\Bebop.Monads.csproj", "{4CD67C7F-DFD7-41E0-A80E-44252ACCAB3F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bebop.Monads", "Bebop.Monads\Bebop.Monads.csproj", "{4CD67C7F-DFD7-41E0-A80E-44252ACCAB3F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Bebop.Monads", "Tests.Bebop.Monads\Tests.Bebop.Monads.csproj", "{9144C3B1-FE9E-444B-BCC1-55BEEADBC462}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Benchmark.Bebop.Monads", "Benchmark.Bebop.Monads\Benchmark.Bebop.Monads.csproj", "{B6DC0074-6234-42F4-8349-7F3A71459355}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{9144C3B1-FE9E-444B-BCC1-55BEEADBC462}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9144C3B1-FE9E-444B-BCC1-55BEEADBC462}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9144C3B1-FE9E-444B-BCC1-55BEEADBC462}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6DC0074-6234-42F4-8349-7F3A71459355}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6DC0074-6234-42F4-8349-7F3A71459355}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6DC0074-6234-42F4-8349-7F3A71459355}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6DC0074-6234-42F4-8349-7F3A71459355}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
