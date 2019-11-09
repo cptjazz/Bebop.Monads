@@ -175,6 +175,11 @@
             is empty.
             </summary>
         </member>
+        <member name="T:Bebop.Monads.IUnit">
+            <summary>
+            A unit type. It represents 'void' as a first class citizen.
+            </summary>
+        </member>
         <member name="T:Bebop.Monads.Maybe">
             <summary>
             A factory for creating 'Maybe' instances.
@@ -320,6 +325,29 @@
         <member name="M:Bebop.Monads.Maybe`1.ToString">
             <summary>
             </summary>
+        </member>
+        <member name="T:Bebop.Monads.Unit">
+            <summary>
+            A unit type. It represents 'void' as a first class citizen.
+            </summary>
+        </member>
+        <member name="F:Bebop.Monads.Unit.Instance">
+            <summary>
+            Provides a shared, boxed instance of <see cref="T:Bebop.Monads.Unit"/> for
+            situations where the struct would not be stack allocated.
+            </summary>
+        </member>
+        <member name="M:Bebop.Monads.Unit.Equals(Bebop.Monads.Unit)">
+            <inheritdoc />
+        </member>
+        <member name="M:Bebop.Monads.Unit.Equals(Bebop.Monads.IUnit)">
+            <inheritdoc />
+        </member>
+        <member name="M:Bebop.Monads.Unit.Equals(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Bebop.Monads.Unit.GetHashCode">
+            <inheritdoc />
         </member>
     </members>
 </doc>

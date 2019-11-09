@@ -9,6 +9,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Bebop.Monads", "Tests
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Benchmark.Bebop.Monads", "Benchmark.Bebop.Monads\Benchmark.Bebop.Monads.csproj", "{B6DC0074-6234-42F4-8349-7F3A71459355}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{3821A8F1-B9B1-4556-9578-3914B28864A1}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
+		Maybe.md = Maybe.md
+		README.md = README.md
+		Unit.md = Unit.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Implementation", "Implementation", "{6BFB245C-5512-4DB3-918F-01D50B473B92}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +40,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4CD67C7F-DFD7-41E0-A80E-44252ACCAB3F} = {6BFB245C-5512-4DB3-918F-01D50B473B92}
+		{9144C3B1-FE9E-444B-BCC1-55BEEADBC462} = {6BFB245C-5512-4DB3-918F-01D50B473B92}
+		{B6DC0074-6234-42F4-8349-7F3A71459355} = {6BFB245C-5512-4DB3-918F-01D50B473B92}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1C3BCF08-AD54-4312-9465-D9F39213E760}

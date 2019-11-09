@@ -11,7 +11,7 @@ namespace Bebop.Monads
     [DisassemblyDiagnoser(printAsm: true, printSource: true)]
     public class MaybeBenchmarks
     {
-        [Params(500)]
+        [Params(1000)]
         public int N;
 
         [GlobalSetup]
@@ -42,7 +42,7 @@ namespace Bebop.Monads
 
         [Benchmark]
         public IMaybe NonGenericReferenceTypeNothing() => Maybe.Nothing(typeof(string));
-        
+        /*
         [Benchmark]
         public IMaybe NonGenericCastableValueTypeFrom() => Maybe.Castable.From(typeof(int), 123);
 
@@ -54,5 +54,5 @@ namespace Bebop.Monads
 
         [Benchmark]
         public IMaybe NonGenericCastableReferenceTypeNothing() => Maybe.Castable.Nothing(typeof(string));
-    }
+    */}
 }

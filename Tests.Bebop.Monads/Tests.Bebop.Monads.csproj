@@ -60,6 +60,7 @@
     <Compile Include="Monads\Test_MaybeOfTNongenericCastable.cs" />
     <Compile Include="Monads\Test_MaybeOfTNongeneric.cs" />
     <Compile Include="Monads\Test_MaybeOfT.cs" />
+    <Compile Include="Monads\Test_Unit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
