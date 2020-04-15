@@ -6,9 +6,9 @@ using System;
 
 namespace Bebop.Monads
 {
-    [ClrJob(baseline: true)]
+    [SimpleJob]
     [RPlotExporter, RankColumn]
-    [DisassemblyDiagnoser(printAsm: true, printSource: true)]
+    [DisassemblyDiagnoser(printSource: true)]
     public class MaybeBenchmarks
     {
         [Params(1000)]

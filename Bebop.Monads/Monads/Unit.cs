@@ -5,7 +5,6 @@ using System;
 
 namespace Bebop.Monads
 {
-
     /// <summary>
     /// A unit type.
     /// </summary>
