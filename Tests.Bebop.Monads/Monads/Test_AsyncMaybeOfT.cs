@@ -5,6 +5,8 @@ using NUnit.Framework;
 using System;
 using System.Threading.Tasks;
 
+#pragma warning disable CS1998
+
 namespace Bebop.Monads
 {
     [TestFixture]
