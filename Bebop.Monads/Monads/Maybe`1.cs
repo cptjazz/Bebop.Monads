@@ -5,6 +5,7 @@ using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using Bebop.Monads.Internals;
 
 namespace Bebop.Monads
 {
@@ -120,8 +121,7 @@ namespace Bebop.Monads
         
         IAsyncMaybe<U> IMaybe<T>.MapAsync<U>(Func<T, Task<Maybe<U>>> binder)
         {
-            if (binder is null)
-                throw new ArgumentNullException(nameof(binder));
+            MaybeThrowHelper.VerifyBinderNotNull(binder);
 
             if (!_hasValue)
                 return default(AsyncMaybe<U>);
@@ -136,22 +136,20 @@ namespace Bebop.Monads
         /// </summary>
         public Maybe<U> Map<U>(Func<T, Maybe<U>> binder)
         {
-            if (binder is null)
-                throw new ArgumentNullException(nameof(binder));
+            MaybeThrowHelper.VerifyBinderNotNull(binder);
 
             return _hasValue ? binder(_value) : default;
         }
 
         /// <summary>
         /// Applies the given async <paramref name="binder"/> to the internal value of this <see cref="Maybe{T}"/>,
-        /// and wraps the result in an <see cref="IAsyncMaybe{U}"/> that can be awaited, 
+        /// and wraps the result in an <see cref="AsyncMaybe{U}"/> that can be awaited, 
         /// or returns an empty <see cref="Maybe{U}"/> (of the target type) if this <see cref="Maybe{T}"/>
         /// is empty.
         /// </summary>
         public AsyncMaybe<U> MapAsync<U>(Func<T, Task<Maybe<U>>> binder)
         {
-            if (binder is null)
-                throw new ArgumentNullException(nameof(binder));
+            MaybeThrowHelper.VerifyBinderNotNull(binder);
 
             if (!_hasValue)
                 return default;
@@ -183,8 +181,7 @@ namespace Bebop.Monads
         public T OrElse(
             Func<T> alternativeFactory)
         {
-            if (alternativeFactory is null)
-                throw new ArgumentNullException(nameof(alternativeFactory));
+            MaybeThrowHelper.VerifyAlternativeFactoryNotNull(alternativeFactory);
 
             return _hasValue
                 ? _value
@@ -199,8 +196,7 @@ namespace Bebop.Monads
         public ValueTask<T> OrElseAsync(
             Func<Task<T>> alternativeFactory)
         {
-            if (alternativeFactory is null)
-                throw new ArgumentNullException(nameof(alternativeFactory));
+            MaybeThrowHelper.VerifyAlternativeFactoryNotNull(alternativeFactory);
 
             return _hasValue
                 ? new ValueTask<T>(_value)

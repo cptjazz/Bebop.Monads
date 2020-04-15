@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using Bebop.Monads.Internals;
 
 namespace Bebop.Monads
 {
@@ -56,8 +57,7 @@ namespace Bebop.Monads
         /// </summary>
         public AsyncMaybe<U> MapAsync<U>(Func<T, Task<Maybe<U>>> binder)
         {
-            if (binder is null)
-                throw new ArgumentNullException(nameof(binder));
+            MaybeThrowHelper.VerifyBinderNotNull(binder);
 
             if (_task is null)
                 return default;
@@ -73,8 +73,7 @@ namespace Bebop.Monads
         /// </summary>
         public AsyncMaybe<U> Map<U>(Func<T, Maybe<U>> binder)
         {
-            if (binder is null)
-                throw new ArgumentNullException(nameof(binder));
+            MaybeThrowHelper.VerifyBinderNotNull(binder);
 
             if (_task is null)
                 return default;
@@ -170,8 +169,7 @@ namespace Bebop.Monads
         public ValueTask<T> OrElse(
             Func<T> alternativeFactory)
         {
-            if (alternativeFactory is null)
-                throw new ArgumentNullException(nameof(alternativeFactory));
+            MaybeThrowHelper.VerifyAlternativeFactoryNotNull(alternativeFactory);
 
             if (_task is null)
                 return new ValueTask<T>(alternativeFactory());
@@ -187,8 +185,7 @@ namespace Bebop.Monads
         public ValueTask<T> OrElseAsync(
             Func<Task<T>> alternativeFactory)
         {
-            if (alternativeFactory is null)
-                throw new ArgumentNullException(nameof(alternativeFactory));
+            MaybeThrowHelper.VerifyAlternativeFactoryNotNull(alternativeFactory);
 
             if (_task is null)
                 return new ValueTask<T>(alternativeFactory());
