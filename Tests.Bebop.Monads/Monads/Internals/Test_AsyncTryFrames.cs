@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright 2020, Alexander Jesner
+// License: https://opensource.org/licenses/MIT
+
+using System;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
