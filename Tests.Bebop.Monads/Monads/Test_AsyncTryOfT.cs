@@ -126,7 +126,7 @@ namespace Bebop.Monads
             public async Task ThenCatch()
             {
                 var result = await Try
-                    .ToAsync(async () => 99)
+                    .DoAsync(async () => 99)
                     .Then(x => x.ToString(CultureInfo.InvariantCulture))
                     .Catch<ArithmeticException>(ex => Assert.Fail("should not happen"))
                     .ExecuteAsync();
@@ -138,7 +138,7 @@ namespace Bebop.Monads
             public async Task Then2Catch()
             {
                 var result = await Try
-                    .ToAsync(async () => 99)
+                    .DoAsync(async () => 99)
                     .Then(() => "99")
                     .Catch<ArithmeticException>(ex => Assert.Fail("should not happen"))
                     .ExecuteAsync();
@@ -150,7 +150,7 @@ namespace Bebop.Monads
             public async Task ThenCatchNongeneric()
             {
                 var result = await Try
-                    .ToAsync(async () => 99)
+                    .DoAsync(async () => 99)
                     .Then(x => x.ToString(CultureInfo.InvariantCulture))
                     .Catch(typeof(ArithmeticException), ex => Assert.Fail("should not happen"))
                     .ExecuteAsync();
@@ -162,7 +162,7 @@ namespace Bebop.Monads
             public async Task ThenAsyncCatch()
             {
                 var result = await Try
-                    .ToAsync(async () => 99)
+                    .DoAsync(async () => 99)
                     .ThenAsync(async x => x.ToString(CultureInfo.InvariantCulture))
                     .Catch<ArithmeticException>(ex => Assert.Fail("should not happen"))
                     .ExecuteAsync();
@@ -174,7 +174,7 @@ namespace Bebop.Monads
             public async Task ThenAsync2Catch()
             {
                 var result = await Try
-                    .ToAsync(async () => 99)
+                    .DoAsync(async () => 99)
                     .ThenAsync(async () => "99")
                     .Catch<ArithmeticException>(ex => Assert.Fail("should not happen"))
                     .ExecuteAsync();
@@ -186,7 +186,7 @@ namespace Bebop.Monads
             public async Task ThenCatchAsync()
             {
                 var result = await Try
-                    .ToAsync(async () => 99)
+                    .DoAsync(async () => 99)
                     .Then(x => x.ToString(CultureInfo.InvariantCulture))
                     .CatchAsync<ArithmeticException>(async ex => Assert.Fail("should not happen"))
                     .ExecuteAsync();
@@ -198,7 +198,7 @@ namespace Bebop.Monads
             public async Task ThenCatchAsyncNongeneric()
             {
                 var result = await Try
-                    .ToAsync(async () => 99)
+                    .DoAsync(async () => 99)
                     .Then(x => x.ToString(CultureInfo.InvariantCulture))
                     .CatchAsync(typeof(ArithmeticException), async ex => Assert.Fail("should not happen"))
                     .ExecuteAsync();
@@ -210,7 +210,7 @@ namespace Bebop.Monads
             public async Task ThenAsyncCatchAsync()
             {
                 var result = await Try
-                    .ToAsync(async () => 99)
+                    .DoAsync(async () => 99)
                     .ThenAsync(async x => x.ToString(CultureInfo.InvariantCulture))
                     .CatchAsync<ArithmeticException>(async ex => Assert.Fail("should not happen"))
                     .ExecuteAsync();
@@ -227,7 +227,7 @@ namespace Bebop.Monads
             {
                 var wasCalled = false;
                 var result = await Try
-                    .ToAsync(async () => 99)
+                    .DoAsync(async () => 99)
                     .Then<string>(x => throw new ArithmeticException())
                     .Catch<ArithmeticException>(ex => wasCalled = true)
                     .ExecuteAsync();
@@ -241,7 +241,7 @@ namespace Bebop.Monads
             {
                 var wasCalled = false;
                 var result = await Try
-                    .ToAsync(async () => 99)
+                    .DoAsync(async () => 99)
                     .Then<string>(x => throw new ArithmeticException())
                     .Catch(typeof(ArithmeticException), ex => wasCalled = true)
                     .ExecuteAsync();
@@ -255,7 +255,7 @@ namespace Bebop.Monads
             {
                 var wasCalled = false;
                 var result = await Try
-                    .ToAsync(async () => 99)
+                    .DoAsync(async () => 99)
                     .ThenAsync<string>(async x => throw new ArithmeticException())
                     .Catch<ArithmeticException>(ex => wasCalled = true)
                     .ExecuteAsync();
@@ -269,7 +269,7 @@ namespace Bebop.Monads
             {
                 var wasCalled = false;
                 var result = await Try
-                    .ToAsync(async () => 99)
+                    .DoAsync(async () => 99)
                     .Then<string>(x => throw new ArithmeticException())
                     .CatchAsync<ArithmeticException>(async ex => wasCalled = true)
                     .ExecuteAsync();
@@ -283,7 +283,7 @@ namespace Bebop.Monads
             {
                 var wasCalled = false;
                 var result = await Try
-                    .ToAsync(async () => 99)
+                    .DoAsync(async () => 99)
                     .Then<string>(x => throw new ArithmeticException())
                     .CatchAsync(typeof(ArithmeticException), async ex => wasCalled = true)
                     .ExecuteAsync();
@@ -297,7 +297,7 @@ namespace Bebop.Monads
             {
                 var wasCalled = false;
                 var result = await Try
-                    .ToAsync(async () => 99)
+                    .DoAsync(async () => 99)
                     .ThenAsync<string>(async x => throw new ArithmeticException())
                     .CatchAsync<ArithmeticException>(async ex => wasCalled = true)
                     .ExecuteAsync();
@@ -314,7 +314,7 @@ namespace Bebop.Monads
             public async Task ThenCatch()
             {
                 var result = await Try
-                    .ToAsync(async () => 99)
+                    .DoAsync(async () => 99)
                     .Then(x => x.ToString(CultureInfo.InvariantCulture))
                     .Catch<ArithmeticException>(ex => Assert.Fail("should not happen"));
 
@@ -325,7 +325,7 @@ namespace Bebop.Monads
             public async Task ThenCatchNongeneric()
             {
                 var result = await Try
-                    .ToAsync(async () => 99)
+                    .DoAsync(async () => 99)
                     .Then(x => x.ToString(CultureInfo.InvariantCulture))
                     .Catch(typeof(ArithmeticException), ex => Assert.Fail("should not happen"));
 
@@ -336,7 +336,7 @@ namespace Bebop.Monads
             public async Task ThenAsyncCatch()
             {
                 var result = await Try
-                    .ToAsync(async () => 99)
+                    .DoAsync(async () => 99)
                     .ThenAsync(async x => x.ToString(CultureInfo.InvariantCulture))
                     .Catch<ArithmeticException>(ex => Assert.Fail("should not happen"));
 
@@ -347,7 +347,7 @@ namespace Bebop.Monads
             public async Task ThenCatchAsync()
             {
                 var result = await Try
-                    .ToAsync(async () => 99)
+                    .DoAsync(async () => 99)
                     .Then(x => x.ToString(CultureInfo.InvariantCulture))
                     .CatchAsync<ArithmeticException>(async ex => Assert.Fail("should not happen"));
 
@@ -358,7 +358,7 @@ namespace Bebop.Monads
             public async Task ThenCatchAsyncNongeneric()
             {
                 var result = await Try
-                    .ToAsync(async () => 99)
+                    .DoAsync(async () => 99)
                     .Then(x => x.ToString(CultureInfo.InvariantCulture))
                     .CatchAsync(typeof(ArithmeticException), async ex => Assert.Fail("should not happen"));
 
@@ -369,7 +369,7 @@ namespace Bebop.Monads
             public async Task ThenAsyncCatchAsync()
             {
                 var result = await Try
-                    .ToAsync(async () => 99)
+                    .DoAsync(async () => 99)
                     .ThenAsync(async x => x.ToString(CultureInfo.InvariantCulture))
                     .CatchAsync<ArithmeticException>(async ex => Assert.Fail("should not happen"));
 
@@ -385,7 +385,7 @@ namespace Bebop.Monads
             {
                 var wasCalled = false;
                 var result = await Try
-                    .ToAsync(async () => 99)
+                    .DoAsync(async () => 99)
                     .Then<string>(x => throw new ArithmeticException())
                     .Catch<ArithmeticException>(ex => wasCalled = true);
 
@@ -398,7 +398,7 @@ namespace Bebop.Monads
             {
                 var wasCalled = false;
                 var result = await Try
-                    .ToAsync(async () => 99)
+                    .DoAsync(async () => 99)
                     .Then<string>(x => throw new ArithmeticException())
                     .Catch(typeof(ArithmeticException), ex => wasCalled = true);
 
@@ -411,7 +411,7 @@ namespace Bebop.Monads
             {
                 var wasCalled = false;
                 var result = await Try
-                    .ToAsync(async () => 99)
+                    .DoAsync(async () => 99)
                     .ThenAsync<string>(async x => throw new ArithmeticException())
                     .Catch<ArithmeticException>(ex => wasCalled = true);
 
@@ -424,7 +424,7 @@ namespace Bebop.Monads
             {
                 var wasCalled = false;
                 var result = await Try
-                    .ToAsync(async () => 99)
+                    .DoAsync(async () => 99)
                     .Then<string>(x => throw new ArithmeticException())
                     .CatchAsync<ArithmeticException>(async ex => wasCalled = true);
 
@@ -437,7 +437,7 @@ namespace Bebop.Monads
             {
                 var wasCalled = false;
                 var result = await Try
-                    .ToAsync(async () => 99)
+                    .DoAsync(async () => 99)
                     .Then<string>(x => throw new ArithmeticException())
                     .CatchAsync(typeof(ArithmeticException), async ex => wasCalled = true);
 
@@ -450,7 +450,7 @@ namespace Bebop.Monads
             {
                 var wasCalled = false;
                 var result = await Try
-                    .ToAsync(async () => 99)
+                    .DoAsync(async () => 99)
                     .ThenAsync<string>(async x => throw new ArithmeticException())
                     .CatchAsync<ArithmeticException>(async ex => wasCalled = true);
 
@@ -466,7 +466,7 @@ namespace Bebop.Monads
             public async Task ThenThenCatchThenCatch()
             {
                 var result = await Try
-                    .ToAsync(async () => 99)
+                    .DoAsync(async () => 99)
                     .Then(x => x.ToString(CultureInfo.InvariantCulture))
                     .Catch<ArithmeticException>(ex => Assert.Fail("should not happen"))
                     .Then(x => TimeSpan.FromSeconds(int.Parse(x)))
@@ -479,7 +479,7 @@ namespace Bebop.Monads
             public async Task ThenThenAsyncCatchThenCatchAsync()
             {
                 var result = await Try
-                    .ToAsync(async () => 99)
+                    .DoAsync(async () => 99)
                     .ThenAsync(async x => x.ToString(CultureInfo.InvariantCulture))
                     .Catch<ArithmeticException>(ex => Assert.Fail("should not happen"))
                     .Then(x => TimeSpan.FromSeconds(int.Parse(x)))
@@ -497,7 +497,7 @@ namespace Bebop.Monads
             {
                 var wasCalled = false;
                 var result = await Try
-                    .ToAsync(async () => 99)
+                    .DoAsync(async () => 99)
                     .Then<string>(x => throw new ArithmeticException())
                     .Catch<ArithmeticException>(ex => wasCalled = true)
                     .Then(x => TimeSpan.FromSeconds(int.Parse(x)))
@@ -512,7 +512,7 @@ namespace Bebop.Monads
             {
                 var wasCalled = false;
                 var result = await Try
-                    .ToAsync(async () => 99)
+                    .DoAsync(async () => 99)
                     .Then<string>(x => throw new ArgumentException())
                     .Catch<ArithmeticException>(ex => Assert.Fail("should not happen"))
                     .Then(x => TimeSpan.FromSeconds(int.Parse(x)))
@@ -526,7 +526,7 @@ namespace Bebop.Monads
             public async Task ThenThenCatchThenCatch_ThrowOn1_Uncaught()
             {
                 var result = Try
-                    .ToAsync(async () => 99)
+                    .DoAsync(async () => 99)
                     .Then<string>(x => throw new InvalidOperationException())
                     .Catch<ArithmeticException>(ex => Assert.Fail("should not happen"))
                     .Then(x => TimeSpan.FromSeconds(int.Parse(x)))
@@ -540,7 +540,7 @@ namespace Bebop.Monads
             {
                 var wasCalled = false;
                 var result = await Try
-                    .ToAsync(async () => 99)
+                    .DoAsync(async () => 99)
                     .Then(x => x.ToString(CultureInfo.InvariantCulture))
                     .Catch<ArithmeticException>(ex => Assert.Fail("should not happen"))
                     .Then<TimeSpan>(x => throw new ArgumentNullException())
@@ -554,7 +554,7 @@ namespace Bebop.Monads
             public async Task ThenThenCatchThenCatch_ThrowOn2_Uncaught()
             {
                 var result = Try
-                    .ToAsync(async () => 99)
+                    .DoAsync(async () => 99)
                     .Then(x => x.ToString(CultureInfo.InvariantCulture))
                     .Catch<ArithmeticException>(ex => Assert.Fail("should not happen"))
                     .Then<TimeSpan>(x => throw new InvalidOperationException())
@@ -569,7 +569,7 @@ namespace Bebop.Monads
             [Test]
             public void RejectsInvalidArguments_Then()
             {
-                var t = Try.ToAsync(async () => 99);
+                var t = Try.DoAsync(async () => 99);
 
                 Assert.Throws<ArgumentNullException>(() => t.Then((Func<int, string>)null));
                 Assert.Throws<ArgumentNullException>(() => t.Then((Func<string>)null));
@@ -578,7 +578,7 @@ namespace Bebop.Monads
             [Test]
             public void RejectsInvalidArguments_ThenAsync()
             {
-                var t = Try.ToAsync(async () => 99);
+                var t = Try.DoAsync(async () => 99);
 
                 Assert.Throws<ArgumentNullException>(() => t.ThenAsync((Func<int, Task<string>>)null));
                 Assert.Throws<ArgumentNullException>(() => t.ThenAsync((Func<Task<string>>)null));
@@ -587,7 +587,7 @@ namespace Bebop.Monads
             [Test]
             public void RejectsInvalidArguments_Catch()
             {
-                var t = Try.ToAsync(async () => 99);
+                var t = Try.DoAsync(async () => 99);
 
                 Assert.Throws<ArgumentNullException>(() => t.Catch<ArithmeticException>(null));
                 Assert.Throws<ArgumentNullException>(() => t.Catch(null, ex => { }));
@@ -598,7 +598,7 @@ namespace Bebop.Monads
             [Test]
             public void RejectsInvalidArguments_CatchAsync()
             {
-                var t = Try.ToAsync(async () => 99);
+                var t = Try.DoAsync(async () => 99);
 
                 Assert.Throws<ArgumentNullException>(() => t.CatchAsync<ArithmeticException>(null));
                 Assert.Throws<ArgumentNullException>(() => t.CatchAsync(null, ex => Task.CompletedTask));

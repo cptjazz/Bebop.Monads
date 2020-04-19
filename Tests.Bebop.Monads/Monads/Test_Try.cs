@@ -31,7 +31,7 @@ namespace Bebop.Monads
         public async Task UseCases()
         {
             var result = await Try
-                .ToAsync(_DataFaker1)
+                .DoAsync(_DataFaker1)
                 .ThenAsync(_DataFaker2)
                 .Catch<ArithmeticException>(e => { /* dont care */})
                 .ThenAsync(_DataFaker3);
@@ -42,8 +42,8 @@ namespace Bebop.Monads
         [Test]
         public void RejectsInvalidArguments()
         {
-            Assert.Throws<ArgumentNullException>(() => Try.To((Func<int>) null));
-            Assert.Throws<ArgumentNullException>(() => Try.ToAsync((Func<Task<int>>) null));
+            Assert.Throws<ArgumentNullException>(() => Try.Do((Func<int>) null));
+            Assert.Throws<ArgumentNullException>(() => Try.DoAsync((Func<Task<int>>) null));
         }
     }
 }

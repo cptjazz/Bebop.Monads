@@ -13,6 +13,9 @@ using Bebop.Monads.Internals;
 
 namespace Bebop.Monads
 {
+    /// <summary>
+    /// Try monad of T.
+    /// </summary>
     [StructLayout(LayoutKind.Auto)]
     public readonly struct Try<T>
     {
@@ -35,6 +38,9 @@ namespace Bebop.Monads
 
         #region Then
 
+        /// <summary>
+        /// Adds the given <paramref name="binder"/> to this Try's call-sequence.
+        /// </summary>
         public Try<U> Then<U>(Func<T, U> binder)
         {
             TryThrowHelper.VerifyBinderNotNull(binder);
@@ -43,6 +49,9 @@ namespace Bebop.Monads
             return new Try<U>(Frames.Add(frame));
         }
 
+        /// <summary>
+        /// Adds the given <paramref name="binder"/> to this Try's call-sequence.
+        /// </summary>
         public Try<U> Then<U>(Func<U> binder)
         {
             TryThrowHelper.VerifyBinderNotNull(binder);
@@ -50,11 +59,14 @@ namespace Bebop.Monads
             var frame = new SyncTryFrame(TryFrameType.Action, _ => binder(), null);
             return new Try<U>(Frames.Add(frame));
         }
-        
+
         #endregion
 
         #region ThenAsync
 
+        /// <summary>
+        /// Adds the given <paramref name="binder"/> to this Try's call-sequence.
+        /// </summary>
         public AsyncTry<U> ThenAsync<U>(Func<T, Task<U>> binder)
         {
             TryThrowHelper.VerifyBinderNotNull(binder);
@@ -66,6 +78,9 @@ namespace Bebop.Monads
             return new AsyncTry<U>(asyncFrames);
         }
 
+        /// <summary>
+        /// Adds the given <paramref name="binder"/> to this Try's call-sequence.
+        /// </summary>
         public AsyncTry<U> ThenAsync<U>(Func<Task<U>> binder)
         {
             TryThrowHelper.VerifyBinderNotNull(binder);
@@ -81,24 +96,32 @@ namespace Bebop.Monads
 
         #region Catch
 
-        public Try<T> Catch<TException>(Action<TException> handler) where TException : Exception
+        /// <summary>
+        /// Adds the given <paramref name="exceptionHandler"/> for exceptions assignable to type
+        /// <typeparamref name="TException"/> to this Try's call sequence.
+        /// </summary>
+        public Try<T> Catch<TException>(Action<TException> exceptionHandler) where TException : Exception
         {
-            TryThrowHelper.VerifyExceptionHandlerNotNull(handler);
+            TryThrowHelper.VerifyExceptionHandlerNotNull(exceptionHandler);
 
             var clause = new SyncCatchClause(
-                ex => handler((TException) ex),
+                ex => exceptionHandler((TException) ex),
                 typeof(TException));
 
             return new Try<T>(Frames.Add(new SyncTryFrame(TryFrameType.CatchClause, null, clause)));
         }
 
-        public Try<T> Catch(Type exceptionType, Action<Exception> handler)
+        /// <summary>
+        /// Adds the given <paramref name="exceptionHandler"/> for exceptions assignable to type
+        /// <paramref name="exceptionType"/> to this Try's call sequence.
+        /// </summary>
+        public Try<T> Catch(Type exceptionType, Action<Exception> exceptionHandler)
         {
             TryThrowHelper.VerifyExceptionType(exceptionType);
-            TryThrowHelper.VerifyExceptionHandlerNotNull(handler);
+            TryThrowHelper.VerifyExceptionHandlerNotNull(exceptionHandler);
 
             var clause = new SyncCatchClause(
-                ex => handler(ex),
+                ex => exceptionHandler(ex),
                 exceptionType);
 
             return new Try<T>(Frames.Add(new SyncTryFrame(TryFrameType.CatchClause, null, clause)));
@@ -108,12 +131,16 @@ namespace Bebop.Monads
 
         #region CatchAsync
 
-        public AsyncTry<T> CatchAsync<TException>(Func<TException, Task> handler) where TException : Exception
+        /// <summary>
+        /// Adds the given <paramref name="exceptionHandler"/> for exceptions assignable to type
+        /// <typeparamref name="TException"/> to this Try's call sequence.
+        /// </summary>
+        public AsyncTry<T> CatchAsync<TException>(Func<TException, Task> exceptionHandler) where TException : Exception
         {
-            TryThrowHelper.VerifyExceptionHandlerNotNull(handler);
+            TryThrowHelper.VerifyExceptionHandlerNotNull(exceptionHandler);
 
             var clause = new AsyncCatchClause(
-                ex => handler((TException) ex),
+                ex => exceptionHandler((TException) ex),
                 typeof(TException));
 
             var asyncFrames = Frames
@@ -123,13 +150,17 @@ namespace Bebop.Monads
             return new AsyncTry<T>(asyncFrames);
         }
 
-        public AsyncTry<T> CatchAsync(Type exceptionType, Func<Exception, Task> handler)
+        /// <summary>
+        /// Adds the given <paramref name="exceptionHandler"/> for exceptions assignable to type
+        /// <paramref name="exceptionType"/> to this Try's call sequence.
+        /// </summary>
+        public AsyncTry<T> CatchAsync(Type exceptionType, Func<Exception, Task> exceptionHandler)
         {
             TryThrowHelper.VerifyExceptionType(exceptionType);
-            TryThrowHelper.VerifyExceptionHandlerNotNull(handler);
+            TryThrowHelper.VerifyExceptionHandlerNotNull(exceptionHandler);
 
             var clause = new AsyncCatchClause(
-                ex => handler(ex),
+                ex => exceptionHandler(ex),
                 exceptionType);
 
             var asyncFrames = Frames
@@ -143,11 +174,22 @@ namespace Bebop.Monads
 
         #region Execute
 
+        /// <summary>
+        /// async/await infrastructure.
+        /// Do not use directly.
+        /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public TaskAwaiter<Maybe<T>> GetAwaiter() => _ExecuteAsyncShim().GetAwaiter();
+        public ValueTaskAwaiter<Maybe<T>> GetAwaiter() => _ExecuteAsyncShim().GetAwaiter();
 
-        private async Task<Maybe<T>> _ExecuteAsyncShim() => Execute();
+        private ValueTask<Maybe<T>> _ExecuteAsyncShim() => new ValueTask<Maybe<T>>(Execute());
 
+        /// <summary>
+        /// Executes all calls in this Try's call sequence and applies the exception
+        /// handlers present in the call sequence. If the call sequence terminates normally,
+        /// it returns a <see cref="Maybe{T}"/> that has a value, if it terminates with a
+        /// caught exception it returns a Nothing, and if it terminates with an uncaught exception
+        /// this exception is re-thrown.
+        /// </summary>
         public Maybe<T> Execute()
         {
             object previousResult = null;
