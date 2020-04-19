@@ -2,6 +2,7 @@
 
 This project provides the following monads:
 * Maybe
+* Try
 
 This library is:
 * netstandard2.0
@@ -24,6 +25,20 @@ var y = n.OrElse(17); // yields 17
 ```
 [See full documentation for `Maybe`](Maybe.md);
 
+## Try
+
+This represents an _exceptional_ monad that can be used to construct lazy chains of action and catch blocks.
+
+```C#
+var result = await Try
+	.Do(() => "I will succeed.")
+	.ThenAsync(async x => x + " Oh will you?")
+	.Then(_ => throw new InvalidOperationException())
+	.Catch<InvalidOperationException>(() => Log.WriteError("Operation did not succeed"));
+
+var s = result.OrElse(string.Empty);
+```
+[See full documentation for `Try`](Try.md);
 
 ## Unit
 
