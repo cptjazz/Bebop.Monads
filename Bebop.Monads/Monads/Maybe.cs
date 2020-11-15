@@ -2,8 +2,7 @@
 // License: https://opensource.org/licenses/MIT
 
 using System;
-using System.Reflection;
-using System.Runtime.CompilerServices;
+using System.Diagnostics;
 
 namespace Bebop.Monads
 {
@@ -52,12 +51,14 @@ namespace Bebop.Monads
             return new MaybeNongeneric(type, value);
         }
 
+        [DebuggerStepThrough]
         private static void _VerifyValueAssignable(Type type, object value)
         {
             if (!type.IsAssignableFrom(value.GetType()))
                 _ThrowNotAssignable(type, value);
         }
 
+        [DebuggerStepThrough]
         private static void _ThrowNotAssignable(Type maybeType, object value)
         {
             var valueType = value.GetType();
@@ -67,12 +68,14 @@ namespace Bebop.Monads
                 $"a value of type '{valueType}'.");
         }
 
+        [DebuggerStepThrough]
         private static void _VerifyNotNull<T>(T value)
         {
             if (ReferenceEquals(value, null))
                 _ThrowValueNull(nameof(value));
         }
 
+        [DebuggerStepThrough]
         private static void _ThrowValueNull(string parameterName)
         {
             throw new ArgumentNullException(
@@ -80,12 +83,14 @@ namespace Bebop.Monads
                 "Cannot construct a 'Maybe' from a 'null' value.");
         }
 
+        [DebuggerStepThrough]
         private static void _VerifyTypeNotNull(Type type)
         {
             if (ReferenceEquals(type, null))
                 _ThrowTypeNull(nameof(type));
         }
 
+        [DebuggerStepThrough]
         private static void _ThrowTypeNull(string parameterName)
         {
             throw new ArgumentNullException(

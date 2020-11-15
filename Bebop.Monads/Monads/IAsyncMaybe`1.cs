@@ -1,4 +1,4 @@
-﻿// Copyright 2018, Alexander Jesner
+﻿// Copyright 2019, Alexander Jesner
 // License: https://opensource.org/licenses/MIT
 
 using System;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Bebop.Monads
 {
     /// <summary>
-    /// This interface provides covariance for <see cref="AsyncMaybe{T}"/>.
+    /// Provides interoperability methods for <see cref="AsyncMaybe{T}"/>.
     /// Note: since <see cref="AsyncMaybe{T}"/> is a value type, calling methods
     /// via this interface introduces boxings!
     /// </summary>

@@ -5,27 +5,27 @@
     <RootNamespace>Bebop</RootNamespace>
     <PackageProjectUrl>https://github.com/cptjazz/Bebop.Monads</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Copyright>Alexander Jesner, 2019</Copyright>
+    <Copyright>Alexander Jesner, 2020</Copyright>
     <Company>—</Company>
     <Authors>Alexander Jesner</Authors>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\Bebop.snk</AssemblyOriginatorKeyFile>
     <PackageTags>maybe monad monads</PackageTags>
-    <Description>This project provides an implementations of the Maybe(of T) monad.</Description>
-    <Version>2.0.0</Version>
-    <VersionPrefix>2.0.0</VersionPrefix>
-    <VersionSuffix></VersionSuffix>
-    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <Description>This project provides an implementation of the Maybe(of T) and Try(of T) monad, both with full support for modern async/await code.</Description>
+    <Version>2.1.0-beta.1</Version>
+    <VersionPrefix>2.1.0</VersionPrefix>
+    <VersionSuffix>beta.1</VersionSuffix>
+    <AssemblyVersion>2.1.0.0</AssemblyVersion>
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <LangVersion>7.3</LangVersion>
-    <DocumentationFile>C:\Users\alexa\Documents\Visual Studio 2017\Projects\Bebop.Monads\Bebop.Monads\Bebop.Monads.xml</DocumentationFile>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
