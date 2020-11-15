@@ -15,7 +15,7 @@ Try<int> tryResult = Try
     .Do(_SomeMethod)
     .Then(_SomeOtherMethodThatThrows)
     .Then(_AndAnotherMethod) // assuming _AndAnotherMethod() returns an int
-    .Catch<InvalidOperationException>(() => 
+    .Catch<InvalidOperationException>(ex => 
     {
         Log.WriteError("Operation did not succeed");
         return -99;
@@ -28,15 +28,12 @@ The constructed `tryResult` will not be executed until `Execute()` is invoked on
 int result = tryResult.Execute();
 ```
 
-The result of the `Execute()` operation is a ``Maybe`1`` because generation of a value is not
-guaranteed when an exception occurs.
-
 If no apropriate catch-handler is found, execution of the `Try` throws:
 
 ```C#
 var result = Try
     .Do<int>(() => throw new ArithmeticException())
-    .Catch<InvalidOperationException>(() => 
+    .Catch<InvalidOperationException>(ex => 
     {
         Log.WriteError("Operation did not succeed");
         return -99;
@@ -44,7 +41,7 @@ var result = Try
     .Execute(); // throws an ArithmeticException
 ```
 
-Execution of an empty ``Try`1`` leads to `default(T)`:
+Execution of an empty ``Try<T>`` or ``TryAsync<T>`` leads to `default(T)`:
 
 ```C#
 var result = default(Try<string>).Execute(); 
@@ -60,7 +57,7 @@ var result = await Try
     .DoAsync(_SomeAsyncMethod)
     .ThenAsync(_SomeOtherAsyncMethodThatThrows)
     .ThenAsync(_AndAnotherAsyncMethod)
-    .CatchAsync<InvalidOperationException>(async () => 
+    .CatchAsync<InvalidOperationException>(async ex => 
     {
         Log.WriteError("Operation did not succeed");
         return -99;
@@ -76,9 +73,26 @@ var result = await Try
     .DoAsync(_SomeAsyncMethod)
     .ThenAsync(_SomeOtherAsyncMethodThatThrows)
     .ThenAsync(_AndAnotherAsyncMethod)
-    .CatchAsync<InvalidOperationException>(async () =>
+    .CatchAsync<InvalidOperationException>(async ex =>
     {
         Log.WriteError("Operation did not succeed");
         return -99;
     });
+```
+
+### Infrastructure Methods
+
+All ``.Catch<T>(..)`` and ``.CatchAsync<T>(..)`` variants also provide overloads that allow for specifying
+the exception type as `Type` object.
+
+```C#
+var result = await Try
+    .DoAsync(_SomeAsyncMethod)
+    .CatchAsync(
+        typeof(InvalidOperationException),
+        async ex =>
+        {
+            Log.WriteError("Operation did not succeed");
+            return -99;
+        });
 ```

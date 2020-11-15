@@ -34,7 +34,7 @@ var result = await Try
 	.Do(() => "I will succeed.")
 	.ThenAsync(async x => x + " Oh will you?")
 	.Then(_ => throw new InvalidOperationException())
-	.Catch<InvalidOperationException>(() => 
+	.Catch<InvalidOperationException>(ex => 
     {
         Log.WriteError("Operation did not succeed");
         return "failed";
