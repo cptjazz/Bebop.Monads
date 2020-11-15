@@ -15,7 +15,7 @@ Try<int> tryResult = Try
     .Do(_SomeMethod)
     .Then(_SomeOtherMethodThatThrows)
     .Then(_AndAnotherMethod) // assuming _AndAnotherMethod() returns an int
-    .Catch<InvalidOperationException>(() => 
+    .Catch<InvalidOperationException>(ex => 
     {
         Log.WriteError("Operation did not succeed");
         return -99;
@@ -36,7 +36,7 @@ If no apropriate catch-handler is found, execution of the `Try` throws:
 ```C#
 var result = Try
     .Do<int>(() => throw new ArithmeticException())
-    .Catch<InvalidOperationException>(() => 
+    .Catch<InvalidOperationException>(ex => 
     {
         Log.WriteError("Operation did not succeed");
         return -99;
@@ -60,7 +60,7 @@ var result = await Try
     .DoAsync(_SomeAsyncMethod)
     .ThenAsync(_SomeOtherAsyncMethodThatThrows)
     .ThenAsync(_AndAnotherAsyncMethod)
-    .CatchAsync<InvalidOperationException>(async () => 
+    .CatchAsync<InvalidOperationException>(async ex => 
     {
         Log.WriteError("Operation did not succeed");
         return -99;
@@ -76,9 +76,26 @@ var result = await Try
     .DoAsync(_SomeAsyncMethod)
     .ThenAsync(_SomeOtherAsyncMethodThatThrows)
     .ThenAsync(_AndAnotherAsyncMethod)
-    .CatchAsync<InvalidOperationException>(async () =>
+    .CatchAsync<InvalidOperationException>(async ex =>
     {
         Log.WriteError("Operation did not succeed");
         return -99;
     });
+```
+
+### Infrastructure Methods
+
+All ``.Catch<T>(..)`` and ``.CatchAsync<T>(..)`` variants also provide overloads that allow for specifying
+the exception type as `Type` object.
+
+```C#
+var result = await Try
+    .DoAsync(_SomeAsyncMethod)
+    .CatchAsync(
+        typeof(InvalidOperationException),
+        async ex =>
+        {
+            Log.WriteError("Operation did not succeed");
+            return -99;
+        });
 ```

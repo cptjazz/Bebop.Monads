@@ -84,7 +84,7 @@ var r2 = await Maybe
     .OrElse(99);
 ```
 
-### Infrastructure methods
+### Infrastructure Methods
 To fit into the C#/.NET ecosystem we provide the following methods that go beyond pure monadic implementations. 
 The methods are part of the interface `IMaybe<T>` and `IMaybe` and are implemented _explicitly_ i. e. you must cast to the interface to invoke the methods.
 
