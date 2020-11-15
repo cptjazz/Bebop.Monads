@@ -12,14 +12,16 @@
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\Bebop.snk</AssemblyOriginatorKeyFile>
     <PackageTags>maybe try monad monads</PackageTags>
-    <Description>This project provides an implementation of the Maybe(of T) and Try(of T) monad, both with full support for modern async/await code.</Description>
-    <Version>2.1.0-beta.1</Version>
+    <Description>This project provides the monads Maybe(of T) and Try(of T), both with full support for modern async/await code.</Description>
+    <Version>2.1.0</Version>
     <VersionPrefix>2.1.0</VersionPrefix>
     <VersionSuffix>beta.1</VersionSuffix>
     <AssemblyVersion>2.1.0.0</AssemblyVersion>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <Configurations>Debug;Release;Test</Configurations>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -50,6 +52,7 @@
 
   <ItemGroup>
     <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.0.0" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
   </ItemGroup>
 
 </Project>
