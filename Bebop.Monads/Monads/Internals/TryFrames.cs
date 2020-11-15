@@ -27,7 +27,7 @@ namespace Bebop.Monads.Internals
             return Frames.Length;
         }
 
-        public CatchClause FindNextMatchingExceptionHandler(Exception exception, int startIndex)
+        public (CatchClause Clause, int Index) FindNextMatchingExceptionHandler(Exception exception, int startIndex)
         {
             while (++startIndex < Frames.Length)
             {
@@ -37,10 +37,10 @@ namespace Bebop.Monads.Internals
                 var clause = Frames[startIndex].CatchClause;
 
                 if (clause.CanHandle(exception))
-                    return clause;
+                    return (clause, startIndex);
             }
 
-            return null;
+            return (null, int.MaxValue);
         }
     }
 }

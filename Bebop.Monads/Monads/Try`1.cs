@@ -206,7 +206,10 @@ namespace Bebop.Monads
                 }
                 catch (Exception e)
                 {
-                    var clause = (SyncCatchClause) Frames.FindNextMatchingExceptionHandler(e, index);
+                    var (c, i) = Frames.FindNextMatchingExceptionHandler(e, index);
+                    var clause = (SyncCatchClause)c;
+                    index = i;
+
                     if (clause is null)
                         throw;
 
