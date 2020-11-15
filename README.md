@@ -34,9 +34,11 @@ var result = await Try
 	.Do(() => "I will succeed.")
 	.ThenAsync(async x => x + " Oh will you?")
 	.Then(_ => throw new InvalidOperationException())
-	.Catch<InvalidOperationException>(() => Log.WriteError("Operation did not succeed"));
-
-var s = result.OrElse(string.Empty);
+	.Catch<InvalidOperationException>(() => 
+    {
+        Log.WriteError("Operation did not succeed");
+        return "failed";
+    });
 ```
 [See full documentation for `Try`](Try.md);
 

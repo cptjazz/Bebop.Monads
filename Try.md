@@ -12,10 +12,10 @@ _must_ return a value.
 
 ```C#
 Try<int> tryResult = Try
-	.Do(_SomeMethod)
-	.Then(_SomeOtherMethodThatThrows)
-	.Then(_AndAnotherMethod) // assuming _AndAnotherMethod() returns an int
-	.Catch<InvalidOperationException>(() => 
+    .Do(_SomeMethod)
+    .Then(_SomeOtherMethodThatThrows)
+    .Then(_AndAnotherMethod) // assuming _AndAnotherMethod() returns an int
+    .Catch<InvalidOperationException>(() => 
     {
         Log.WriteError("Operation did not succeed");
         return -99;
@@ -35,9 +35,13 @@ If no apropriate catch-handler is found, execution of the `Try` throws:
 
 ```C#
 var result = Try
-	.Do(() => throw new ArithmeticException())
-	.Catch<InvalidOperationException>(() => Log.WriteError("Operation did not succeed"))
-    Execute(); // throws an ArithmeticException
+    .Do<int>(() => throw new ArithmeticException())
+    .Catch<InvalidOperationException>(() => 
+    {
+        Log.WriteError("Operation did not succeed");
+        return -99;
+    })
+    .Execute(); // throws an ArithmeticException
 ```
 
 Execution of an empty ``Try`1`` leads to `default(T)`:
@@ -53,10 +57,14 @@ There is an ``async`` variant for all construction and binding methods.
 
 ```C#
 var result = await Try
-	.DoAsync(_SomeAsyncMethod)
-	.ThenAsync(_SomeOtherAsyncMethodThatThrows)
-	.ThenAsync(_AndAnotherAsyncMethod)
-	.CatchAsync<InvalidOperationException>(async () => Log.WriteError("Operation did not succeed"))
+    .DoAsync(_SomeAsyncMethod)
+    .ThenAsync(_SomeOtherAsyncMethodThatThrows)
+    .ThenAsync(_AndAnotherAsyncMethod)
+    .CatchAsync<InvalidOperationException>(async () => 
+    {
+        Log.WriteError("Operation did not succeed");
+        return -99;
+    })
     .ExecuteAsync();
 ```
 
@@ -65,8 +73,12 @@ both ``Try`1`` and ``AsyncTry`1`` are awaitables:
 
 ```C#
 var result = await Try
-	.DoAsync(_SomeAsyncMethod)
-	.ThenAsync(_SomeOtherAsyncMethodThatThrows)
-	.ThenAsync(_AndAnotherAsyncMethod)
-	.CatchAsync<InvalidOperationException>(async () => Log.WriteError("Operation did not succeed"));
+    .DoAsync(_SomeAsyncMethod)
+    .ThenAsync(_SomeOtherAsyncMethodThatThrows)
+    .ThenAsync(_AndAnotherAsyncMethod)
+    .CatchAsync<InvalidOperationException>(async () =>
+    {
+        Log.WriteError("Operation did not succeed");
+        return -99;
+    });
 ```
