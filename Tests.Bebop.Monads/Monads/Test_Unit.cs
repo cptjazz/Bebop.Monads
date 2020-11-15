@@ -11,8 +11,8 @@ namespace Bebop.Monads
         [Test]
         public void CanCreate()
         {
-            var u = new Unit();
-            var v = default(Unit);
+            _ = new Unit();
+            _ = default(Unit);
 
             Assert.Pass();
         }

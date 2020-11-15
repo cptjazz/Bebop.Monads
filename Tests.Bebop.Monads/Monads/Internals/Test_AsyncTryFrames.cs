@@ -1,6 +1,8 @@
 ﻿// Copyright 2020, Alexander Jesner
 // License: https://opensource.org/licenses/MIT
 
+#pragma warning disable CS1998 // async method lacks 'await' operators
+
 using System;
 using System.Threading.Tasks;
 using NUnit.Framework;

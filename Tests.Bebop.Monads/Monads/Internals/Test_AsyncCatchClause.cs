@@ -5,6 +5,8 @@ using System;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
+#pragma warning disable CS1998 // async method lacks 'await' operators
+
 namespace Bebop.Monads.Internals
 {
     [TestFixture]
