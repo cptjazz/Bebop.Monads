@@ -11,21 +11,31 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\Bebop.snk</AssemblyOriginatorKeyFile>
-    <PackageTags>maybe monad monads</PackageTags>
+    <PackageTags>maybe try monad monads</PackageTags>
     <Description>This project provides an implementation of the Maybe(of T) and Try(of T) monad, both with full support for modern async/await code.</Description>
     <Version>2.1.0-beta.1</Version>
     <VersionPrefix>2.1.0</VersionPrefix>
     <VersionSuffix>beta.1</VersionSuffix>
     <AssemblyVersion>2.1.0.0</AssemblyVersion>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <Configurations>Debug;Release;Test</Configurations>
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <LangVersion>7.3</LangVersion>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />
-    <DebugType>full</DebugType>
+    <DebugType>pdbonly</DebugType>
     <DebugSymbols>true</DebugSymbols>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Test|AnyCPU'">
+    <LangVersion>7.3</LangVersion>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
