@@ -16,7 +16,7 @@ namespace Bebop.Monads.Internals
         {
             var type = TryFrameType.CatchClause;
             Func<object, Task<object>> action = async o => o;
-            var clause = new AsyncCatchClause(exception => Task.CompletedTask, typeof(ArithmeticException));
+            var clause = new AsyncCatchClause(async exception => 9, typeof(ArithmeticException));
 
             var x = new AsyncTryFrame(type, action, clause);
 

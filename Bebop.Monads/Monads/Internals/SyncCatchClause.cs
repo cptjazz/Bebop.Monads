@@ -9,10 +9,10 @@ namespace Bebop.Monads.Internals
 {
     internal sealed class SyncCatchClause : CatchClause
     {
-        public Action<Exception> Handler { get; }
+        public Func<Exception, object> Handler { get; }
 
 
-        public SyncCatchClause(Action<Exception> handler, Type exceptionType) 
+        public SyncCatchClause(Func<Exception, object> handler, Type exceptionType) 
             : base(exceptionType)
         {
             Handler = handler;

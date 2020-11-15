@@ -8,9 +8,9 @@ namespace Bebop.Monads.Internals
 {
     internal sealed class AsyncCatchClause : CatchClause
     {
-        public Func<Exception, Task> Handler { get; }
+        public Func<Exception, Task<object>> Handler { get; }
 
-        public AsyncCatchClause(Func<Exception, Task> handler, Type exceptionType) 
+        public AsyncCatchClause(Func<Exception, Task<object>> handler, Type exceptionType) 
             : base(exceptionType)
         {
             Handler = handler;

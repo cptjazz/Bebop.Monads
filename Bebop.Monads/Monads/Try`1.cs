@@ -100,7 +100,7 @@ namespace Bebop.Monads
         /// Adds the given <paramref name="exceptionHandler"/> for exceptions assignable to type
         /// <typeparamref name="TException"/> to this Try's call sequence.
         /// </summary>
-        public Try<T> Catch<TException>(Action<TException> exceptionHandler) where TException : Exception
+        public Try<T> Catch<TException>(Func<TException, T> exceptionHandler) where TException : Exception
         {
             TryThrowHelper.VerifyExceptionHandlerNotNull(exceptionHandler);
 
@@ -115,7 +115,7 @@ namespace Bebop.Monads
         /// Adds the given <paramref name="exceptionHandler"/> for exceptions assignable to type
         /// <paramref name="exceptionType"/> to this Try's call sequence.
         /// </summary>
-        public Try<T> Catch(Type exceptionType, Action<Exception> exceptionHandler)
+        public Try<T> Catch(Type exceptionType, Func<Exception, T> exceptionHandler)
         {
             TryThrowHelper.VerifyExceptionType(exceptionType);
             TryThrowHelper.VerifyExceptionHandlerNotNull(exceptionHandler);
@@ -135,12 +135,12 @@ namespace Bebop.Monads
         /// Adds the given <paramref name="exceptionHandler"/> for exceptions assignable to type
         /// <typeparamref name="TException"/> to this Try's call sequence.
         /// </summary>
-        public AsyncTry<T> CatchAsync<TException>(Func<TException, Task> exceptionHandler) where TException : Exception
+        public AsyncTry<T> CatchAsync<TException>(Func<TException, Task<T>> exceptionHandler) where TException : Exception
         {
             TryThrowHelper.VerifyExceptionHandlerNotNull(exceptionHandler);
 
             var clause = new AsyncCatchClause(
-                ex => exceptionHandler((TException) ex),
+                async ex => await exceptionHandler((TException) ex).ConfigureAwait(false),
                 typeof(TException));
 
             var asyncFrames = Frames
@@ -154,13 +154,13 @@ namespace Bebop.Monads
         /// Adds the given <paramref name="exceptionHandler"/> for exceptions assignable to type
         /// <paramref name="exceptionType"/> to this Try's call sequence.
         /// </summary>
-        public AsyncTry<T> CatchAsync(Type exceptionType, Func<Exception, Task> exceptionHandler)
+        public AsyncTry<T> CatchAsync(Type exceptionType, Func<Exception, Task<T>> exceptionHandler)
         {
             TryThrowHelper.VerifyExceptionType(exceptionType);
             TryThrowHelper.VerifyExceptionHandlerNotNull(exceptionHandler);
 
             var clause = new AsyncCatchClause(
-                ex => exceptionHandler(ex),
+                async ex => await exceptionHandler(ex).ConfigureAwait(false),
                 exceptionType);
 
             var asyncFrames = Frames
@@ -179,9 +179,9 @@ namespace Bebop.Monads
         /// Do not use directly.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public ValueTaskAwaiter<Maybe<T>> GetAwaiter() => _ExecuteAsyncShim().GetAwaiter();
+        public ValueTaskAwaiter<T> GetAwaiter() => _ExecuteAsyncShim().GetAwaiter();
 
-        private ValueTask<Maybe<T>> _ExecuteAsyncShim() => new ValueTask<Maybe<T>>(Execute());
+        private ValueTask<T> _ExecuteAsyncShim() => new ValueTask<T>(Execute());
 
         /// <summary>
         /// Executes all calls in this Try's call sequence and applies the exception
@@ -190,7 +190,7 @@ namespace Bebop.Monads
         /// caught exception it returns a Nothing, and if it terminates with an uncaught exception
         /// this exception is re-thrown.
         /// </summary>
-        public Maybe<T> Execute()
+        public T Execute()
         {
             object previousResult = null;
             var index = Frames.FindNextActionFrameIndex(-1);
@@ -210,14 +210,14 @@ namespace Bebop.Monads
                     if (clause is null)
                         throw;
 
-                    clause.Handler(e);
-                    return Maybe.Nothing<T>();
+                    previousResult = clause.Handler(e);
+                    index = Frames.FindNextActionFrameIndex(index);
                 }
             }
 
             return previousResult is null
-                ? Maybe.Nothing<T>()
-                : Maybe.From((T) previousResult);
+                ? default(T)
+                : (T) previousResult;
         }
 
         #endregion

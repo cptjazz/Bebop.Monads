@@ -13,7 +13,7 @@ namespace Bebop.Monads.Internals
         [Test]
         public void CanCreate()
         {
-            Action<Exception> handler = exception => { };
+            Func<Exception, object> handler = exception => 9;
             var type = typeof(ArithmeticException);
 
             var x = new SyncCatchClause(handler, type);
@@ -25,7 +25,7 @@ namespace Bebop.Monads.Internals
         [Test]
         public void CanDetermineHandlerCompatibility()
         {
-            Action<Exception> handler = exception => { };
+            Func<Exception, object> handler = exception => 9;
             var type = typeof(OperationCanceledException);
 
             var x = new SyncCatchClause(handler, type);
@@ -40,7 +40,11 @@ namespace Bebop.Monads.Internals
         public async Task CanConvertToAsync()
         {
             var wasCalled = false;
-            Action<Exception> handler = exception => { wasCalled = true; };
+            Func<Exception, object> handler = exception =>
+            {
+                wasCalled = true;
+                return 9;
+            };
 
             var type = typeof(ArithmeticException);
 

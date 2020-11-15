@@ -33,10 +33,10 @@ namespace Bebop.Monads
             var result = await Try
                 .DoAsync(_DataFaker1)
                 .ThenAsync(_DataFaker2)
-                .Catch<ArithmeticException>(e => { /* dont care */})
+                .Catch<ArithmeticException>(e => 99)
                 .ThenAsync(_DataFaker3);
 
-            Assert.AreEqual(Maybe.Nothing<string>(), result);
+            Assert.AreEqual("glory to you and your house", result);
         }
 
         [Test]

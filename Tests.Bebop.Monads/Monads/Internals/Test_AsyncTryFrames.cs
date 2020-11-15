@@ -22,7 +22,7 @@ namespace Bebop.Monads.Internals
                     TryFrameType.CatchClause,
                     null,
                     new AsyncCatchClause(
-                        _ => Task.CompletedTask,
+                        async _ => 9,
                         typeof(ArithmeticException))),
             };
 
@@ -46,7 +46,7 @@ namespace Bebop.Monads.Internals
                 TryFrameType.CatchClause, 
                 null, 
                 new AsyncCatchClause(
-                    _ => Task.CompletedTask, 
+                    async _ => 9, 
                     typeof(ArithmeticException)));
 
             var frames = new[]

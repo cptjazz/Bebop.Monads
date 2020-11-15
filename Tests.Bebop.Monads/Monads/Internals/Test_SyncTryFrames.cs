@@ -22,7 +22,7 @@ namespace Bebop.Monads.Internals
                     TryFrameType.CatchClause,
                     null,
                     new SyncCatchClause(
-                        _ => { },
+                        _ => 9,
                         typeof(ArithmeticException))),
             };
 
@@ -46,7 +46,7 @@ namespace Bebop.Monads.Internals
                 TryFrameType.CatchClause, 
                 null, 
                 new SyncCatchClause(
-                    _ => { }, 
+                    _ => 9, 
                     typeof(ArithmeticException)));
 
             var frames = new[]
@@ -79,7 +79,7 @@ namespace Bebop.Monads.Internals
                 TryFrameType.CatchClause,
                 null,
                 new SyncCatchClause(
-                    _ => { wasF2Called = true; },
+                    _ => { wasF2Called = true; return 9; },
                     typeof(ArithmeticException)));
 
             var frames = new[] {f1, f2};

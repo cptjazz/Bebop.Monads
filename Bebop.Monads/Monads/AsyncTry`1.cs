@@ -94,7 +94,7 @@ namespace Bebop.Monads
         /// Adds the given <paramref name="exceptionHandler"/> for exceptions assignable to type
         /// <typeparamref name="TException"/> to this Try's call sequence.
         /// </summary>
-        public AsyncTry<T> Catch<TException>(Action<TException> exceptionHandler) where TException : Exception
+        public AsyncTry<T> Catch<TException>(Func<TException, T> exceptionHandler) where TException : Exception
         {
             TryThrowHelper.VerifyExceptionHandlerNotNull(exceptionHandler);
 
@@ -109,7 +109,7 @@ namespace Bebop.Monads
         /// Adds the given <paramref name="exceptionHandler"/> for exceptions assignable to type
         /// <paramref name="exceptionType"/> to this Try's call sequence.
         /// </summary>
-        public AsyncTry<T> Catch(Type exceptionType, Action<Exception> exceptionHandler)
+        public AsyncTry<T> Catch(Type exceptionType, Func<Exception, T> exceptionHandler)
         {
             TryThrowHelper.VerifyExceptionType(exceptionType);
             TryThrowHelper.VerifyExceptionHandlerNotNull(exceptionHandler);
@@ -129,7 +129,7 @@ namespace Bebop.Monads
         /// Adds the given <paramref name="exceptionHandler"/> for exceptions assignable to type
         /// <typeparamref name="TException"/> to this Try's call sequence.
         /// </summary>
-        public AsyncTry<T> CatchAsync<TException>(Func<TException, Task> exceptionHandler) where TException : Exception
+        public AsyncTry<T> CatchAsync<TException>(Func<TException, Task<T>> exceptionHandler) where TException : Exception
         {
             TryThrowHelper.VerifyExceptionHandlerNotNull(exceptionHandler);
 
@@ -144,7 +144,7 @@ namespace Bebop.Monads
         /// Adds the given <paramref name="exceptionHandler"/> for exceptions assignable to type
         /// <paramref name="exceptionType"/> to this Try's call sequence.
         /// </summary>
-        public AsyncTry<T> CatchAsync(Type exceptionType, Func<Exception, Task> exceptionHandler)
+        public AsyncTry<T> CatchAsync(Type exceptionType, Func<Exception, Task<T>> exceptionHandler)
         {
             TryThrowHelper.VerifyExceptionType(exceptionType);
             TryThrowHelper.VerifyExceptionHandlerNotNull(exceptionHandler);
@@ -165,7 +165,7 @@ namespace Bebop.Monads
         /// Do not use directly.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public TaskAwaiter<Maybe<T>> GetAwaiter() => ExecuteAsync().GetAwaiter();
+        public TaskAwaiter<T> GetAwaiter() => ExecuteAsync().GetAwaiter();
 
         /// <summary>
         /// Executes all calls in this Try's call sequence and applies the exception
@@ -174,7 +174,7 @@ namespace Bebop.Monads
         /// caught exception it returns a Nothing, and if it terminates with an uncaught exception
         /// this exception is re-thrown.
         /// </summary>
-        public async Task<Maybe<T>> ExecuteAsync()
+        public async Task<T> ExecuteAsync()
         {
             object previousResult = null;
             var index = Frames.FindNextActionFrameIndex(-1);
@@ -194,14 +194,14 @@ namespace Bebop.Monads
                     if (clause is null)
                         throw;
 
-                    await clause.Handler(e).ConfigureAwait(false);
-                    return Maybe.Nothing<T>();
+                    previousResult = await clause.Handler(e).ConfigureAwait(false);
+                    index = Frames.FindNextActionFrameIndex(index);
                 }
             }
 
             return previousResult is null
-                ? Maybe.Nothing<T>()
-                : Maybe.From((T) previousResult);
+                ? default(T)
+                : (T) previousResult;
         }
 
         #endregion

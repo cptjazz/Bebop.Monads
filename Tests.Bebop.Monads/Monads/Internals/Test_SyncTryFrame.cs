@@ -10,7 +10,7 @@ namespace Bebop.Monads.Internals
         {
             var type = TryFrameType.CatchClause;
             Func<object, object> action = o => o;
-            var clause = new SyncCatchClause(exception => {}, typeof(ArithmeticException));
+            var clause = new SyncCatchClause(exception => 9, typeof(ArithmeticException));
 
             var x = new SyncTryFrame(type, action, clause);
 

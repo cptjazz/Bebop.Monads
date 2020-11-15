@@ -13,7 +13,7 @@ namespace Bebop.Monads.Internals
         [Test]
         public void CanCreate()
         {
-            Func<Exception, Task> handler = exception => Task.CompletedTask;
+            Func<Exception, Task<object>> handler = async exception => 9;
             var type = typeof(ArithmeticException);
 
             var x = new AsyncCatchClause(handler, type);
@@ -25,7 +25,7 @@ namespace Bebop.Monads.Internals
         [Test]
         public void CanDetermineHandlerCompatibility()
         {
-            Func<Exception, Task> handler = exception => Task.CompletedTask;
+            Func<Exception, Task<object>> handler = async exception => 9;
             var type = typeof(OperationCanceledException);
 
             var x = new AsyncCatchClause(handler, type);
