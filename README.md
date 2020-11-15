@@ -31,10 +31,10 @@ This represents an _exceptional_ monad that can be used to construct lazy chains
 
 ```C#
 var result = await Try
-	.Do(() => "I will succeed.")
-	.ThenAsync(async x => x + " Oh will you?")
-	.Then(_ => throw new InvalidOperationException())
-	.Catch<InvalidOperationException>(ex => 
+    .Do(() => "I will succeed.")
+    .ThenAsync(async x => x + " Oh will you?")
+    .Then(_ => throw new InvalidOperationException())
+    .Catch<InvalidOperationException>(ex => 
     {
         Log.WriteError("Operation did not succeed");
         return "failed";
