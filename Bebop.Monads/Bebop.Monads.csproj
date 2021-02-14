@@ -5,7 +5,7 @@
     <RootNamespace>Bebop</RootNamespace>
     <PackageProjectUrl>https://github.com/cptjazz/Bebop.Monads</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Copyright>Alexander Jesner, 2020</Copyright>
+    <Copyright>Alexander Jesner, 2021</Copyright>
     <Company>—</Company>
     <Authors>Alexander Jesner</Authors>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -13,10 +13,10 @@
     <AssemblyOriginatorKeyFile>..\Bebop.snk</AssemblyOriginatorKeyFile>
     <PackageTags>maybe try monad monads</PackageTags>
     <Description>This project provides the monads Maybe(of T) and Try(of T), both with full support for modern async/await code.</Description>
-    <Version>2.1.0</Version>
+    <Version>2.2.0</Version>
     <VersionPrefix>2.1.0</VersionPrefix>
     <VersionSuffix>beta.1</VersionSuffix>
-    <AssemblyVersion>2.1.0.0</AssemblyVersion>
+    <AssemblyVersion>2.2.0.0</AssemblyVersion>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <Configurations>Debug;Release;Test</Configurations>
