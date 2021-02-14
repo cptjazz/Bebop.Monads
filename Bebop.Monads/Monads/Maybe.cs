@@ -40,6 +40,16 @@ namespace Bebop.Monads
         }
 
         /// <summary>
+        /// Creates a <see cref="Maybe{T}"/> instance from the given nullable <paramref name="value"/>.
+        /// </summary>
+        public static Maybe<T> From<T>(Nullable<T> value) where T : struct
+        {
+            return value.HasValue 
+                ? new Maybe<T>(value.Value) 
+                : default;
+        }
+
+        /// <summary>
         /// Creates an <see cref="IMaybe"/> instance that contains the given <paramref name="value"/>.
         /// </summary>
         public static IMaybe From(Type type, object value)

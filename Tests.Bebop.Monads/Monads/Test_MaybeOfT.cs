@@ -39,6 +39,24 @@ namespace Bebop.Monads
                 Assert.Throws<ArgumentNullException>(() => Maybe.From<string>(null));
             }
 
+            [Test]
+            public void CanConstructFromNullable_NoValue()
+            {
+                var n = default(Nullable<int>);
+                var m = Maybe.From(n);
+
+                Assert.AreEqual(Maybe.Nothing<int>(), m);
+            }
+
+            [Test]
+            public void CanConstructFromNullable_HasValue()
+            {
+                var n = (Nullable<int>) 77;
+                var m = Maybe.From(n);
+
+                Assert.AreEqual(Maybe.From(77), m);
+            }
+
             private Maybe<string> _ImplicitReceiverReferenceType(Maybe<string> m)
             {
                 return m;
