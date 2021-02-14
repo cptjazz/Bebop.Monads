@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29009.5
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bebop.Monads", "Bebop.Monads\Bebop.Monads.csproj", "{4CD67C7F-DFD7-41E0-A80E-44252ACCAB3F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Bebop.Monads", "Tests.Bebop.Monads\Tests.Bebop.Monads.csproj", "{9144C3B1-FE9E-444B-BCC1-55BEEADBC462}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Bebop.Monads", "Tests.Bebop.Monads\Tests.Bebop.Monads.csproj", "{9144C3B1-FE9E-444B-BCC1-55BEEADBC462}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Benchmark.Bebop.Monads", "Benchmark.Bebop.Monads\Benchmark.Bebop.Monads.csproj", "{B6DC0074-6234-42F4-8349-7F3A71459355}"
 EndProject
