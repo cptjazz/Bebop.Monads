@@ -7,9 +7,9 @@ namespace Bebop.Monads
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            var summary = BenchmarkRunner.Run<MaybeBenchmarks>();
+            var _ = BenchmarkRunner.Run<MaybeBenchmarks>();
         }
     }
 }
